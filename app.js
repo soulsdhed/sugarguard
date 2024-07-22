@@ -28,20 +28,20 @@ nunjucks.configure("views", {
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(
-    session({
-        httpOnly: true,
-        resave: false,
-        secret: "secret",
-        store: new fileStore(),
-        saveUninitialized: false,
-        // retries: 1,
-        // async writeFile(req, res, next) {
-        //     await saveSession(req.session);
-        //     next();
-        // },
-    })
-);
+// app.use(
+//     session({
+//         httpOnly: true,
+//         resave: false,
+//         secret: "secret",
+//         store: new fileStore(),
+//         saveUninitialized: false,
+//         // retries: 1,
+//         // async writeFile(req, res, next) {
+//         //     await saveSession(req.session);
+//         //     next();
+//         // },
+//     })
+// );
 app.use(express.static(__dirname + "/public")); //주상
 
 app.use("/", mainRouter);

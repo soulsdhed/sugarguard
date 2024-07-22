@@ -33,7 +33,9 @@ app.use(
         // },
     })
 );
-app.use(express.static(__dirname + "/public")); //주상
+// app.use(express.static(__dirname + "/public")); // Css파일 - 정적파일
+app.use(express.static("public")); // Css파일 - 정적파일
+app.use(express.static("script")); // Script - 정적파일
 
 app.use("/", mainRouter);
 app.use("/api", apiRouter);

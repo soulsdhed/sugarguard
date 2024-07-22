@@ -1,0 +1,68 @@
+#header {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: -20px;
+}
+
+#content-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.divs {
+    width: 80%;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5%;
+}
+
+.content-row {
+    display: flex;
+    width: 80%;
+}
+
+.divs-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 20%;
+}
+
+#chart {
+    background-color: rgb(173, 216, 230);
+    margin-top: 50px;
+    height: 200px;
+}
+
+#calendar {
+    background-color: orange;
+    height: 77px;
+}
+
+#exercise {
+    background-color: yellow;
+    height: 400px;
+    margin-left: 0%;
+    width: 55%;
+}
+
+#recipe {
+    background-color: green;
+    height: calc(50% - 20px);
+    margin-bottom: 20px;
+    width: 140px;
+    margin-left: 0px;
+}
+
+#diary {
+    background-color: lightgreen;
+    height: calc(50% - 20px);
+    width: 140px;
+    margin-left: 0px;
+}
+
+.chart-container {
+    width: 50%; /* 원래 크기의 4분의 1 */
+    height: 160px; /* 원래 크기의 4분의 1 */
+}

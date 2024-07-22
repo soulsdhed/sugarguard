@@ -12,7 +12,7 @@ body{
 #document {
     border: 1px solid black; /* 테두리 설정 */
     /* padding: 20px; 내부 여백 설정 */
-    background-color: #ffffff; /* 배경색 설정 */
+    background-color: slategray; /* 배경색 설정 */
     width: 90%;
     min-width: 480px;
     max-width: 480px;

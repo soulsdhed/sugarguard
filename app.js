@@ -33,6 +33,7 @@ app.use(
         // },
     })
 );
+app.use(express.static(__dirname + "/public")); //주상
 
 app.use("/", mainRouter);
 app.use("/api", apiRouter);

@@ -10,7 +10,7 @@ const apiRouter = require("./routes/apiRouter");
 
 // middleware
 const errorHandler = require("./middlewares/errorHandler");
-const sucessHandler = require("./middlewares/successHandler");
+const successHandler = require("./middlewares/successHandler");
 const timeoutMiddleware = require("./middlewares/timeoutMiddleware");
 
 // express 설정
@@ -43,6 +43,9 @@ app.use(express.json());
 //     })
 // );
 app.use(express.static(__dirname + "/public")); //주상
+
+// 성공 처리 미들웨어
+app.use(successHandler);
 
 app.use("/", mainRouter);
 app.use("/api", apiRouter);

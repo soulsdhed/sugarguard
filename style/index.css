@@ -14,11 +14,8 @@ body{
     /* padding: 20px; 내부 여백 설정 */
     background-color: #ffffff; /* 배경색 설정 */
     width: 90%;
-    max-width: 600px;
-    height: 9000px;
-}
-#content h4{
-    text-align: center;
+    min-width: 480px;
+    max-width: 480px;
 }
 #navBar{
     display: flex;
@@ -31,7 +28,7 @@ body{
     background-color: black;
     font-size: 14px;
     box-sizing : border-box;
-    max-width: 600px;
+    max-width: 480px;
     margin: 0px auto;
     padding: 10px 0;
 }
@@ -40,3 +37,6 @@ body{
     color: #ffffff;
     cursor: pointer;
 }
+ion-icon {
+    color: #ffffff;
+  }

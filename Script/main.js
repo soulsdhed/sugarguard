@@ -1,3 +1,5 @@
+// mainChart
+
 document.addEventListener("DOMContentLoaded", function () {
     const labels = ["0", "9", "13", "20"];
     const data = {
@@ -60,6 +62,65 @@ document.addEventListener("DOMContentLoaded", function () {
         },
     };
 
-    const ctx = document.getElementById("myChart").getContext("2d");
+    const ctx = document.getElementById("mainChart1").getContext("2d");
+    new Chart(ctx, config);
+});
+
+// mainChart2
+
+document.addEventListener("DOMContentLoaded", () => {
+    const ctx = document.getElementById("mainChart2").getContext("2d");
+
+    // 오늘 하루의 소모한 칼로리 데이터를 생성
+    const timeLabels = [
+        "06:00",
+        "09:00",
+        "12:00",
+        "15:00",
+        "18:00",
+        "21:00",
+        "24:00",
+    ];
+    const caloriesBurned = [300, 430, 450, 740, 800, 1200, 2000]; // 예시 데이터
+
+    const data = {
+        labels: timeLabels,
+        datasets: [
+            {
+                label: "",
+                data: caloriesBurned,
+                fill: true,
+                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                borderColor: "rgba(75, 192, 192, 1)",
+                pointBackgroundColor: "rgba(75, 192, 192, 1)",
+                pointBorderColor: "#fff",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgba(75, 192, 192, 1)",
+            },
+        ],
+    };
+
+    const config = {
+        type: "line",
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+            plugins: {
+                filler: {
+                    propagate: false,
+                },
+            },
+            interaction: {
+                intersect: false,
+            },
+        },
+    };
+
     new Chart(ctx, config);
 });

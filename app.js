@@ -1,8 +1,8 @@
 const express = require("express");
 const nunjucks = require("nunjucks");
 // const cookieParser = require("cookie-parser"); // 쿠키
-// const session = require("express-session"); // 세션
-// const fileStore = require("session-file-store")(session); // 세션 저장소
+const session = require("express-session"); // 세션 + 주상이 수정함
+const fileStore = require("session-file-store")(session); // 세션 저장소 + 주상이 수정함
 
 // router
 const mainRouter = require("./routes/mainRouter");
@@ -43,6 +43,7 @@ app.use(
     })
 );
 app.use(express.static(__dirname + "/public")); //주상
+app.use(express.static(__dirname + "/script")); //주상
 
 app.use("/", mainRouter);
 app.use("/api", apiRouter);

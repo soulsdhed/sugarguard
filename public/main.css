@@ -29,15 +29,11 @@
     width: 20%;
 }
 
+/* Div 태그들 (5) */
 #chart {
     background-color: rgb(173, 216, 230);
     margin-top: 50px;
     height: 200px;
-}
-
-#calendar {
-    background-color: orange;
-    height: 77px;
 }
 
 #exercise {
@@ -62,7 +58,84 @@
     margin-left: 0px;
 }
 
+/* mainChart */
 .chart-container {
     width: 50%; /* 원래 크기의 4분의 1 */
     height: 160px; /* 원래 크기의 4분의 1 */
+    flex: 1; /* 차트 컨테이너가 왼쪽에 위치하도록 설정 */
+
+}
+#chart {
+    display: flex;
+    margin-bottom: 20px; /* 필요에 따라 조정 */
+}
+#chart-text {
+    flex: 1; /* 텍스트가 차트 오른쪽에 위치하도록 설정 */
+    margin-left: 20px; /* 차트와 텍스트 사이의 간격 */
+    font-size: 16px; /* 텍스트 크기 조절 */
+    text-align: left; /* 텍스트 정렬 */
+}
+#chart-text span {
+    font-size: 12px;
+}
+
+/* Calender */
+#calendar-container {
+    width: 90%;
+    min-width: 480px;
+    max-width: 480px;
+    margin: auto;
+}
+
+#calendar-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+#calendar-header span {
+    margin: 0 5px;
+}
+
+#calendar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow-x: auto;
+    white-space: nowrap; /* 한 줄로 유지하기 위해 설정 */
+}
+
+#calendar .day {
+    flex: 0 0 auto; /* 아이템이 줄 바꿈 되지 않고 한 줄로 유지되도록 설정 */
+    width: 60px; /* 각 날짜의 너비 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    padding: 5px;
+    margin: 2px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    cursor: pointer; /* 클릭 가능한 요소로 설정 */
+}
+
+#calendar .day.selected {
+    background-color: #007bff; /* 선택된 날짜의 배경색 */
+    color: white; /* 선택된 날짜의 텍스트 색상 */
+    font-weight: bold; /* 선택된 날짜의 텍스트 굵게 */
+}
+
+/* mainChart2 */
+
+.chart-container2{
+    width: 80%;
+    height: 400px;
+    margin: auto;
+}
+
+#mainChart {
+    width: 100%;
+    height: 100%;
 }

@@ -1,0 +1,49 @@
+#recipe-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 100px;
+}
+
+.recipe-bar1 {
+    display: flex;
+}
+
+#search-input {
+    width: 300px;
+    padding: 15px;
+}
+
+#recipe-title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#recipe-name {
+    border: 1px solid white;
+    background-color: #ffffff;
+    width: 90%;
+    min-width: 470px;
+    max-width: 470px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px; /* 각 링크 사이의 간격을 줄임 */
+    margin-bottom: 20px;
+}
+
+#recipe-name h2 {
+    grid-column: span 4;
+}
+
+#recipe-name a {
+    display: inline-block;
+    font-size: 15px;
+    padding: 15px 10px; /* 내부 여백을 줄임 */
+    background-color: whitesmoke;
+    text-decoration: none;
+    color: #000;
+    border-radius: 5px;
+    text-align: center;
+    box-sizing: border-box; /* 요소 크기에 패딩과 테두리를 포함 */
+}

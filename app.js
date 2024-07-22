@@ -1,8 +1,9 @@
 const express = require("express");
 const nunjucks = require("nunjucks");
 // const cookieParser = require("cookie-parser"); // 쿠키
-const session = require("express-session"); // 세션 + 주상이 수정함
-const fileStore = require("session-file-store")(session); // 세션 저장소 + 주상이 수정함
+// const session = require("express-session"); // 세션 + 주상이 수정함
+// const fileStore = require("session-file-store")(session); // 세션 저장소 + 주상이 수정함
+const rateLimit = require("express-rate-limit");
 
 // router
 const mainRouter = require("./routes/mainRouter");
@@ -15,6 +16,15 @@ const timeoutMiddleware = require("./middlewares/timeoutMiddleware");
 
 // express 설정
 const app = express();
+
+// api call 제한
+app.use(
+    rateLimit({
+        windowMs: 1 * 60 * 1000, // 1분
+        max: 10, // 최대 10개 요청
+        message: "API rate limit exceeded.",
+    })
+);
 
 // 타임 아웃 미들웨어 (5초)
 app.use(timeoutMiddleware(process.env.TIMEOUT));

@@ -1,14 +1,23 @@
 const express = require("express");
 const nunjucks = require("nunjucks");
 // const cookieParser = require("cookie-parser"); // 쿠키
-const session = require("express-session"); // 세션
-const fileStore = require("session-file-store")(session); // 세션 저장소
+// const session = require("express-session"); // 세션
+// const fileStore = require("session-file-store")(session); // 세션 저장소
 
-const app = express();
-const PORT = 3000;
-
+// router
 const mainRouter = require("./routes/mainRouter");
 const apiRouter = require("./routes/apiRouter");
+
+// middleware
+const errorHandler = require("./middlewares/errorHandler");
+const sucessHandler = require("./middlewares/successHandler");
+const timeoutMiddleware = require("./middlewares/timeoutMiddleware");
+
+// express 설정
+const app = express();
+
+// 타임 아웃 미들웨어 (5초)
+app.use(timeoutMiddleware(process.env.TIMEOUT));
 
 app.set("view engine", "html");
 
@@ -33,13 +42,14 @@ app.use(
         // },
     })
 );
-// app.use(express.static(__dirname + "/public")); // Css파일 - 정적파일
-app.use(express.static("public")); // Css파일 - 정적파일
-app.use(express.static("script")); // Script - 정적파일
+app.use(express.static(__dirname + "/public")); //주상
 
 app.use("/", mainRouter);
 app.use("/api", apiRouter);
 
-app.listen(PORT, () => {
-    console.log("Port 3000 : Server Start");
+// 에러 처리 미들웨어
+app.use(errorHandler);
+
+app.listen(process.env.PORT, () => {
+    console.log(`Port ${process.env.PORT} : Server Start`);
 });

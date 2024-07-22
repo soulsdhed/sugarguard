@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../public/sugardiary.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 추가 -->
+</head>
+
+<body>
+    <div id="sugardiary-html">
+        <div id="sugardiary-bar">
+            <form action="" id="sugardiary-bar1">
+                시간 <input type="text"><br>
+                혈당 <input type="text"><br>
+                체중 <input type="text"><br>
+                혈압 <input type="text"><br>
+            </form>
+        </div>
+
+        <div class="container">
+            <div class="dropdown">
+                <span class="selLabel">
+                    <h1>+</h1>
+                </span>
+                <input type="hidden" name="cd-dropdown">
+                <ul class="dropdown-list">
+                    <li data-value="1">
+                        <span>운동 기록</span>
+                    </li>
+                    <li data-value="2">
+                        <span>식사 혈당 기록</span>
+                    </li>
+                    <li data-value="3">
+                        <span>혈당 기록</span>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                $(".selLabel").click(function () {
+                    $('.dropdown').toggleClass('active');
+                });
+
+                $(".dropdown-list li").click(function () {
+                    $('.selLabel').text($(this).text());
+                    $('.dropdown').removeClass('active');
+                    $('.selected-item p span').text($('.selLabel').text());
+                });
+            });
+        </script>
+    </div>
+</body>
+
+</html>

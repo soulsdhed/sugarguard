@@ -1,11 +1,12 @@
 const mysql = require("mysql2");
+require("dotenv").config();
 
 const db = mysql.createConnection({
-    host: "project-db-stu3.smhrd.com",
-    port: 3307,
-    user: "Insa5_JSA_hacksim_4",
-    password: "aischool4",
-    database: "Insa5_JSA_hacksim_4",
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
 });
 
 // MySQL 최초 연결
@@ -15,5 +16,20 @@ db.connect((err) => {
     }
     console.log("MySQL Connected...");
 });
+
+// const db = mysql.createPool({
+//     connectionLimit: 10,
+//     host: process.env.DB_HOST,
+//     port: process.env.DB_PORT,
+//     user: process.env.DB_USER,
+//     password: process.env.DB_PASSWORD,
+//     database: process.env.DB_NAME,
+// });
+
+// db.getConnection((err, connection) => {
+//     if (err) throw err; // not connected!
+//     // 연결 사용 후 반환
+//     connection.release();
+// });
 
 module.exports = db;

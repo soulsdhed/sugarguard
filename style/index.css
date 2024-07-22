@@ -16,7 +16,6 @@ body{
     width: 90%;
     min-width: 480px;
     max-width: 480px;
-    height: 9000px;
 }
 #navBar{
     display: flex;
@@ -38,3 +37,6 @@ body{
     color: #ffffff;
     cursor: pointer;
 }
+ion-icon {
+    color: #ffffff;
+  }

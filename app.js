@@ -43,9 +43,10 @@ app.use(express.json());
 //     })
 // );
 
+app.use(express.static(__dirname + "/public"));
+
 // 성공 처리 미들웨어
 app.use(sucessHandler);
-app.use(express.static(__dirname + "/public"));
 
 app.use("/", mainRouter);
 app.use("/api", apiRouter);

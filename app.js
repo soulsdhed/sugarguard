@@ -28,7 +28,6 @@ nunjucks.configure("views", {
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-<<<<<<< HEAD
 // app.use(
 //     session({
 //         httpOnly: true,
@@ -46,23 +45,7 @@ app.use(express.json());
 
 // 성공 처리 미들웨어
 app.use(sucessHandler);
-=======
-app.use(
-    session({
-        httpOnly: true,
-        resave: false,
-        secret: "secret",
-        store: new fileStore(),
-        saveUninitialized: false,
-        // retries: 1,
-        // async writeFile(req, res, next) {
-        //     await saveSession(req.session);
-        //     next();
-        // },
-    })
-);
-app.use(express.static(__dirname + "/public")); //주상
->>>>>>> 19e696d3a64dd80dbb68cde7e3a5d87a4340962a
+app.use(express.static(__dirname + "/public"));
 
 app.use("/", mainRouter);
 app.use("/api", apiRouter);

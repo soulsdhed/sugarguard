@@ -1,0 +1,42 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    display: flex;
+    flex-direction: center;
+    justify-content: center;
+    height: 100vh;
+}
+#document {
+    border: 1px solid black; /* 테두리 설정 */
+    /* padding: 20px; 내부 여백 설정 */
+    background-color: #ffffff; /* 배경색 설정 */
+    width: 90%;
+    max-width: 600px;
+    height: 9000px;
+}
+#content h4{
+    text-align: center;
+}
+#navBar{
+    display: flex;
+    color: #ffffff;
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    justify-content: space-around;
+    background-color: black;
+    font-size: 14px;
+    box-sizing : border-box;
+    max-width: 600px;
+    margin: 0px auto;
+    padding: 10px 0;
+}
+#navBar a{
+    text-decoration: none;
+    color: #ffffff;
+    cursor: pointer;
+}

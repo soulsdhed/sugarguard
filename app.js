@@ -45,6 +45,7 @@ app.use(express.json());
 // );
 app.use(express.static(__dirname + "/public")); //주상
 app.use(express.static(__dirname + "/script")); //주상
+app.use(express.static(__dirname + "/img")); //주상
 
 // 성공 처리 미들웨어
 app.use(successHandler);

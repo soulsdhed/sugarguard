@@ -1,5 +1,3 @@
-// mainChart
-
 document.addEventListener("DOMContentLoaded", function () {
     const labels = ["0", "9", "13", "20"];
     const data = {
@@ -13,9 +11,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 borderWidth: 2,
                 tension: 0.4, // 곡선을 둥글게 만듦
                 fill: false, // 채우기를 비활성화
-                pointRadius: 1, // 데이터 포인트의 반지름
-                pointBackgroundColor: "orange", // 데이터 포인트 색상 파스텔 옐로우
-                pointBorderColor: "orange", // 데이터 포인트 테두리 색상 파스텔 옐로우
+                pointRadius: 0, // 데이터 포인트의 반지름을 0으로 설정하여 점을 보이지 않게 함
+                pointBackgroundColor: "orange", // 데이터 포인트 색상 파스텔 옐로우 (이 속성은 사용되지 않음)
+                pointBorderColor: "orange", // 데이터 포인트 테두리 색상 파스텔 옐로우 (이 속성은 사용되지 않음)
             },
         ],
     };
@@ -66,8 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
     new Chart(ctx, config);
 });
 
-// mainChart2
-
 document.addEventListener("DOMContentLoaded", () => {
     const ctx = document.getElementById("mainChart2").getContext("2d");
 
@@ -94,10 +90,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 fill: true,
                 backgroundColor: gradient,
                 borderColor: "rgba(75, 192, 192, 1)",
-                pointBackgroundColor: "rgba(75, 192, 192, 1)",
-                pointBorderColor: "#fff",
-                pointHoverBackgroundColor: "#fff",
-                pointHoverBorderColor: "rgba(75, 192, 192, 1)",
+                pointBackgroundColor: "rgba(75, 192, 192, 1)", // 데이터 포인트 색상 (이 속성은 사용되지 않음)
+                pointBorderColor: "#fff", // 데이터 포인트 테두리 색상 (이 속성은 사용되지 않음)
+                pointHoverBackgroundColor: "#fff", // 호버 시 데이터 포인트 배경색 (이 속성은 사용되지 않음)
+                pointHoverBorderColor: "rgba(75, 192, 192, 1)", // 호버 시 데이터 포인트 테두리 색상 (이 속성은 사용되지 않음)
+                pointRadius: 0, // 데이터 포인트의 반지름을 0으로 설정하여 점을 보이지 않게 함
                 tension: 0.4,
             },
         ],
@@ -145,9 +142,101 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             elements: {
                 point: {
-                    radius: 5,
-                    hoverRadius: 7,
-                    hoverBorderWidth: 3,
+                    radius: 0, // 데이터 포인트의 반지름을 0으로 설정하여 점을 보이지 않게 함
+                    hoverRadius: 0, // 호버 시 데이터 포인트의 반지름을 0으로 설정하여 점을 보이지 않게 함
+                    hoverBorderWidth: 0, // 호버 시 데이터 포인트 테두리 너비를 0으로 설정하여 점을 보이지 않게 함
+                },
+            },
+            animation: {
+                duration: 1500,
+                easing: "easeInOutQuart",
+            },
+        },
+    };
+
+    new Chart(ctx, config);
+});
+
+// chart2
+
+document.addEventListener("DOMContentLoaded", () => {
+    const ctx = document.getElementById("mainChart2").getContext("2d");
+
+    const timeLabels = [
+        "06:00",
+        "09:00",
+        "12:00",
+        "15:00",
+        "18:00",
+        "21:00",
+        "24:00",
+    ];
+    const caloriesBurned = [300, 430, 450, 740, 800, 1200, 2000];
+
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, "rgba(75, 192, 192, 0.4)");
+    gradient.addColorStop(1, "rgba(75, 192, 192, 0)");
+
+    const data = {
+        labels: timeLabels,
+        datasets: [
+            {
+                data: caloriesBurned,
+                fill: true,
+                backgroundColor: gradient,
+                borderColor: "rgba(75, 192, 192, 1)",
+                pointBackgroundColor: "rgba(75, 192, 192, 1)",
+                pointBorderColor: "#fff",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgba(75, 192, 192, 1)",
+                tension: 0.4,
+                pointRadius: 0, // 점을 보이지 않게 설정
+            },
+        ],
+    };
+
+    const config = {
+        type: "line",
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        display: false,
+                    },
+                    ticks: {
+                        color: "#000",
+                    },
+                },
+                x: {
+                    grid: {
+                        display: false,
+                    },
+                    ticks: {
+                        color: "#000",
+                    },
+                },
+            },
+            plugins: {
+                legend: {
+                    display: false,
+                },
+                tooltip: {
+                    enabled: false, // 툴팁 비활성화
+                },
+            },
+            interaction: {
+                intersect: false,
+                mode: "index",
+            },
+            elements: {
+                point: {
+                    radius: 0, // 점을 보이지 않게 설정
+                    hoverRadius: 0,
+                    hoverBorderWidth: 0,
                 },
             },
             animation: {

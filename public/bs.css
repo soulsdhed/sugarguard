@@ -1,0 +1,119 @@
+body {
+    background-color: #f6f6f6;
+    text-align: center;
+    padding: 0px;
+    table-layout: center;
+}
+
+/* .container {
+    margin-bottom: 20px;
+} */
+
+table{
+    margin-left: auto;
+    margin-right: auto;
+    width: 480px;
+    height: 500px;
+}
+
+.colorBox {
+    width: 20px;
+    height: 20px;
+    /* border: 2px solid #f6f6f6; */
+    margin: 20px;
+    text-align: center;
+    line-height: 20px;
+    background-color: #66CC66;
+}
+
+.box1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #ffffff;
+    width: 480px;
+    height: 50px;
+    border-radius: 10px;
+}
+
+.box2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #ffffff;
+    width: 480px;
+    height: 150px;
+    border-radius: 10px;
+    margin: 0;
+}
+.box2 h5{
+    margin: 0;
+    text-align: left;
+}
+
+/* label {
+    font-weight: bold;
+} */
+
+input[type="number"], input[type="date"] {
+    padding: 5px;
+}
+
+input[type="checkbox"]{
+    width: 20px;    
+    height: 20px;
+    border: solid 5px #f0f0f0; 
+    }
+
+button {
+    padding: 8px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    margin-right: 0px;
+    border-radius: 10px;
+}
+
+/* .bsBtn {
+    height: 30px;
+    width: 30px;
+} */
+/* 
+.record {
+    margin-bottom: 5px;
+    padding: 10px;
+    border-radius: 5px;
+} */
+
+#datePicker {
+    margin-top: 20px;
+}
+
+input[type="radio"] {
+    width:13px; height:13px; margin:0 0 2px;
+    padding:0; border: 1px solid #FFF;
+    vertical-align:middle;}
+
+
+#recordBsBefore, #recordBsAfter {
+    border: solid 2px #f0f0f0;
+    border-radius: 5px;
+}
+
+
+#eatRecord, #eatMemo {
+    height: 100px;
+    width: 400px;
+    border: solid 2px #f0f0f0;
+    border-radius: 10px;
+    
+}
+
+#bottomMenu {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+

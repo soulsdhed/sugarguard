@@ -1,4 +1,33 @@
 #login_main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: white;
-    border: solid 1px black;
+    height: 100%;
+    width: 100%;
+}
+#login_input{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    height: 350px;
+    margin-top: 5%;
+    border-radius: 15px;
+    background-color: white;
+    border: solid 1px gray;
+}
+#login_input input{
+    width: 70%;
+    height: 8%;
+}
+#login_input img{
+    width: 50%;
+    height: 50%;
+}
+#login_main a{
+    font-size:10px ;
+    text-decoration-line:none;
+    color: black;
 }

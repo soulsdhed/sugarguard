@@ -1,0 +1,20 @@
+{% extends "index.html" %}{% block content %}
+<link rel="stylesheet" href="mypage.css">
+    <div class="mypage_main">
+        <div class="mypage_profile">
+            <img src="../img/병원이모티콘1.PNG" alt="">
+            <a href="/login">로그인 해주세요.</a>
+        </div>
+        <br>
+        <div class="mypage_blood">
+            <div class="mypage_blood_title">
+                <img src="../img/blood.png" alt="">
+                <h3>혈당</h3>
+            </div>
+            <div class="mypage_blood_title_detail">
+                <h3>식전혈당:</h3>
+                <h4>mg/dl</h4>
+            </div>
+        </div>
+    </div>
+{% endblock %}

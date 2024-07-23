@@ -1,8 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const calendar = document.getElementById("calendar");
+    const calendarHeader = document.getElementById("calendar-header");
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
     let currentDate = new Date(); // 현재 날짜로 초기화
+
+    function updateHeader(date) {
+        const options = { year: 'numeric', month: 'long' };
+        calendarHeader.textContent = date.toLocaleDateString('ko-KR', options);
+    }
 
     function generateCalendar(selectedDate) {
         calendar.innerHTML = ""; // 기존 캘린더 내용 제거
@@ -19,14 +25,14 @@ document.addEventListener("DOMContentLoaded", () => {
             if (date.toDateString() === selectedDate.toDateString()) {
                 dayDiv.classList.add("selected");
             }
-            dayDiv.innerHTML = `${date.getDate()}<br>${
-                daysOfWeek[date.getDay()]
-            }`;
+            dayDiv.innerHTML = `${date.getDate()}<br>${daysOfWeek[date.getDay()]}`;
             dayDiv.addEventListener("click", () => {
                 generateCalendar(date); // 새로운 날짜 생성
+                updateHeader(date); // 헤더 업데이트
             });
             calendar.appendChild(dayDiv);
         }
+        updateHeader(selectedDate); // 선택된 날짜로 헤더 업데이트
     }
 
     // Infinite scroll logic

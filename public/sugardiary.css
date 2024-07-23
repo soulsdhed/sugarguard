@@ -16,22 +16,53 @@ html {
 }
 
 body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
-    border: 1px solid black; /* 테두리 설정 */
-    background-color: #ffffff; /* 배경색 설정 */
+    margin: 0;
+}
+
+#sugardiary-bar1 {
+    position: relative;
+    top: 2%;
+    margin-left: 30%;
+    margin-top: 20%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+#sugardiary-bar input[type="time"],
+#sugardiary-bar input[type="number"] {
+    width: 60%;
+    /* 입력 필드의 너비 조절 */
+    height: 30px;
+    /* 입력 필드의 높이 조절 */
+    font-size: 16px;
+    /* 입력 필드 안의 텍스트 크기 조절 */
+}
+
+#sugardiary-bar label {
+    font-size: 18px;
+    /* 레이블 텍스트 크기 조절 */
+    display: inline-block;
+    margin-bottom: 10px;
+    /* 레이블과 입력 필드 사이의 간격 조절 */
+}
+
+#sugardiary-html {
+    background-color: #C1C1C1;
+    height: 100vh;
+    border: 1px solid black;
     width: 90%;
     min-width: 480px;
     max-width: 480px;
-    
-    
-}
-#sugardiary-bar1{
+    min-height: 740px;
+    max-height: 740px;
+    /* 최소 높이를 설정하여 너무 작아지지 않게 함 */
     position: relative;
-    top: 20px;
-}
-
-#sugardiary-html{
-    background-color: gray;
 }
 
 .container {
@@ -39,20 +70,77 @@ body {
     color: #333;
     font-family: "Roboto", arial, sans-serif;
     font-size: 16px;
-    position: relative; /* 고정 위치 제거 */
-    margin: 20px 0; /* 여백 조정 */
-    margin-left: 250px;
-    margin-top: 520px;
+    position: relative;
+    /* 고정 위치 제거 */
+    margin: 2% 0;
+    /* 여백 조정 */
+    margin-left: 10%;
+    margin-top: 60%;
     border-radius: 30px;
 }
 
 
-/* dropdown list */
-.dropdown {
-    margin: 20px auto;
-    width: 300px;
-
+/* 혈당, 체중, 혈압 바*/
+.dropdown1 {
     position: relative;
+    width: 60%;
+    margin-bottom: 2%;
+}
+
+.dropdown1-button {
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #34495e;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    user-select: none;
+    position: relative;
+}
+
+.dropdown1-list {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    z-index: 10;
+    max-height: 150px;
+    overflow-y: auto;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+}
+
+.dropdown1-list.active {
+    display: block;
+}
+
+.dropdown1-list div {
+    padding: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.dropdown1-list div:hover {
+    background-color: #f0f0f0;
+}
+
+
+
+/* dropdown list 오른쪽 하단바*/
+
+.dropdown {
+    bottom: 5%;
+    right: 5%;
+    width: 90%;
+    max-width: 200px;
+
+    position: absolute;
     perspective: 800px;
 
     &.active {
@@ -82,41 +170,47 @@ body {
     }
 
     .dropdown-list li {
-        display: flex; /* 가로 방향으로 나열 */
-        justify-content: space-between; /* 양쪽 끝으로 배치 */
+        display: flex;
+        /* 가로 방향으로 나열 */
+        justify-content: space-between;
+        /* 양쪽 끝으로 배치 */
         list-style: none;
         position: absolute;
         top: 0;
         width: 100%;
         transition: transform 300ms ease;
     }
-    
+
     .item-description {
-        margin-left: 10px; /* 리스트와 글자 사이의 간격 */
-        color: #fff; /* 글자 색상 */
+        margin-left: 10px;
+        /* 리스트와 글자 사이의 간격 */
+        color: #fff;
+        /* 글자 색상 */
     }
-    
+
     .dropdown-list li:nth-child(1) {
         background-color: #1abc9c;
         z-index: 4;
         transform: translateY(0);
     }
-    
+
     .dropdown-list li:nth-child(2) {
         background-color: #3498db;
         z-index: 3;
         transform: translateY(3%);
     }
-    
+
     .dropdown-list li:nth-child(3) {
         background-color: #9b59b6;
         z-index: 2;
         transform: translateY(6%);
     }
+
     >span {
         border-radius: 30px;
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-        width: 230px;
+        width: 100%;
+        max-width: 230px;
         height: 60px;
         line-height: 60px;
         color: #fff;
@@ -124,7 +218,7 @@ body {
         letter-spacing: 2px;
         background: #34495e;
         display: block;
-        padding: 0 50px 0 30px;
+        padding: 0 20px;
         position: relative;
         z-index: 9999;
         cursor: pointer;
@@ -147,7 +241,6 @@ body {
             padding: 10px;
             height: 70%;
             line-height: 24px;
-            border-left: 1px solid #ddd;
         }
 
         &:active {
@@ -163,8 +256,9 @@ body {
 .dropdown-list {
     position: absolute;
     top: 0px;
-    width: 220px;
-    
+    width: 100%;
+    max-width: 220px;
+
 
     li {
         display: block;
@@ -197,8 +291,6 @@ body {
             transform: translateY(6%);
             border-radius: 30px;
         }
-
-
 
         span {
             box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);

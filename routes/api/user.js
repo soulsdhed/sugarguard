@@ -82,8 +82,14 @@ router.post("/", async (req, res, next) => {
     try {
         // password 암호화
         const cryptedPassword = await bcrypt.hash(password, 10);
-        const query = `
-            INSERT INTO MEMBER_TB (member_id, password, nickname, email, gender, birth_date, diabetes_type) 
+        const query = `INSERT INTO MEMBER_TB (
+                member_id, 
+                password, 
+                nickname, 
+                email, 
+                gender, 
+                birth_date, 
+                diabetes_type)
             VALUES (?, ?, ?, ?, ?, ?, ?);`;
         db.execute(
             query,
@@ -96,9 +102,9 @@ router.post("/", async (req, res, next) => {
                 birthDate,
                 diabetesType || null,
             ],
-            (err, result) => {
-                // sql error
-                if (err) {
+            (err, results) => {
+                // sql error 또는 등록되지 않은 경우
+                if (err || results.affectedRows < 1) {
                     return next({
                         code: "SERVER_INTERNAL_ERROR",
                     });
@@ -172,7 +178,7 @@ router.post("/login", (req, res, next) => {
             // 비밀번호 확인 성공
             // jwt 발급
             const user = {
-                userId: row.userId,
+                userId: row.member_id,
             };
             const accessToken = generateAccessToken(user);
             const refreshToken = generateRefreshToken(user);
@@ -363,7 +369,6 @@ router.patch("/", authenticateToken, (req, res, next) => {
     const query = `UPDATE MEMBER_TB
         SET ${updates.join(", ")}
         WHERE member_id = ?`;
-
     db.execute(query, params, (err, results) => {
         if (err) {
             return next({
@@ -372,7 +377,7 @@ router.patch("/", authenticateToken, (req, res, next) => {
         }
 
         // 존재하지 않는 유저
-        if (results.affectedRows <= 0) {
+        if (results.affectedRows < 1) {
             return next({
                 code: "USER_NOT_FOUND",
             });

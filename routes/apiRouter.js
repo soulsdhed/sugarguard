@@ -13,9 +13,9 @@ const chartRouter = require("./api/chart");
 router.use("/auth", authRouter);
 router.use("/users", userRouter);
 router.use("/recipes", recipeRouter);
-router.use("/exercise", excerciseRouter);
-router.use("/blood", bloodsugarRouter);
-router.use("/meal", mealRouter);
+router.use("/exercise-logs", excerciseRouter);
+router.use("/blood-sugar-logs", bloodsugarRouter);
+router.use("/meal-logs", mealRouter);
 router.use("/chart", chartRouter);
 
 module.exports = router;

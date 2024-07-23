@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const db = require("../../conf/db");
+const authenticateToken = require("../../middlewares/authenticateToken");
 
-router.get("/", (req, res) => {
+// TODO :
+// 차트 주별 월별
+router.get("/", authenticateToken, (req, res, next) => {
     //
 });
 

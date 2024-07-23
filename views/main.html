@@ -2,58 +2,82 @@
 <link rel="stylesheet" href="main.css" />
 <!-- icon이랑 today 삭제 -->
 <div id="content-main">
-    <h3 id="header">SugarGuard</h3>
     <!-- Header -->
+    <h2 id="header">SugarGuard</h2>
 
     <!-- 대형차트 -->
     <div class="divs" id="chart">
         <div class="chart-container">
             <!-- 차트 css를 위한 class : chart-container -->
-            <canvas id="mainChart1"></canvas>
+            <canvas id="mainChart2"></canvas>
         </div>
         <p id="chart-text">
-            <strong>내용입니다 여러분!</strong><br /><span
-                >부가설명입니다!</span
-            >
+            <strong>Big Chart</strong><br /><span>Details</span>
         </p>
     </div>
 
     <!-- 중앙 달력 -->
-    <div class="divs" id="calendar-container">
-        <div id="calendar-header">
-            <span id="calendar-year"></span>
-            <span id="calendar-month"></span>
-        </div>
+    <div id="calendar-header"></div>
+    <div id="calendar-container">
         <div id="calendar"></div>
     </div>
 
     <!-- 중앙 -->
-    <div class="content-row">
-        <!-- 운동량 그래프 -->
-        <div class="divs" id="exercise">
-            <div class="chart-container2">
-                <canvas id="mainChart2"></canvas>
+        <div class="block-container">
+
+
+            <div class="main-block"> <!-- flex 가로방향 -->
+                
+                <div class="sub-block"> <!-- flex 세로방향 -->
+                    <!-- 여기는 제목 -->
+                    <p class="ptag">소제목</p>
+                    <h3> 레시피추천</h3>
+                </div>
+                <div>
+                    <img id="main-recipe" src="main_recipe.png" alt="#">
+                </div>
             </div>
-        </div>
-
-
-
-
-        <!-- 기능 추가 예정 0723 -->
-        <div class="divs-col">
-            <!-- 레시피 추천 -->
-            <div class="divs" id="recipe">
-                <p>*1위 레시피</p>
+            <div class="main-block"> <!-- flex 가로방향 -->
+                
+                <div class="sub-block"> <!-- flex 세로방향 -->
+                    <!-- 여기는 제목 -->
+                    <p class="ptag">소제목</p>
+                    <h3> 당뇨일지</h3>
+                </div>
+                <div>
+                    <img id="main-diabetes" src="main-diabetes.png" alt="#">
+                </div>
             </div>
-
-            <!-- 당뇨 일기 -->
-            <div class="divs" id="diary">
-                <a href="#">Diary 바로가기</a>
+            <div class="main-block"> <!-- flex 가로방향 -->
+                
+                <div class="sub-block"> <!-- flex 세로방향 -->
+                    <!-- 여기는 제목 -->
+                    <p class="ptag">소제목</p>
+                    <h3> 운동일지 </h3>
+                </div>
+                <div>
+                    <img id="main-recipe" src="main_recipe.png" alt="#">
+                </div>
             </div>
+            <div class="main-block"> <!-- flex 가로방향 -->
+                <div class="sub-block"> <!-- flex 세로방향 -->
+                    <!-- 여기는 제목 -->
+                    <p class="ptag">소제목</p>
+                    <h3> 식사일지 </h3>
+                </div>
+                <div>
+                    <img id="main-recipe" src="main_recipe.png" alt="#">
+                </div>
+            </div>
+            <div style="height:5px"></div>
         </div>
     </div>
 </div>
+</div>
+</div>
 
+
+<!-- Script -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-gradient"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

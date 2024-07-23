@@ -17,15 +17,6 @@ const timeoutMiddleware = require("./middlewares/timeoutMiddleware");
 // express 설정
 const app = express();
 
-// api call 제한
-app.use(
-    rateLimit({
-        windowMs: 1 * 60 * 1000, // 1분
-        max: 10, // 최대 10개 요청
-        message: "API rate limit exceeded.",
-    })
-);
-
 // 타임 아웃 미들웨어 (5초)
 app.use(timeoutMiddleware(process.env.TIMEOUT));
 
@@ -59,6 +50,15 @@ app.use(express.static(__dirname + "/script")); //주상
 app.use(successHandler);
 
 app.use("/", mainRouter);
+// api call 제한
+app.use(
+    rateLimit({
+        windowMs: 1 * 60 * 1000, // 1분
+        max: 10, // 최대 10개 요청
+        message: "API rate limit exceeded.",
+    })
+);
+
 app.use("/api", apiRouter);
 
 // 에러 처리 미들웨어
@@ -67,4 +67,3 @@ app.use(errorHandler);
 app.listen(process.env.PORT, () => {
     console.log(`Port ${process.env.PORT} : Server Start`);
 });
-w

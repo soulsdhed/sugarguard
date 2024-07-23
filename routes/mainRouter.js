@@ -13,4 +13,12 @@ router.get("/login", (req, res) => {
     res.render("login");
 });//김진
 
+router.get("/recipe", (req, res) => {
+    res.render("recipe");
+});
+
+router.get("/sugardiary", (req, res) => {
+    res.render("sugardiary");
+});
+
 module.exports = router;

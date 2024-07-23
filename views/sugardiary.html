@@ -1,123 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "index.html" %}{% block content %}
+<link rel="stylesheet" href="sugardiary.css">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../public/sugardiary.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 추가 -->
-</head>
+{% block head %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 추가 -->
+{% endblock %}
 
-<body>
-    <div id="sugardiary-html">
-        <div id="sugardiary-bar">
-            <form action="" id="sugardiary-bar1">
-                <label for="time">시간</label>
-                <input type="time" id="time" step="60"><br>
-                <label for="blood-sugar">혈당</label>
-                <div class="dropdown1">
-                    <div class="dropdown1-button" id="blood-sugar-button">혈당 값을 선택하세요</div>
-                    <div class="dropdown1-list" id="blood-sugar-list"></div>
-                </div><br>
-                <label for="weight">체중</label>
-                <div class="dropdown1">
-                    <div class="dropdown1-button" id="weight-button">체중 값을 선택하세요</div>
-                    <div class="dropdown1-list" id="weight-list"></div>
-                </div><br>
-                <label for="blood-pressure">혈압</label>
-                <div class="dropdown1">
-                    <div class="dropdown1-button" id="blood-pressure-button">혈압 값을 선택하세요</div>
-                    <div class="dropdown1-list" id="blood-pressure-list"></div>
-                </div><br>
-            </form>
-        </div>
+<div id="header">
+    <div id="date" style="float: left;"></div>
+    <div id="time" style="float: right;"></div>
+    <div style="clear: both;"></div>
+</div>
 
-        <div class="container">
-            <div class="dropdown">
-                <span class="selLabel">
-                    <h1>+</h1>
-                </span>
-                <input type="hidden" name="cd-dropdown">
-                <ul class="dropdown-list">
-                    <li data-value="1">
-                        <span>운동 기록</span>
-                    </li>
-                    <li data-value="2">
-                        <span>식사 혈당 기록</span>
-                    </li>
-                    <li data-value="3">
-                        <span>혈당 기록</span>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-
+<div id="sugardiary_main">
+    <div id="sugardiary-bar">
+        <form action="" id="sugardiary-bar1">
+            <label for="time">시간</label>
+            <input type="time" id="time" step="60"><br>
+            <label for="blood-sugar">혈당</label>
+            <div class="dropdown1">
+                <div class="dropdown1-button" id="blood-sugar-button">혈당 값을 선택하세요</div>
+                <div class="dropdown1-list" id="blood-sugar-list"></div>
+            </div><br>
+            <label for="blood-pressure">혈압</label>
+            <div class="dropdown1">
+                <div class="dropdown1-button" id="blood-pressure-button">혈압 값을 선택하세요</div>
+                <div class="dropdown1-list" id="blood-pressure-list"></div>
+            </div><br>
+            <label for="weight">체중</label>
+            <div class="dropdown1">
+                <div class="dropdown1-button" id="weight-button">체중 값을 선택하세요</div>
+                <div class="dropdown1-list" id="weight-list"></div>
+            </div><br>
+        </form>
     </div>
-    <script>
-        $(document).ready(function () {
-            $(".selLabel").click(function () {
-                $('.dropdown').toggleClass('active');
-            });
 
-            $(".dropdown-list li").click(function () {
-                $('.selLabel').text($(this).text());
-                $('.dropdown').removeClass('active');
-                $('.selected-item p span').text($('.selLabel').text());
-            });
-        });
+    <div class="container">
+        <div class="dropdown">
+            <span class="selLabel">
+                <h1>+</h1>
+            </span>
+            <input type="hidden" name="cd-dropdown">
+            <ul class="dropdown-list">
+                <li data-value="1">
+                    <span>운동 기록</span>
+                </li>
+                <li data-value="2">
+                    <span>식사 혈당 기록</span>
+                </li>
+                <li data-value="3">
+                    <span>혈당 기록</span>
+                </li>
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const createOptions = (min, max, step) => {
-                let options = '';
-                for (let i = min; i <= max; i += step) {
-                    options += `<div data-value="${i}">${i}</div>`;
-                }
-                return options;
-            };
+            </ul>
+        </div>
+    </div>
 
-            const bloodSugarButton = document.getElementById('blood-sugar-button');
-            const bloodSugarList = document.getElementById('blood-sugar-list');
-            bloodSugarList.innerHTML = createOptions(40, 250, 1);
-
-            const weightButton = document.getElementById('weight-button');
-            const weightList = document.getElementById('weight-list');
-            weightList.innerHTML = createOptions(20, 200, 1);
-
-            const bloodPressureButton = document.getElementById('blood-pressure-button');
-            const bloodPressureList = document.getElementById('blood-pressure-list');
-            bloodPressureList.innerHTML = createOptions(40, 250, 1);
-
-            const toggleDropdown = (button, list) => {
-                list.classList.toggle('active');
-            };
-
-            const selectOption = (button, list) => {
-                list.addEventListener('click', function (e) {
-                    if (e.target && e.target.nodeName === 'DIV') {
-                        button.textContent = e.target.textContent;
-                        list.classList.remove('active');
-                    }
-                });
-            };
-
-            bloodSugarButton.addEventListener('click', function () {
-                toggleDropdown(bloodSugarButton, bloodSugarList);
-            });
-            selectOption(bloodSugarButton, bloodSugarList);
-
-            weightButton.addEventListener('click', function () {
-                toggleDropdown(weightButton, weightList);
-            });
-            selectOption(weightButton, weightList);
-
-            bloodPressureButton.addEventListener('click', function () {
-                toggleDropdown(bloodPressureButton, bloodPressureList);
-            });
-            selectOption(bloodPressureButton, bloodPressureList);
-        });
-    </script>
-</body>
-
-</html>
+</div>
+<script src="sugardiary.js"></script>
+{% endblock %}

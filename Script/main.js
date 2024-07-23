@@ -71,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", () => {
     const ctx = document.getElementById("mainChart2").getContext("2d");
 
-    // 오늘 하루의 소모한 칼로리 데이터를 생성
     const timeLabels = [
         "06:00",
         "09:00",
@@ -81,21 +80,25 @@ document.addEventListener("DOMContentLoaded", () => {
         "21:00",
         "24:00",
     ];
-    const caloriesBurned = [300, 430, 450, 740, 800, 1200, 2000]; // 예시 데이터
+    const caloriesBurned = [300, 430, 450, 740, 800, 1200, 2000];
+
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, "rgba(75, 192, 192, 0.4)");
+    gradient.addColorStop(1, "rgba(75, 192, 192, 0)");
 
     const data = {
         labels: timeLabels,
         datasets: [
             {
-                label: "",
                 data: caloriesBurned,
                 fill: true,
-                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                backgroundColor: gradient,
                 borderColor: "rgba(75, 192, 192, 1)",
                 pointBackgroundColor: "rgba(75, 192, 192, 1)",
                 pointBorderColor: "#fff",
                 pointHoverBackgroundColor: "#fff",
                 pointHoverBorderColor: "rgba(75, 192, 192, 1)",
+                tension: 0.4,
             },
         ],
     };
@@ -109,15 +112,47 @@ document.addEventListener("DOMContentLoaded", () => {
             scales: {
                 y: {
                     beginAtZero: true,
+                    grid: {
+                        display: false, // y축 그리드 선 제거
+                    },
+                    ticks: {
+                        color: "#000",
+                    },
+                },
+                x: {
+                    grid: {
+                        display: false, // x축 그리드 선 제거
+                    },
+                    ticks: {
+                        color: "#000",
+                    },
                 },
             },
             plugins: {
-                filler: {
-                    propagate: false,
+                legend: {
+                    display: false, // 범례 숨기기
+                },
+                tooltip: {
+                    backgroundColor: "rgba(0,0,0,0.7)",
+                    titleColor: "#000",
+                    bodyColor: "#000",
+                    cornerRadius: 4,
                 },
             },
             interaction: {
                 intersect: false,
+                mode: "index",
+            },
+            elements: {
+                point: {
+                    radius: 5,
+                    hoverRadius: 7,
+                    hoverBorderWidth: 3,
+                },
+            },
+            animation: {
+                duration: 1500,
+                easing: "easeInOutQuart",
             },
         },
     };

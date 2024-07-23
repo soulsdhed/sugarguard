@@ -195,7 +195,6 @@ router.get("/recommend", (req, res, next) => {
     });
 });
 
-// TODO :
 // 레시피 등록
 router.post("/", authenticateToken, (req, res, next) => {
     // 요리 인원수 : 1인분, 2인분, 3인분, 4인분, 5인분, 6인분이상
@@ -253,12 +252,85 @@ router.post("/", authenticateToken, (req, res, next) => {
             member_id) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
 
-    db.execute();
+    db.execute(
+        query,
+        [
+            recipe_name,
+            cooking_method,
+            meal_category,
+            ingredient_category,
+            dish_type,
+            instructions,
+            ingredients,
+            description,
+            photo_url,
+            recipe_amount,
+            recipe_time,
+            recipe_difficult,
+            userId,
+        ],
+        (err, results) => {
+            if (err) {
+                return next({
+                    code: "SERVER_INTERNAL_ERROR",
+                });
+            }
+
+            // 레시피 등록 성공
+            return res.success({
+                userId: userId,
+                recipe: {
+                    recipe_name: recipe_name,
+                    cooking_method: cooking_method,
+                    meal_category: meal_category,
+                    ingredient_category: ingredient_category,
+                    dish_type: dish_type,
+                    instructions: instructions,
+                    ingredients: ingredients,
+                    description: description,
+                    photo_url: photo_url,
+                    recipe_amount: recipe_amount,
+                    recipe_time: recipe_time,
+                    recipe_difficult: recipe_difficult,
+                },
+            });
+        }
+    );
 });
 
 // 레시피 승인
-router.post("/approval", (req, res, next) => {
-    //
+router.patch("/", authenticateToken, (req, res, next) => {
+    const { recipe_id } = req.body;
+    const { userId } = req.user;
+
+    // admin 확인 (일단 이렇게)
+    if (userId !== "Admin") {
+        return next({
+            code: "AUTH_UNAUTHORIZED",
+        });
+    }
+
+    // update
+    const query = `UPDATE RECIPE_TB SET approved = TRUE WHERE recipe_id = ?`;
+    db.execute(query, [recipe_id], (err, results) => {
+        if (err) {
+            return next({
+                code: "SERVER_INTERNAL_ERROR",
+            });
+        }
+
+        // 존재하지 않는 레시피
+        if (results.affectedRows <= 0) {
+            return next({
+                code: "DATA_NOT_FOUND",
+            });
+        }
+
+        return res.success({
+            userId: userId,
+            recipe_id: recipe_id,
+        });
+    });
 });
 
 module.exports = router;

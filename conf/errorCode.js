@@ -8,6 +8,11 @@ const ERROR_CODES = {
         statusCode: 401,
         message: "Invalid ID or password.",
     },
+    // data
+    DATA_NOT_FOUND: {
+        statusCode: 404,
+        message: "Data not found.",
+    },
     // auth
     AUTH_INVALID_TOKEN: {
         statusCode: 401,

@@ -18,7 +18,7 @@
     width: 100%; /* 화면 너비의 80% */
     padding: 2%; /* 내부 여백 설정 */
     margin: 2% 0; /* 상하 여백 설정 */
-    border-radius: 8px; /* 모서리 둥글게 */
+    border-radius: 20px; /* 모서리 둥글게 */
 }
 
 .content-row {
@@ -28,40 +28,12 @@
     gap: 5%;
 }
 
-.divs-col {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 50%;
-}
-
 /* Div 태그들 (5) */
 #chart {
-    background-color: rgb(173, 216, 230);
+    background-color: #FFFFFF;
     margin-top: 50px;
     height: 30%;
-}
-
-#exercise {
-    background-color: rgb(216, 255, 216);
-    height: 100%;
-    margin-left: 0%;
-    width: 60%;
-}
-
-#recipe {
-    background-color: green;
-    height: calc(50% - 20px);
-    margin-bottom: 20px;
-    width: 100%;
-    margin-left: 0px;
-}
-
-#diary {
-    background-color: rgb(255, 243, 245);
-    height: calc(50% - 20px);
-    width: 100%;
-    margin-left: 0px;
+    padding: 5%
 }
 
 /* mainChart */

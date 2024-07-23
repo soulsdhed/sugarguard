@@ -2,19 +2,17 @@
 <link rel="stylesheet" href="main.css" />
 <!-- icon이랑 today 삭제 -->
 <div id="content-main">
-    <h3 id="header">SugarGuard</h3>
     <!-- Header -->
+    <h3 id="header">SugarGuard</h3>
 
     <!-- 대형차트 -->
     <div class="divs" id="chart">
         <div class="chart-container">
             <!-- 차트 css를 위한 class : chart-container -->
-            <canvas id="mainChart1"></canvas>
+            <canvas id="mainChart2"></canvas>
         </div>
         <p id="chart-text">
-            <strong>내용입니다 여러분!</strong><br /><span
-                >부가설명입니다!</span
-            >
+            <strong>Big Chart</strong><br /><span>Details</span>
         </p>
     </div>
 
@@ -22,35 +20,36 @@
     <div id="calendar-container">
         <div id="calendar"></div>
     </div>
-    
 
     <!-- 중앙 -->
-    <div class="content-row">
-        <!-- 운동량 그래프 -->
-        <div class="divs" id="exercise">
-            <div class="chart-container2">
-                <canvas id="mainChart2"></canvas>
-            </div>
-        </div>
-
-
-
-
-        <!-- 기능 추가 예정 0723 -->
-        <div class="divs-col">
+        <div id="block-container">
             <!-- 레시피 추천 -->
-            <div class="divs" id="recipe">
-                <p>*1위 레시피</p>
+            <div id="recipe">
+                <span>우리가 도와줄게요</span><p>당뇨에 좋은 레시피<br> 추천</p>
             </div>
 
-            <!-- 당뇨 일기 -->
-            <div class="divs" id="diary">
-                <a href="#">Diary 바로가기</a>
+            <!-- 당뇨 일지 -->
+            <div id="diabetes-log">
+
             </div>
+
+            <!-- 운동 일지 -->
+            <div id="exercise-log">
+
+            </div>
+
+            <!-- 식사 일지 -->
+            <div id="meals-log">
+
+            </divclass=>
         </div>
     </div>
 </div>
+</div>
+</div>
 
+
+<!-- Script -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-gradient"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

@@ -8,6 +8,7 @@ const excerciseRouter = require("./api/exerciselog");
 const bloodsugarRouter = require("./api/bloodlog");
 const mealRouter = require("./api/meallog");
 const authRouter = require("./api/auth");
+const chartRouter = require("./api/chart");
 
 router.use("/auth", authRouter);
 router.use("/users", userRouter);
@@ -15,5 +16,6 @@ router.use("/recipes", recipeRouter);
 router.use("/exercise", excerciseRouter);
 router.use("/blood", bloodsugarRouter);
 router.use("/meal", mealRouter);
+router.use("/chart", chartRouter);
 
 module.exports = router;

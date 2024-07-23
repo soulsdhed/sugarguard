@@ -1,25 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../style/login.css">
-</head>
-<body>
-    <form action="">
+{% extends "index.html" %}{% block content %}
+<link rel="stylesheet" href="login.css">
+        <!-- 기본 로그인 입력 -->
     <div id="login_main">
-        <input type="text"><br>
-        <input type="password"><br>
-        <a href="#">아이디/비밀번호 찾기</a>
-        <a href="#">회원가입</a><br>
+        <div id="login_input">
+            <br>
+            <img src="../img/logo.png" alt="">
+            <input type="text" placeholder="아이디 또는 이메일"><br>
+            <input type="password" placeholder="비밀번호"><br>
+            <input type="submit" value="로그인">
+        </div>
+        <div>
+            <b><a href="#">아이디/비밀번호 찾기</a></b>
+            <b><a href="#">회원가입</a><br></b>
+        </div>
     </div>
-    <a href="#">
-        <img src="../img/kakao_login_medium_wide.png" alt="">
-    </a>
-    <a href="#">
-        <img src="" alt="">
-    </a>
-    </form>
-</body>
-</html>
+    {% endblock %}

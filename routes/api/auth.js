@@ -3,10 +3,7 @@ const router = express.Router();
 const db = require("../../conf/db");
 
 // jwt
-const {
-    accessTokenExpiresIn,
-    generateAccessToken,
-} = require("../../utils/jwt");
+const { generateAccessToken } = require("../../utils/jwt");
 
 // 엑세스 토큰 재발행
 router.post("/token", (req, res, next) => {
@@ -38,14 +35,15 @@ router.post("/token", (req, res, next) => {
         }
 
         // 새로운 accessToken 발행
-        const user = {
-            userId: row.member_id,
-        };
-        const accessToken = generateAccessToken(user);
-        res.cookie("accessToken", accessToken, {
-            httpOnly: true,
-            maxAge: accessTokenExpiresIn * 1000,
-        });
+        // const user = {
+        //     userId: row.member_id,
+        // };
+        // const accessToken = generateAccessToken(user);
+        // res.cookie("accessToken", accessToken, {
+        //     httpOnly: true,
+        //     maxAge: accessTokenExpiresIn * 1000,
+        // });
+        const accessToken = generateAccessToken(res, row.member_id);
 
         // client에 응답 (token 재발행 success)
         return res.success({

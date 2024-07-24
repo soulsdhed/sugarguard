@@ -1,0 +1,36 @@
+{% extends "index.html" %}{% block content %}
+<link rel="stylesheet" href="recipe_details.css" />
+<div id="recipe">
+    <!-- Photo -->
+    <div class="photo">
+        <img id="photo" alt="Recipe Photo" />
+    </div>
+
+    <!-- Title -->
+
+    <div class="title">
+        <p id="recipe_name"><strong></strong></p>
+    </div>
+
+    <!-- RowFlex(3) -->
+    <div class="rowflex">
+        <div>★별점</div>
+        <div>⏰소요시간</div>
+        <div>👍칼로리</div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <p id="description"></p>
+    </div>
+
+    <!-- ingredient -->
+    <p id="description"></p>
+    <h2 id="ingredient_title"></h2>
+    <div id="ingredients_table"></div>
+    <h2>Instructions</h2>
+    <ol id="instructions"></ol>
+    </div>
+</div>
+<script src="recipe_details.js"></script>
+{% endblock %}

@@ -1,73 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "index.html" %}{% block content %}
+<link rel="stylesheet" href="recipe.css">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SugarGuard</title>
-    <link rel="icon" href="/Logo.ico">
-    <!-- <link rel="stylesheet" href="/style/index.css"> -->
-    <link rel="stylesheet" href="/style/recipe.css">
-    <!-- <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script> -->
-</head>
 
-<body>
-    <div id="document">
-        <div id="content">
-            <h4 id="recipe-title">Sugar Guard</h4>
-            <div id="recipe-name">
-                <h2>식재료</h2>
-                <a href="#">돼지</a>
-                <a href="#">소</a>
-                <a href="#">닭</a>
-                <a href="#">달걀</a>
-                <a href="#">양파</a>
-                <a href="#">당근</a>
-                <a href="#">감자</a>
-                <a href="#">파</a>
-                <a href="#">양배추</a>
-                <a href="#">두부</a>
-                <a href="#">콩</a>
-                <a href="#">아몬드</a>
-                <a href="#">오이</a>
-                <a href="#">사과</a>
-                <a href="#">새우</a>
-                <a href="#">연어</a>
-                <h2>조미료</h2>
-                <a href="#">조미료</a>
-                <a href="#">조미료</a>
-                <a href="#">조미료</a>
-                <a href="#">조미료</a>
-                <a href="#">조미료</a>
-                <a href="#">조미료</a>
-                <a href="#">조미료</a>
-                <a href="#">조미료</a>
-                <a href="#">조미료</a>
-                <a href="#">조미료</a>
-                <a href="#">조미료</a>
-                <a href="#">조미료</a>
-                <a href="#">조미료</a>
-                <a href="#">조미료</a>
-                <a href="#">조미료</a>
-                <a href="#">조미료</a>
-            </div>
-            <div id="recipe-bar">
-                <form action="" class="recipe-bar1">
-                    <input type="text" id="search-input" name="recipe-search-bar">
-                    <input type="submit" value="검색">
-                </form>
-            </div>
-
-        </div>
-        <!-- <div id="navBar">
-            <a href="#" id="nav1"><ion-icon name="restaurant-outline" size="small"></ion-icon></a> 
-            <a href="#" id="nav2"><ion-icon name="search-outline" size="small"></ion-icon></a>
-            <a href="#" id="nav3"><ion-icon name="home-outline" size="small"></ion-icon></a> 
-            <a href="#" id="nav4"><ion-icon name="create-outline" size="small"></ion-icon></a>
-            <a href="#" id="nav5"><ion-icon name="person-outline" size="small"></ion-icon></a>
-        </div> -->
+<div id="content">
+    <div id="recipe-title">
+        <a href="#" id="recipe-page-background"><img src="right.png" alt=""><br></a>
+        <h4>레시피 페이지</h4>
     </div>
-</body>
+    <div id="recipe-name">
+        <h2>육류</h2>
+        <a href="#"><img src="beef.png" alt=""><br><span>소</span></a>
+        <a href="#"><img src="pig.png" alt=""><br><span>돼지</span></a>
+        <a href="#"><img src="chiken.png" alt=""><br><span>닭</span></a>
+        <a href="#"><img src="duck.png" alt=""><br><span>오리고기</span></a>
+        <a href="#"><img src="sheep.png" alt=""><br><span>양고기</span></a>
+        <a href="#"><img src="mackerel.png" alt=""><br><span>고등어</span></a>
+        <a href="#"><img src="salmon.png" alt=""><br><span>연어</span></a>
+        <a href="#"><img src="tuna.png" alt=""><br><span>참치</span></a>
+        <h2>야채</h2>
+        <a href="#"><img src="onion.png" alt=""><br><span>양파</span></a>
+        <a href="#"><img src="carrot.png" alt=""><br><span>당근</span></a>
+        <a href="#"><img src="tomato.png" alt=""><br><span>토마토</span></a>
+        <a href="#"><img src="mushiroom.png" alt=""><br><span>버섯</span></a>
+        <a href="#"><img src="cabbage.png" alt=""><br><span>양배추</span></a>
+        <a href="#"><img src="cucumber.png" alt=""><br><span>오이</span></a>
+        <a href="#"><img src="potato.png" alt=""><br><span>감자</span></a>
+        <a href="#"><img src="sweetpotato.png" alt=""><br><span>고구마</span></a>
+        <a href="#"><img src="garlic.png" alt=""><br><span>마늘</span></a>
+        <a href="#"><img src="broccoli.png" alt=""><br><span>브로콜리</span></a>
+        <a href="#"><img src="greenonion.png" alt=""><br><span>대파</span></a>
+        <a href="#"><img src="radish.png" alt=""><br><span>무</span></a>
+        <h2>견과류</h2>
+        <a href="#"><img src="peanut.png" alt=""><br><span>땅콩</span></a>
+        <a href="#"><img src="almond.png" alt=""><br><span>아몬드</span></a>
+        <a href="#"><img src="walnut.png" alt=""><br><span>호두</span></a>
+        <a href="#"><img src="pistachio.png" alt=""><br><span>피스타치오</span></a>
+        <h2>조미료</h2>
+        <a href="#"><img src="salt.png" alt=""><br><span>소금</span></a>
+        <a href="#"><img src="pepper.png" alt=""><br><span>후추</span></a>
+        <a href="#"><img src="soysauce.png" alt=""><br><span>간장</span></a>
+        <a href="#"><img src="soybeanpaste.png" alt=""><br><span>된장</span></a>
+        <a href="#"><img src="redpepper.png" alt=""><br><span>고추가루</span></a>
+        <a href="#"><img src="vinegar.png" alt=""><br><span>식초</span></a>
+        <a href="#"><img src="oliveoile.png" alt=""><br><span>올리브유</span></a>
+        <a href="#"><img src="herb.png" alt=""><br><span>허브</span></a>
+        <h2>조리양</h2>
+        <a href="#"><img src="1.png" alt=""><br><span>1인분</span></a>
+        <a href="#"><img src="2.png" alt=""><br><span>2인분</span></a>
+        <a href="#"><img src="3.png" alt=""><br><span>3인분</span></a>
+        <a href="#"><img src="4.png" alt=""><br><span>4인분이상</span></a>
+        <h2>요리시간</h2>
+        <a href="#"><img src="15.png" alt=""><br><span>15분</span></a>
+        <a href="#"><img src="30.png" alt=""><br><span>30분</span></a>
+        <a href="#"><img src="60.png" alt=""><br><span>60분</span></a>
+        <a href="#"><img src="120.png" alt=""><br><span>2시간이상</span></a>
+        <h2>요리난이도</h2>
+        <a href="#"><img src="" alt=""><br><span>아무나</span></a>
+        <a href="#"><img src="" alt=""><br><span>초급</span></a>
+        <a href="#"><img src="" alt=""><br><span>중급</span></a>
+        <a href="#"><img src="" alt=""><br><span>고급</span></a>
+    </div>
+    <div id="recipe-bar">
+        <form action="" class="recipe-bar1">
+            <input type="text" id="search-input" name="recipe-search-bar">
+            <input type="submit" value="검색">
+        </form>
+    </div>
+</div>
 
-</html>
+{% endblock %}

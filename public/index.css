@@ -29,6 +29,7 @@ body, html {
     margin: 0 auto; /* 중앙 정렬 */
     padding: 0 10px; /* 좌우 여백을 10px로 설정 */
     padding-bottom: 60px; /* 네비게이션 바와의 여백을 60px로 설정 */
+    word-break: break-all; /* 페이지를 넘어가는 글자 없애도록 설정 */
 }
 
 #navBar {

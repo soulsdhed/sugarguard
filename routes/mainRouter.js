@@ -20,5 +20,8 @@ router.get("/recipe", (req, res) => {
 router.get("/sugardiary", (req, res) => {
     res.render("sugardiary");
 });
+router.get("/recipe_details", (req,res)=> {
+    res.render("recipe_details")
+})
 
 module.exports = router;

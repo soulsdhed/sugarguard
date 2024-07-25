@@ -2,21 +2,31 @@ const express = require("express");
 const router = express.Router();
 const db = require("../../conf/db");
 const authenticateToken = require("../../middlewares/authenticateToken");
+const { isValidURL } = require("../../utils/validation");
+require("dotenv").config();
 
 // 레시피 추천 (jwt - 회원)
 router.get("/", authenticateToken, (req, res, next) => {
-    const {
+    let {
         have,
         prefer,
         dislike,
         amount,
         time,
         difficult,
-        count: queryCount = 10,
+        photo_url,
+        count = 10,
     } = req.query;
 
+    // photo_url 검사 (key 형태로 넘어오면 url을 재조립해준다)
+    if (!isValidURL(photo_url)) {
+        photo_url = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${photo_url}`;
+    }
+
+    // TODO : Flask 서버로 해당 내용을 보내서, have 추출
+
     // max count : 10
-    const count = Math.min(parseInt(queryCount), 10);
+    count = Math.min(parseInt(count), 10);
 
     // 재료를 ,를 기준으로 분리 (공백 제거)
     const haveIngredients = have

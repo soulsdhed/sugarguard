@@ -60,6 +60,8 @@ router.post(
         const uniqueFileName = `${uuidv4()}-${fileName}`;
         const key = `${folder}/${uniqueFileName}`;
 
+        // console.log(fileName, fileType);
+
         // upload type 종류 제한
         if (
             type !== "recipe" &&

@@ -3,24 +3,30 @@
 <link rel="stylesheet" href="join.css">
 
 <div id="join_main">
-<form id="myForm">
+    <div id="join_title">
+        <input type="submit" value="<" class="pass_button">
+        <input type="submit" value=">" class="pass_button" onclick="handleButtonClick(event)">
+    </div>
+<div id="myForm">
+        <br>
         <h2 id="join_change">건강관리 이제 시작입니다! <br>아이디를 입력해주세요.</h2>
         <table id="join_new_input">
                 
         </table>
-    <table>
-        <tr>
-            <td><br><br></td>
-        </tr>
-        <tr>
-            <td><input type="text" id="join_input" placeholder="아이디"></td>
-        </tr>
-        <tr>
-            <td><br><br></td>
-        </tr>
-    </table>
-</form>
-    <input type="submit" value="다음" id="pass_button" onclick="handleButtonClick(event)">
+        <table>
+            <tr>
+                <td><br><br></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="join_input" placeholder="아이디"></td>
+            </tr>
+            <tr>
+                <td><br><br></td>
+            </tr>
+        </table>
+    
+</ㅇ>
+    
 </div>
 
 <script src="join.js"></script>

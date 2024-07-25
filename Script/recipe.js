@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
-
 // 카메라 앱 작동 (버튼)
 document.getElementById("recipe-camera").addEventListener("click", (e) => {
     e.preventDefault();

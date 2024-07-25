@@ -1,0 +1,4 @@
+Flask
+OpenAI
+python-dotenv
+waitress

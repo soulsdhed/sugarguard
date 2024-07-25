@@ -4,6 +4,8 @@ const cookieParser = require("cookie-parser"); // 쿠키
 // const session = require("express-session"); // 세션 + 주상이 수정함
 // const fileStore = require("session-file-store")(session); // 세션 저장소 + 주상이 수정함
 const rateLimit = require("express-rate-limit");
+// const { spawn } = require('child_process');
+// const path = require('path');
 
 // router
 const mainRouter = require("./routes/mainRouter");
@@ -16,6 +18,7 @@ const timeoutMiddleware = require("./middlewares/timeoutMiddleware");
 
 // express 설정
 const app = express();
+let flaskProcess;
 
 // 타임 아웃 미들웨어 (5초)
 app.use(timeoutMiddleware(process.env.TIMEOUT));
@@ -59,7 +62,7 @@ app.use("/", mainRouter);
 app.use(
     rateLimit({
         windowMs: 1 * 60 * 1000, // 1분
-        max: 10, // 최대 10개 요청
+        max: 100, // 최대 100개 요청
         message: "API rate limit exceeded.",
     })
 );
@@ -70,4 +73,36 @@ app.use(errorHandler);
 
 app.listen(process.env.PORT, () => {
     console.log(`Port ${process.env.PORT} : Server Start`);
+
+    // // Flask 서버를 가상 환경에서 실행
+    // const venvPath = path.join(__dirname, './flask/venv/Scripts');
+    // const flaskAppPath = path.join(__dirname, './flask/app.py');
+
+    // // Waitress를 사용하여 Flask 서버 실행
+    // flaskProcess = spawn(path.join(venvPath, 'python'), [flaskAppPath]);
+    // console.log(`Port ${process.env.FLASK_PORT} : Flask Server Start`);
+
+    // flaskProcess.stdout.on('data', (data) => {
+    //     console.log(`Flask stdout: ${data}`);
+    // });
+
+    // flaskProcess.stderr.on('data', (data) => {
+    //     console.error(`Flask stderr: ${data}`);
+    // });
+
+    // flaskProcess.on('close', (code) => {
+    //     console.log(`Flask process exited with code ${code}`);
+    // });
 });
+
+// process.on('SIGINT', () => {
+//     console.log('Stopping servers...');
+//     if (flaskProcess) flaskProcess.kill();
+//     process.exit();
+// });
+
+// process.on('SIGTERM', () => {
+//     console.log('Stopping servers...');
+//     if (flaskProcess) flaskProcess.kill();
+//     process.exit();
+// });

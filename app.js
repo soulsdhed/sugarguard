@@ -18,9 +18,9 @@ const timeoutMiddleware = require("./middlewares/timeoutMiddleware");
 
 // express 설정
 const app = express();
-let flaskProcess;
+// let flaskProcess;
 
-// 타임 아웃 미들웨어 (5초)
+// 타임 아웃 미들웨어 (20초 -> 플라스크 응답이 너무 느리다...)
 app.use(timeoutMiddleware(process.env.TIMEOUT));
 
 app.set("view engine", "html");

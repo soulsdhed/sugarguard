@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
+const axios = require('axios');
 const db = require("../../conf/db");
 const authenticateToken = require("../../middlewares/authenticateToken");
 const { isValidURL } = require("../../utils/validation");
 require("dotenv").config();
 
 // 레시피 추천 (jwt - 회원)
-router.get("/", authenticateToken, (req, res, next) => {
+router.get("/", authenticateToken, async (req, res, next) => {
     let {
         have,
         prefer,
@@ -23,7 +24,20 @@ router.get("/", authenticateToken, (req, res, next) => {
         photo_url = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${photo_url}`;
     }
 
-    // TODO : Flask 서버로 해당 내용을 보내서, have 추출
+    // Flask 서버로 해당 내용을 보내서, have 추출
+    try {
+        const response = await axios.post('http://localhost:5000/api/ingredients-detection', {
+            image_url: photo_url
+        });
+        // console.log(response);
+
+        // have를 사진에서 추출
+        have = response.data.ingredients_names;
+    } catch (e) {
+        return next({
+            code: "SERVER_SERVICE_UNAVAILABLE"
+        })
+    }
 
     // max count : 10
     count = Math.min(parseInt(count), 10);

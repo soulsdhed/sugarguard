@@ -6,7 +6,6 @@ const moment = require("moment-timezone");
 
 // jwt
 const {
-    accessTokenExpiresIn,
     refreshTokenExpiresIn,
     generateAccessToken,
     generateRefreshToken,
@@ -134,7 +133,16 @@ router.post("/login", (req, res, next) => {
     const { userId, password } = req.body;
 
     // query
-    const query = `SELECT member_id, password, nickname, email, gender, birth_date, diabetes_type, deleted_at
+    const query = `
+        SELECT 
+            member_id, 
+            password, 
+            nickname, 
+            email, 
+            gender, 
+            birth_date, 
+            diabetes_type, 
+            deleted_at
         FROM MEMBER_TB 
         WHERE member_id = ?`;
 
@@ -177,11 +185,23 @@ router.post("/login", (req, res, next) => {
 
             // 비밀번호 확인 성공
             // jwt 발급
-            const user = {
-                userId: row.member_id,
-            };
-            const accessToken = generateAccessToken(user);
-            const refreshToken = generateRefreshToken(user);
+            const accessToken = generateAccessToken(res, row.member_id);
+            const refreshToken = generateRefreshToken(res, row.member_id);
+
+            // const user = {
+            //     userId: row.member_id,
+            // };
+            // const accessToken = generateAccessToken(user);
+            // const refreshToken = generateRefreshToken(user);
+            // // 쿠키에 저장
+            // res.cookie("accessToken", accessToken, {
+            //     httpOnly: true,
+            //     maxAge: accessTokenExpiresIn * 1000,
+            // });
+            // res.cookie("refreshToken", refreshToken, {
+            //     httpOnly: true,
+            //     maxAge: refreshTokenExpiresIn * 1000,
+            // });
 
             // refresh token table에 저장
             const refreshTokenInsertQuery = `INSERT INTO REFRESH_TOKEN_TB 
@@ -203,16 +223,6 @@ router.post("/login", (req, res, next) => {
                     }
 
                     // 리프레쉬 토큰 추가 성공
-                    // 쿠키에 저장
-                    res.cookie("accessToken", accessToken, {
-                        httpOnly: true,
-                        maxAge: accessTokenExpiresIn * 1000,
-                    });
-                    res.cookie("refreshToken", refreshToken, {
-                        httpOnly: true,
-                        maxAge: refreshTokenExpiresIn * 1000,
-                    });
-
                     // client에 응답 (login success)
                     return res.success({
                         userId: row.userId,
@@ -396,7 +406,6 @@ router.post("/logout", authenticateToken, (req, res, next) => {
     const query = `DELETE FROM REFRESH_TOKEN_TB WHERE member_id = ?`;
     db.execute(query, [userId], (err, results) => {
         if (err) {
-            console.log(err);
             return next({
                 code: "SERVER_INTERNAL_ERROR",
             });

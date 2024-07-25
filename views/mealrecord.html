@@ -1,0 +1,19 @@
+{% extends "index.html" %}{% block content %}
+<link rel="stylesheet" href="mealrecord.css">
+
+<div id="mealrecord">
+    <div id="time-meal">
+        <a href="" id="breakfast"><span>아침</span></a>
+        <a href="" id="lunch"><span>점심</span></a>
+        <a href="" id="dinner"><span>저녁</span></a>
+        <a href="" id="snack"><span>간식</span></a>
+    </div>
+    <div id="meal-information">
+        <input type="text" value="식사정보">
+    </div>
+    <div id="medicine">
+        <input type="text" value="약">
+        <input type="checkbox" id="checkbox" value="체크박스">
+    </div>
+</div>
+{% endblock %}

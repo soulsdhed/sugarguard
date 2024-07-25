@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>SugarGuard</title>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-gradient"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link rel="stylesheet" href="../index2.css" />
+        <link rel="stylesheet" href="../report.css" />
+        <link rel="shortcut icon" href="Logo.ico" />
+    </head>
+    <body>
+        <div id="document">
+            <p id="report-title">Stats</p>
+            <hr />
+            <!-- tab bar -->
+            <div class="tab">
+                <nav>
+                    <ul>
+                        <li class="active"><a href=""> WEEK </a></li>
+                        <li><a href=""> MONTH </a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="report-content">
+                <div id="content-result1">BC 20511</div>
+                <div id="container-result">
+                    <div id="content-result2">기원전</div>
+                    <div id="content-result3">20511년</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="Chart"></canvas>
+            </div>
+        </div>
+
+        <script src="../report.js"></script>
+    </body>
+</html>

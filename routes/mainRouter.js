@@ -16,6 +16,9 @@ router.get("/login", (req, res) => {
 router.get("/join", (req, res) => {
     res.render("join");
 });//김진
+router.get("/test", (req, res) => {
+    res.render("test");
+});//김진
 
 router.get("/recipe", (req, res) => {
     res.render("recipe");

@@ -1,6 +1,6 @@
 const express = require("express");
 const nunjucks = require("nunjucks");
-// const cookieParser = require("cookie-parser"); // 쿠키
+const cookieParser = require("cookie-parser"); // 쿠키
 // const session = require("express-session"); // 세션 + 주상이 수정함
 // const fileStore = require("session-file-store")(session); // 세션 저장소 + 주상이 수정함
 const rateLimit = require("express-rate-limit");
@@ -21,7 +21,6 @@ const app = express();
 app.use(timeoutMiddleware(process.env.TIMEOUT));
 
 app.set("view engine", "html");
-
 nunjucks.configure("views", {
     express: app,
     watch: true,
@@ -43,6 +42,10 @@ app.use(express.json());
 //         // },
 //     })
 // );
+
+// 쿠키
+app.use(cookieParser());
+
 app.use(express.static(__dirname + "/public")); //주상
 app.use(express.static(__dirname + "/script")); //주상
 app.use(express.static(__dirname + "/img")); //주상

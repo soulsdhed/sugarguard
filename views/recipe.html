@@ -1,6 +1,6 @@
 {% extends "index.html" %}{% block content %}
 <link rel="stylesheet" href="recipe.css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <div id="content">
     <div id="recipe-title">
@@ -44,7 +44,8 @@
         <a href="#" class="toggle-active"><img src="vinegar.png" alt=""><br><span>식초</span></a>
         <a href="#" class="toggle-active"><img src="oliveoile.png" alt=""><br><span>올리브유</span></a>
         <a href="#" class="toggle-active"><img src="herb.png" alt=""><br><span>허브</span></a>
-        <!-- {% if userId %} -->
+
+        <!-- % if userId % -->
         <h2>조리양</h2>
         <a href="#" class="toggle-active"><img src="1.png" alt=""><br><span>1인분</span></a>
         <a href="#" class="toggle-active"><img src="2.png" alt=""><br><span>2인분</span></a>
@@ -60,15 +61,19 @@
         <a href="#" class="toggle-active"><img src="easy.png" alt=""><br><span>초급</span></a>
         <a href="#" class="toggle-active"><img src="normal.png" alt=""><br><span>중급</span></a>
         <a href="#" class="toggle-active"><img src="hard.png" alt=""><br><span>고급</span></a>
-        <!-- {% endif %} -->
+        <!-- % endif % -->
     </div>
     <div id="recipe-bar">
-        <form action="" class="recipe-bar1">
-            <h4>추가사항</h4><input type="text" id="search-input" name="recipe-search-bar">
-            <input type="submit" value="검색" id="search-button">
-        </form>
+        <span>추가 재료</span>
+        <input type="text" name="" id="">
+        <button id="search-button">추천</button>
+        <!-- % if userId % -->
+        <button id="recipe-camera"><i class="fas fa-camera"></i></button>
+        <input type="file" accept="image/*" capture="camera" id="cameraInput">
+        <!-- % endif % -->
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="recipe.js"></script>
 
 {% endblock %}

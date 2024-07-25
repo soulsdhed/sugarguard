@@ -1,74 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let nav = document.querySelector("nav");
-    let line = document.createElement("div");
-    line.classList.add("line");
-
-    nav.appendChild(line);
-
-    let active = nav.querySelector(".active");
-    let pos = 0;
-    let wid = 0;
-
-    if (active) {
-        pos = active.offsetLeft;
-        wid = active.offsetWidth;
-        line.style.left = pos + "px";
-        line.style.width = wid + "px";
-    }
-
-    nav.querySelectorAll("ul li a").forEach(function (anchor) {
-        anchor.addEventListener("click", function (e) {
-            e.preventDefault();
-            let parent = anchor.parentElement;
-            if (
-                !parent.classList.contains("active") &&
-                !nav.classList.contains("animate")
-            ) {
-                nav.classList.add("animate");
-
-                let position = parent.offsetLeft;
-                let width = parent.offsetWidth;
-
-                nav.querySelectorAll("ul li").forEach(function (li) {
-                    li.classList.remove("active");
-                });
-
-                if (position >= pos) {
-                    line.style.transition = "width 0.3s";
-                    line.style.width = position - pos + width + "px";
-                    setTimeout(function () {
-                        line.style.transition = "width 0.15s, left 0.15s";
-                        line.style.width = width + "px";
-                        line.style.left = position + "px";
-                        setTimeout(function () {
-                            nav.classList.remove("animate");
-                        }, 150);
-                        parent.classList.add("active");
-                    }, 300);
-                } else {
-                    line.style.transition = "left 0.3s";
-                    line.style.left = position + "px";
-                    setTimeout(function () {
-                        line.style.transition = "width 0.15s";
-                        line.style.width = pos - position + wid + "px";
-                        setTimeout(function () {
-                            line.style.width = width + "px";
-                            nav.classList.remove("animate");
-                        }, 150);
-                        parent.classList.add("active");
-                    }, 300);
-                }
-
-                pos = position;
-                wid = width;
-            }
-        });
-    });
-});
-
-// Chart
-
-document.addEventListener("DOMContentLoaded", function () {
     // Navigation line animation
     let nav = document.querySelector("nav");
     let line = document.createElement("div");
@@ -156,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 {
                     label: "",
                     data: [200, 400, 600, 800, 100, 500, 700],
-                    backgroundColor: "black", // 더 진한 파란색으로 설정
+                    backgroundColor: "black",
                     borderColor: "rgba(0, 0, 255, 0.0)", // 투명한 테두리로 설정
                     borderWidth: 0, // 테두리 너비를 0으로 설정
                 },

@@ -13,6 +13,10 @@ router.get("/login", (req, res) => {
     res.render("login");
 });//김진
 
+router.get("/join", (req, res) => {
+    res.render("join");
+});//김진
+
 router.get("/recipe", (req, res) => {
     res.render("recipe");
 }); // 풍규

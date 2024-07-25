@@ -3,26 +3,24 @@ body {
     text-align: center;
     padding: 0px;
     table-layout: center;
+
 }
 
-/* .container {
-    margin-bottom: 20px;
-} */
 
 table{
-    margin-left: auto;
-    margin-right: auto;
-    width: 480px;
-    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 95vw;
+    height: 40vh;
 }
 
 .colorBox {
-    width: 20px;
-    height: 20px;
+    width: 4vh;
+    height:4vh;
     /* border: 2px solid #f6f6f6; */
-    margin: 20px;
+    /* margin: 20px; */
     text-align: center;
-    line-height: 20px;
     background-color: #66CC66;
 }
 
@@ -31,8 +29,8 @@ table{
     align-items: center;
     justify-content: space-around;
     background-color: #ffffff;
-    width: 480px;
-    height: 50px;
+    width: 90vw;
+    height: 7vh;
     border-radius: 10px;
 }
 
@@ -42,8 +40,8 @@ table{
     align-items: center;
     justify-content: space-around;
     background-color: #ffffff;
-    width: 480px;
-    height: 150px;
+    width: 90vw;
+    height: 15vh;
     border-radius: 10px;
     margin: 0;
 }
@@ -61,17 +59,17 @@ input[type="number"], input[type="date"] {
 }
 
 input[type="checkbox"]{
-    width: 20px;    
-    height: 20px;
+    width: 3vh;    
+    height: 3vh;
     border: solid 5px #f0f0f0; 
     }
 
 button {
-    padding: 8px 10px;
+    padding: 2px 2px;
     background-color: #4CAF50;
     color: white;
     border: none;
-    margin-right: 0px;
+    /* margin-right: 0px; */
     border-radius: 10px;
 }
 
@@ -85,13 +83,39 @@ button {
     padding: 10px;
     border-radius: 5px;
 } */
+ 
+.time-display {
+    font-size: 24px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    color: #007bff;
+  }
+  .time-input {
+    font-size: 16px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+    max-width: 80%;
+  }
+  .submit-btn {
+    margin-top: 10px;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+  }
 
 #datePicker {
-    margin-top: 20px;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
 }
 
 input[type="radio"] {
-    width:13px; height:13px; margin:0 0 2px;
+    width: 1.5vh; height: 1.5vh;
     padding:0; border: 1px solid #FFF;
     vertical-align:middle;}
 
@@ -102,18 +126,29 @@ input[type="radio"] {
 }
 
 
-#eatRecord, #eatMemo {
-    height: 100px;
-    width: 400px;
+#eatMemo {
+    height: 10vh;
+    width: 80vw;
     border: solid 2px #f0f0f0;
     border-radius: 10px;
     
 }
 
+
+#bssubmit {
+    margin-top: 2vh;
+    height: 3vh;
+    width: 3vh;
+    border-radius: 3vh;
+    border-color: #f0f0f0;
+    background-color: #ffffff;
+}
+
+/* 
 #bottomMenu {
     position: fixed;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
 }
-
+ */

@@ -21,4 +21,7 @@ router.get("/sugardiary", (req, res) => {
     res.render("sugardiary");
 });
 
+router.get("/bs", (req, res) => {
+    res.render("bs");
+});
 module.exports = router;

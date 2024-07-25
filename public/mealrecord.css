@@ -1,17 +1,43 @@
-#mealrecord {
-    background-color: gray;
-    width: 100px;
-    min-width: 400px;
-    max-width: 400px;
-    display: grid;
-    margin: 0 auto;
-
+h2{
+    text-align: center;
 }
 
 #time-meal {
-
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+    gap: 10px;
+    height: 80px;
+}
+#time-meal a {
+    background-color: gray;
+    border-radius: 10px;
+}
+#time-meal h2{
+    padding-bottom: 30px;
+    bottom: 30px;
+    text-align: center;
 }
 
-#time-meal a {
 
+#meal-information {
+    background-color: gray;
+}
+#meal-information input {
+    background-color: bisque;
+    width: 95%;
+    max-width: 400px;
+    height: 120px;
+    
+}
+
+#medicine {
+    background-color: gray;
+    
+}
+#medicine input {
+    background-color: bisque;
+    width: 90%;
+    max-width: 400px;
+    height: 40px;
 }

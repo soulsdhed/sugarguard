@@ -25,7 +25,7 @@ router.get("/sugardiary", (req, res) => {
     res.render("sugardiary"); 
 }); // 풍규
 
-router.get("mealrecord", (req,res)=> {
+router.get("/mealrecord", (req,res)=> {
     res.render("mealrecord") ;
 }); // 풍규 
 

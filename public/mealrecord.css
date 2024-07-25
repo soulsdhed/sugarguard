@@ -1,5 +1,26 @@
-h2{
+#mealrecord-button {
+    margin-left: auto;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    padding: 5px 10px;
+}
+
+#title {
+    position: relative;
     text-align: center;
+}
+
+#date-time-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+#date, #time {
+    display: flex;
+    align-items: center;
 }
 
 #time-meal {
@@ -9,35 +30,38 @@ h2{
     gap: 10px;
     height: 80px;
 }
+
 #time-meal a {
-    background-color: gray;
+    background-color: #e3e3e3;
     border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;  
+    text-decoration: none;  
+    color: black;
 }
-#time-meal h2{
-    padding-bottom: 30px;
-    bottom: 30px;
+
+#time-meal h2 {
     text-align: center;
 }
 
-
-#meal-information {
-    background-color: gray;
-}
 #meal-information input {
-    background-color: bisque;
-    width: 95%;
+    background-color: #e3e3e3;
+    width: 100%;
     max-width: 400px;
     height: 120px;
-    
+
 }
 
-#medicine {
-    background-color: gray;
-    
-}
 #medicine input {
-    background-color: bisque;
-    width: 90%;
+    background-color: #e3e3e3;
+    width: 100%;
     max-width: 400px;
     height: 40px;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    
 }

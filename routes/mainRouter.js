@@ -27,8 +27,14 @@ router.get("/sugardiary", (req, res) => {
 router.get("/recipe_details", (req, res) => {
     res.render("recipe_details");
 });
+router.get("/mealrecord", (req, res) => {
+    res.render("mealrecord");
+}); // 풍규 
 router.get("/report/:type", (req, res) => {
     res.render("report");
+});
+router.get("/recipe_list", (req, res) => {
+    res.render("recipe_list");
 });
 
 module.exports = router;

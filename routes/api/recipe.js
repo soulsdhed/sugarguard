@@ -60,7 +60,7 @@ router.get("/", authenticateToken, (req, res, next) => {
             ingredientsQueryString += ` + (ingredients LIKE '%${dislikeIngredients[i]}%') * ${dislikeWeight}`;
         }
     }
-    console.log(ingredientsQueryString);
+    // console.log(ingredientsQueryString);
 
     // 요리 인원수 : 1인분, 2인분, 3인분, 4인분, 5인분, 6인분이상
     // 요리 시간 : 5분이내, 10분이내, 15분이내, 20분이내, 30분이내, 60분이내, 90분이내, 2시간이내, 2시간이상
@@ -234,6 +234,9 @@ router.post("/", authenticateToken, (req, res, next) => {
         });
     }
 
+    // TODO : S3 업로드 고려해서 url을 만들기 (url 형식이면 안하고 url 형식이 아니면 하도록?)
+    // const imageUrl = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${photo_url}`;
+
     // recipe 정보
     const query = `
         INSERT INTO MEMBER_TB (
@@ -296,6 +299,40 @@ router.post("/", authenticateToken, (req, res, next) => {
             });
         }
     );
+});
+
+// 레시피 조회
+router.get("/:recipe_id", authenticateToken, (req, res, next) => {
+    const { recipe_id } = req.params;
+
+    const query = `
+        SELECT 
+            recipe_name, 
+            cooking_method,
+            meal_category,
+            ingredient_category,
+            dish_type,
+            instructions,
+            ingredients,
+            description,
+            photo_url,
+            recipe_amount,
+            recipe_time,
+            recipe_difficult
+        FROM RECIPE_TB
+        WHERE recipe_id = ?
+    `;
+    db.execute(query, [recipe_id], (err, rows) => {
+        if (err) {
+            return next({
+                code: "SERVER_INTERNAL_ERROR",
+            });
+        }
+
+        return res.success({
+            recipes: rows[0],
+        });
+    });
 });
 
 // 레시피 승인

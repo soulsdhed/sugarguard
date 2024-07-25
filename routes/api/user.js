@@ -133,7 +133,16 @@ router.post("/login", (req, res, next) => {
     const { userId, password } = req.body;
 
     // query
-    const query = `SELECT member_id, password, nickname, email, gender, birth_date, diabetes_type, deleted_at
+    const query = `
+        SELECT 
+            member_id, 
+            password, 
+            nickname, 
+            email, 
+            gender, 
+            birth_date, 
+            diabetes_type, 
+            deleted_at
         FROM MEMBER_TB 
         WHERE member_id = ?`;
 
@@ -397,7 +406,6 @@ router.post("/logout", authenticateToken, (req, res, next) => {
     const query = `DELETE FROM REFRESH_TOKEN_TB WHERE member_id = ?`;
     db.execute(query, [userId], (err, results) => {
         if (err) {
-            console.log(err);
             return next({
                 code: "SERVER_INTERNAL_ERROR",
             });

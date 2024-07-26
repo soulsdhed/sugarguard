@@ -31,10 +31,6 @@
     grid-template-columns: 1fr;
 }
 
-#div3 {
-    display: none; /* Hide the form initially */
-}
-
 
 #back {
     margin-left: 5px;
@@ -96,6 +92,9 @@
     width: 15%;
 } 
 
+
+
+
 #calendar {
     display: flex;
     flex-wrap: nowrap; /* 날짜들을 한 줄로 나열 */
@@ -130,6 +129,11 @@
     font-weight: bold; /* 선택된 날짜의 텍스트 굵게 */
 }
 
+
+
+
+
+
 .selectBox {
     width: 100%;
     height: 10%;
@@ -153,13 +157,9 @@ select::-ms-expand {
     display: none;
 }
 
-select:focus {
-  border-color: #0094e1;
-}
-
 select option {
-    width: 20%;
-    height: 50%;
+    /* width: 20%;
+    height: 50%; */
     background: #ffffff;
     border: hidden;
     color: hidden;
@@ -167,14 +167,6 @@ select option {
   }
 
 
-.colorBox {
-    width: 20px;
-    height: 20px;
-    /* border: 2px solid #f6f6f6; */
-    /* margin: 20px; */
-    text-align: center;
-    background-color: #66CC66;
-}
 
 .box1 {
     display: flex;
@@ -182,24 +174,21 @@ select option {
     justify-content: space-around;
     background-color: #ffffff;
     width: 100%;
-    height: 100%;
+    height: 30%;
     border-radius: 10px;
+    margin-bottom: 5%;
 }
 
-.box2 {
+.box3 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     background-color: #ffffff;
     width: 100%;
-    height: 100%;
+    height: 15%;
     border-radius: 10px;
-    margin: 0;
-}
-.box2 h5{
-    margin: 0;
-    text-align: left;
+    margin-bottom: 5%;
 }
 
 
@@ -212,39 +201,14 @@ button {
     border-radius: 10px;
 }
 
-#timeInput {
-    font-size: 12px;
-    padding: 3px;
-    border: 1px solid #f6f6f6;
-    border-radius: 20px;
-    height: 25px;
-    width: 100px;
-    max-width: 100px;
-  }
 
-  
-#saveTimeBtn {
-    color: #ffffff;
-    height: 25px;
-    width: 45px;
-    padding: 2px;
-    background-color: rgb(145, 138, 138);
-    border-radius: 15px;
-  }
-    
-
-#recordBsBefore, #recordBsAfter {
+#duration {
     border: solid 2px #f0f0f0;
     border-radius: 5px;
     height: 25px;
     width: 80px;
 }
 
-
-#eatMemo {
-    height: 80px;
-    width: 300px;
-    border: solid 2px #f0f0f0;
-    border-radius: 10px;
+#result{
+    margin-bottom: 0px;
 }
-

@@ -81,65 +81,53 @@ displayCurrentTime();
 
 
 
+const exerciseCalories = {
+    "걷기": 3.5,
+    "달리기": 9.8,
+    "자전거": 7.0,
+    "수영": 8.0,
+    "줄넘기": 12.0,
+    "계단 오르기": 8.5,
+    "에어로빅": 6.0,
+    "근력 운동": 4.5,
+    "요가": 4.0,
+    "필라테스": 5.0,
+    "테니스": 7.5,
+    "축구": 7.0,
+    "농구": 8.0,
+    "배드민턴": 6.0,
+    "볼링": 2.5,
+    "댄스": 7.0,
+    "탁구": 4.5,
+    "하이킹": 6.5,
+    "크로스핏": 9.5,
+    "체조": 5.5,
+    "스쿼시": 9.0,
+    "복싱": 10.0,
+    "자유 웨이트": 6.0,
+    "사이클링": 8.0,
+    "롤러블레이딩": 7.0,
+    "킥복싱": 9.0,
+    "하키": 8.0,
+    "스키": 7.5,
+    "스노우보드": 6.5,
+    "서핑": 7.0,
+    "스쿼트": 5.0,
+    "유산소 운동": 6.5,
+    "전신 운동": 8.5
+};
 
-  
-  // 운동 별 일반적인 1시간당 칼로리 소모량 (kg 당 칼로리)
-  const exerciseCalories = {
-    '걷기': 3.5,
-    '조깅': 7.0,
-    '수영(경쟁)': 10.0,
-    '수영(레저)': 6.0,
-    '자전거 타기(보통)': 7.5,
-    '자전거 타기(고속)': 10.0,
-    '골프(보통)': 4.5,
-    '골프(카트 타기)': 2.5,
-    '테니스': 7.0,
-    '배드민턴': 5.5,
-    '스쿼시': 9.0,
-    '야구': 5.5,
-    '축구': 7.0,
-    '농구': 6.0,
-    '볼링': 3.0,
-    '줄넘기': 12.0,
-    '계단 오르내리기': 8.0,
-    '체조(경륜)': 8.0,
-    '스트레칭': 2.5,
-    '요가': 3.0,
-    '필라테스': 3.5,
-    '중량 훈련(보통)': 5.0,
-    '중량 훈련(강도 높음)': 7.0,
-    '줄다리기': 10.0,
-    '헬스 머신(런닝 머신, 엘리프티컬 등)': 7.0,
-    '체육 수업(보통)': 6.0,
-    '댄스(고강도)': 8.0,
-    '댄스(저강도)': 4.5,
-    '체육 수업(고강도)': 8.0,
-    '댄스(집에서)': 4.0
-  };
+function calculateCalories() {
+    const exercise = document.getElementById("exercise").value;
+    const duration = parseFloat(document.getElementById("duration").value);
 
-  // 운동별 칼로리 소모 계산 함수
-  function calculateCalories(exercise, duration) {
-    if (exercise in exerciseCalories) {
-      const caloriesPerHour = exerciseCalories[exercise];
-      const caloriesBurned = (caloriesPerHour * duration) / 60;
-      return caloriesBurned.toFixed(2);  // 소수점 2자리까지 표시
-    } else {
-      return '운동을 찾을 수 없습니다.';
+    if (!exercise || isNaN(duration) || duration <= 0) {
+        alert("운동 종류와 시간을 정확히 입력해 주세요.");
+        return;
     }
-  }
 
-  // 폼 제출 이벤트 처리
-  const form = document.getElementById('calorieForm');
-  form.addEventListener('submit', function(event) {
-    event.preventDefault(); // 기본 제출 동작 방지
+    const caloriesPerMinute = exerciseCalories[exercise];
+    const totalCalories = caloriesPerMinute * duration;
 
-    const exercise = document.getElementById('exerciseSelect').value;
-    // const weight = document.getElementById('weightInput').value;
-    const duration = document.getElementById('durationInput').value;
-
-    const burnedCalories = calculateCalories(exercise,duration);
-
-    // 결과를 HTML에 표시
-    const resultElement = document.getElementById('result');
-    resultElement.innerHTML = `<p>${duration}분 동안 ${exercise}을(를) 하면 약 <strong>${burnedCalories}kcal</strong> 소모됩니다.</p>`;
-  });
+    document.getElementById("result").innerText = `소모 칼로리 : ${totalCalories.toFixed(2)} kcal`;
+}

@@ -44,8 +44,8 @@ router.get("/bs", (req, res) => {
     res.render("bs");
 }); // 김희은
 
-router.get("/exercise", (req, res) => {
-    res.render("exercise");
+router.get("/exercise1", (req, res) => {
+    res.render("exercise1");
 }); // 김희은
 
 

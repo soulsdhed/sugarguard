@@ -170,8 +170,6 @@ select option {
 .colorBox {
     width: 20px;
     height: 20px;
-    /* border: 2px solid #f6f6f6; */
-    /* margin: 20px; */
     text-align: center;
     background-color: #66CC66;
 }
@@ -228,7 +226,7 @@ button {
     height: 25px;
     width: 45px;
     padding: 2px;
-    background-color: rgb(145, 138, 138);
+    background-color:  #4CAF50;
     border-radius: 15px;
   }
     

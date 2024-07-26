@@ -24,13 +24,6 @@ router.post("/", async (req, res, next) => {
         diabetesType,
     } = req.body;
 
-    // 빈 필드 검사 (필수 항목 검사)
-    if (!userId || !password || !nickname || !email || !gender) {
-        return next({
-            code: "VALIDATION_MISSING_FIELD",
-        });
-    }
-
     // ID 유효성 검사 (영어와 숫자로만, 4~12글자)
     if (userId.length < 4 || userId.length > 12) {
         return next({
@@ -51,6 +44,7 @@ router.post("/", async (req, res, next) => {
             code: "VALIDATION_ERROR",
         });
     }
+    console.log("3");
 
     // 이메일 유효성 검사 (이메일 형식)
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

@@ -54,8 +54,8 @@ const drawChart = async (period, first) => {
 
     let barColor = "rgba(0, 0, 255, 1.0)";
     let stepSize = 10;
-    let title = "분석 차트"
-    let unit = "mg/dl"
+    let title = "분석 차트";
+    let unit = "mg/dl";
     let average = "0";
 
     // 쿼리에 따라 데이터 분기
@@ -65,9 +65,9 @@ const drawChart = async (period, first) => {
         // 색상 설정
         barColor = "rgba(215, 32, 0, 1.0)";
         // 제목
-        title = "혈당 분석 차트"
+        title = "혈당 분석 차트";
         // 단위
-        unit = "mg/dl"
+        unit = "mg/dl";
 
         try {
             const response = await axios.get("/api/chart/blood-sugar", {
@@ -115,9 +115,9 @@ const drawChart = async (period, first) => {
         // 색상 설정
         barColor = "rgba(0, 52, 185, 1.0)";
         // 제목
-        title = "운동량 분석 차트"
+        title = "운동량 분석 차트";
         // 단위
-        unit = "kcal"
+        unit = "kcal";
 
         try {
             const response = await axios.get("/api/chart/exercise", {
@@ -165,9 +165,9 @@ const drawChart = async (period, first) => {
         // 색상 설정
         barColor = "rgba(255, 205, 74, 1.0)";
         // 제목
-        title = "식사 칼로리 분석 차트"
+        title = "식사 칼로리 분석 차트";
         // 단위
-        unit = "kcal"
+        unit = "kcal";
 
         try {
             const response = await axios.get("/api/chart/meal", {
@@ -215,9 +215,9 @@ const drawChart = async (period, first) => {
         // 색상 설정
         barColor = "#833ee0";
         // 제목
-        title = "체중 분석 차트"
+        title = "체중 분석 차트";
         // 단위
-        unit = "kg"
+        unit = "kg";
 
         try {
             const response = await axios.get("/api/chart/weight", {
@@ -265,9 +265,9 @@ const drawChart = async (period, first) => {
         // 색상 설정
         barColor = "#833ee0";
         // 제목
-        title = "혈압 분석 차트"
+        title = "혈압 분석 차트";
         // 단위
-        unit = "mmHg"
+        unit = "mmHg";
 
         try {
             const response = await axios.get("/api/chart/blood-pressure", {

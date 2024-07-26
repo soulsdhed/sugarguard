@@ -22,10 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
         return values;
     }
 
-    const caloriesBurned1 = getRandomValues(7, 200, 2000);
-    const caloriesBurned2 = getRandomValues(7, 200, 2000);
-    const caloriesBurned3 = getRandomValues(7, 200, 2000);
-    const caloriesBurned4 = getRandomValues(7, 200, 2000);
+    // const caloriesBurned1 = getRandomValues(7, 200, 2000);
+    // const caloriesBurned2 = getRandomValues(7, 200, 2000);
+    // const caloriesBurned3 = getRandomValues(7, 200, 2000);
+    // const caloriesBurned4 = getRandomValues(7, 200, 2000);
 
     const generateData = () => {
         return {
@@ -145,9 +145,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (date.toDateString() === selectedDate.toDateString()) {
                 dayDiv.classList.add("selected");
             }
-            dayDiv.innerHTML = `${date.getDate()}<br>${
-                daysOfWeek[date.getDay()]
-            }`;
+            dayDiv.innerHTML = `${date.getDate()}<br>${daysOfWeek[date.getDay()]
+                }`;
             dayDiv.addEventListener("click", () => {
                 generateCalendar(date); // 새로운 날짜 생성
                 updateHeader(date); // 헤더 업데이트

@@ -24,7 +24,6 @@ html {
     background-color: #f6f6f6; /* 배경색을 연한 회색으로 설정 */
     width: 100vw; /* 화면 너비의 100%로 설정 */
     max-width: 480px; /* 최대 너비를 480px로 제한 */
-    max-height: 100%; /* 최대 높이를 100%로 설정 */
     margin: 0 auto; /* 중앙 정렬 */
     padding: 0 10px; /* 좌우 여백을 10px로 설정 */
     padding-bottom: 60px; /* 네비게이션 바와의 여백을 60px로 설정 */

@@ -105,9 +105,6 @@ ul {
 li::marker {
     content: none; /* li의 마커 제거 */
 }
-#instructions {
-    padding-bottom: 75px;
-}
 .recipe-detail-rowflex-div img{
     padding-right: 4px;
 }

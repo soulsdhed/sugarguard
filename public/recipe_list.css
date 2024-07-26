@@ -1,0 +1,100 @@
+.container-title {
+    display: flex;
+    align-items: center; /* 요소들을 세로 중앙에 정렬 */
+    padding: 5px;
+    margin-top: 12px;
+}
+
+.list_title {
+    width: 27%;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.list_search {
+    position: relative;
+    width: 71%;
+}
+
+.list_search input[type="text"] {
+    width: 100%;
+    padding: 10px 20px 10px 40px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+}
+
+.list_search input[type="image"] {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    pointer-events: none; /* 이 설정으로 인해 아이콘을 클릭해도 아무 동작을 하지 않습니다. */
+}
+/* content */
+.content-list {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 16px;
+    max-width: 1200px; /* 전체 콘텐츠의 최대 너비를 설정 */
+    padding-bottom: 70px;
+}
+
+.recipe {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #ddd; /* 각 레시피 항목 사이에 구분선 추가 */
+    padding-bottom: 24px;
+}
+
+.recipe img {
+    width: 92px;
+    height: 92px;
+    object-fit: cover;
+    margin-right: 16px;
+}
+
+.recipe-details {
+    flex: 1;
+    min-width: 0; /* flexbox에서 overflow가 발생하지 않도록 설정 */
+}
+
+.recipe-details h2 {
+    margin: 0 0 4px 0;
+    font-size: 1.2em;
+}
+
+.recipe-details p {
+    margin: 0 0 4px 0;
+    font-size: 0.8em;
+    white-space: normal; 
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 원하는 줄 수로 설정, 여기서는 두 줄 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%; /* 원하는 최대 너비로 설정, 화면 크기에 따라 변경 가능 */
+}
+
+.recipe-meta {
+    display: flex;
+    gap: 14px; /* 각 항목 사이의 간격을 설정 */
+    margin-top: 17px; /* 적당한 여백 추가 */
+    font-size: 0.9em; /* 글씨 크기 약간 조정 */
+}
+
+.recipe-meta span {
+    display: flex;
+    align-items: center;
+}
+
+.recipe-meta img {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+}

@@ -249,7 +249,8 @@ router.post("/login", (req, res, next) => {
 
 // 회원 탈퇴 (jwt)
 router.delete("/", authenticateToken, (req, res, next) => {
-    const { userId, password } = req.body;
+    const { userId } = req.user;
+    const { password } = req.body;
 
     // 비밀번호 확인
     const query = `SELECT member_id, password, nickname, email, gender, birth_date, diabetes_type, deleted_at
@@ -325,15 +326,15 @@ router.delete("/", authenticateToken, (req, res, next) => {
 
 // 회원 정보 수정 (jwt)
 router.patch("/", authenticateToken, (req, res, next) => {
-    const { userId, nickname, email, gender, birthDate, diabetesType } =
-        req.body;
+    const { userId } = req.user;
+    const { nickname, /*email,*/ gender, birthDate, diabetesType } = req.body;
 
-    // userId는 반드시 있어야 한다
-    if (!userId) {
-        return next({
-            code: "VALIDATION_MISSING_FIELD",
-        });
-    }
+    // // userId는 반드시 있어야 한다
+    // if (!userId) {
+    //     return next({
+    //         code: "VALIDATION_MISSING_FIELD",
+    //     });
+    // }
 
     // 업데이트할 필드 동적 생성
     const updates = [];
@@ -347,11 +348,11 @@ router.patch("/", authenticateToken, (req, res, next) => {
         params.push(nickname);
         data["nickname"] = nickname;
     }
-    if (email !== null && email !== undefined) {
-        updates.push("email = ?");
-        params.push(email);
-        data["email"] = email;
-    }
+    // if (email !== null && email !== undefined) {
+    //     updates.push("email = ?");
+    //     params.push(email);
+    //     data["email"] = email;
+    // }
     if (gender !== null && gender !== undefined) {
         updates.push("gender = ?");
         params.push(gender);
@@ -400,7 +401,8 @@ router.patch("/", authenticateToken, (req, res, next) => {
 
 // 로그 아웃 (jwt)
 router.post("/logout", authenticateToken, (req, res, next) => {
-    const { userId } = req.body;
+    // const { userId } = req.body;
+    const { userId } = req.user;
 
     // 유저의 모든 refreshToken 삭제
     const query = `DELETE FROM REFRESH_TOKEN_TB WHERE member_id = ?`;

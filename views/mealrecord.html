@@ -2,29 +2,35 @@
 <link rel="stylesheet" href="mealrecord.css">
 
 <div>
-    <h2>Sugar Guard</h2>
     <div id="mealrecord">
+        <div id="title">
+            <h2>Sugar Guard</h2>
+            <input type="submit" id="mealrecord-button" value="저장">
+        </div><br>
+        <div id="date-time-container">
+            <div id="date">
+                <label for="date">날짜: </label>
+                <input type="date" id="date" name="date" onchange="saveDate()">
+            </div>
+            <div id="time">
+                <label for="time">시간: </label>
+                <input type="time" id="time" name="time" onchange="saveTime()">
+            </div>
+        </div><br>
         <div id="time-meal">
-            <a href="" id="breakfast"><span>
-                    <h2>아침</h2>
-                </span></a>
-            <a href="" id="lunch"><span>
-                    <h2>점심</h2>
-                </span></a>
-            <a href="" id="dinner"><span>
-                    <h2>저녁</h2>
-                </span></a>
-            <a href="" id="snack"><span>
-                    <h2>간식</h2>
-                </span></a>
+            <a href="#" id="breakfast"><span><h2>아침</h2></span></a>
+            <a href="#" id="lunch"><span><h2>점심</h2></span></a>
+            <a href="#" id="dinner"><span><h2>저녁</h2></span></a>
+            <a href="#" id="snack"><span><h2>간식</h2></span></a>
+        </div><br>
+        <textarea style="font-size: 15px;" name="meal-information" id="meal-information" cols="10" rows="10" placeholder="최대 100자까지 정보 입력이 가능합니다" maxlength="100"></textarea>
+        <div id="medicine">
+            <input type="text" value="약">
         </div><br>
         <div id="meal-information">
             <input type="text" value="식사정보">
         </div><br>
-        <div id="medicine">
-            <input type="text" value="약">
-
-        </div>
     </div>
 </div>
+<script src="mealrecord.js"></script>
 {% endblock %}

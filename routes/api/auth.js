@@ -13,9 +13,21 @@ const authenticateToken = require("../../middlewares/authenticateToken");
 // 엑세스 토큰 재발행
 router.post("/token", (req, res, next) => {
     const authHeader = req.headers["authorization"];
-    const refreshToken = authHeader && authHeader.split(" ")[1];
+    let refreshToken = authHeader && authHeader.split(" ")[1];
 
-    // header의 refreshToken이 존재하는지 여부 확인
+    // header에 refreshToken이 없는 경우
+    if (!refreshToken) {
+        // 쿠키에서 검색
+        refreshToken = req.cookies.refreshToken;
+
+        // 그래도 없으면 Error
+        if (!refreshToken) {
+            return next({
+                code: "AUTH_INVALID_TOKEN",
+            });
+        }
+    }
+
     const query = `SELECT refresh_token, member_id, expires_at 
         FROM REFRESH_TOKEN_TB 
         WHERE refresh_token = ?`;

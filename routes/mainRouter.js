@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-    res.render("main");
+    res.render("main", { title: "main", currentPage: "/" });
 });
 
 router.get("/mypage", (req, res) => {
-    res.render("mypage");
+    res.render("mypage", { title: "Mypage", currentPage: "/mypage" });
 }); //김진
 
 router.get("/login", (req, res) => {
@@ -29,12 +29,15 @@ router.get("/recipe_details", (req, res) => {
 });
 router.get("/mealrecord", (req, res) => {
     res.render("mealrecord");
-}); // 풍규 
+}); // 풍규
 router.get("/report/:type", (req, res) => {
     res.render("report");
 });
 router.get("/recipe_list", (req, res) => {
-    res.render("recipe_list");
+    res.render("recipe_list", {
+        title: "Recipe_List",
+        currentPage: "/recipe_list",
+    });
 });
 
 module.exports = router;

@@ -1,4 +1,11 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@font-face {
+    font-family: 'MoveSans-Bold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-2@1.0/MoveSans-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
 body{
     font-family: pretendard;
 }
@@ -7,6 +14,14 @@ body{
     padding: 0%;
     margin-top: 5%; /* 상하 여백 설정 */
     color: rgb(65, 61, 61);
+    /* font-family: 'MoveSans-Bold';
+    font-weight: 700;
+    font-style: normal;
+    font-size: 32px; */
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 32px;
 }
 
 #content-main {

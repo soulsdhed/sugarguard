@@ -40,6 +40,13 @@ router.get("/", authenticateToken, (req, res, next) => {
                 code: "VALIDATION_MISSING_FIELD",
             });
         }
+        // startDate가 endDate보다 더 뒤인 경우
+        if (new Date(startDate) > new Date(endDate)) {
+            return next({
+                code: "VALIDATION_ERROR",
+            });
+        }
+
         const startDateTime = `${startDate} 00:00:00`;
         const endDateTime = `${endDate} 23:59:59`;
 
@@ -72,8 +79,8 @@ router.get("/", authenticateToken, (req, res, next) => {
 
 // 운동 기록 등록
 router.post("/", authenticateToken, (req, res, next) => {
+    const { userId } = req.user;
     const {
-        userId,
         record_time,
         exercise_type,
         exercise_time,
@@ -144,9 +151,9 @@ router.post("/", authenticateToken, (req, res, next) => {
 
 // 운동 기록 수정
 router.patch("/", authenticateToken, (req, res, next) => {
+    const { userId } = req.user;
     const {
         el_id,
-        userId,
         record_time,
         exercise_type,
         exercise_time,

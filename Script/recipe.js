@@ -7,20 +7,65 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+
     // 검색 버튼 클릭 이벤트 핸들러 추가
-    document.getElementById("search-button").addEventListener("click", (e) => {
-        e.preventDefault(); // 폼의 기본 동작 방지
+    document
+        .getElementById("search-button")
+        .addEventListener("click", async (e) => {
+            e.preventDefault(); // 폼의 기본 동작 방지
 
-        // 활성화된 a 태그들 선택
-        const activeLinks = document.querySelectorAll("#recipe-name a.active");
+            // 활성화된 a 태그들 선택
+            const activeLinks = document.querySelectorAll(
+                "#recipe-name a.active"
+            );
 
-        // 활성화된 a 태그들의 텍스트를 로그에 출력
-        activeLinks.forEach((link) => {
-            console.log(link.querySelector("span").textContent);
+            let have = [];
+            let amount = [];
+            let time = [];
+            let difficult = [];
+            // 활성화된 a 태그들의 텍스트를 로그에 출력
+            activeLinks.forEach((link) => {
+                const content = link.querySelector("span").textContent;
+
+                if (
+                    ["1인분", "2인분", "3인분", "4인분이상"].includes(content)
+                ) {
+                    amount.push(content);
+                } else if (
+                    ["15분이내", "30분이내", "60분이내", "2시간이상"].includes(
+                        content
+                    )
+                ) {
+                    time.push(content);
+                } else if (
+                    ["아무나", "초급", "중급", "고급"].includes(content)
+                ) {
+                    difficult.push(content);
+                } else {
+                    have.push(content);
+                }
+            });
+
+            // TODO : 이미지 없는 레시피 추천
+            console.log(have);
+            console.log(amount);
+            console.log(time);
+            console.log(difficult);
+
+            console.log(have.join(", "));
+
+            try {
+                const res = await axios.get("/api/recipes", {
+                    params: {
+                        have: have.join(", "),
+                    },
+                    withCredentials: true, // 쿠키를 포함하여 요청
+                });
+                console.log(res);
+            } catch (err) {
+                console.error(err);
+            }
         });
-
-        // TODO : 이미지 없는 레시피 추천
-    });
 });
 
 // 카메라 앱 작동 (버튼)

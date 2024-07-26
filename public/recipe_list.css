@@ -41,7 +41,6 @@
     margin: 0 auto;
     padding: 16px;
     max-width: 1200px; /* 전체 콘텐츠의 최대 너비를 설정 */
-    padding-bottom: 70px;
 }
 
 .recipe {

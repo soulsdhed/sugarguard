@@ -1,7 +1,12 @@
-function isValidDate(dateString) {
-    if (dateString == null) return false; // Check for null or undefined
+const isValidDate = (dateString) => {
+    // Check for null or undefined
+    if (dateString == null) {
+        return false;
+    }
     const regex = /^\d{4}-\d{2}-\d{2}$/;
-    if (!regex.test(dateString)) return false;
+    if (!regex.test(dateString)) {
+        return false;
+    }
 
     const [year, month, day] = dateString.split("-").map(Number);
     const date = new Date(year, month - 1, day);
@@ -10,27 +15,37 @@ function isValidDate(dateString) {
         date.getMonth() + 1 === month &&
         date.getDate() === day
     );
-}
+};
 
-function isValidWeek(dateString) {
-    if (dateString == null) return false; // Check for null or undefined
+const isValidWeek = (dateString) => {
+    // Check for null or undefined
+    if (dateString == null) {
+        return false;
+    }
     const regex = /^\d{4}-\d{2}$/;
-    if (!regex.test(dateString)) return false;
+    if (!regex.test(dateString)) {
+        return false;
+    }
 
     const [year, week] = dateString.split("-").map(Number);
     return year > 0 && week >= 1 && week <= 53;
-}
+};
 
-function isValidMonth(dateString) {
-    if (dateString == null) return false; // Check for null or undefined
+const isValidMonth = (dateString) => {
+    // Check for null or undefined
+    if (dateString == null) {
+        return false;
+    }
     const regex = /^\d{4}-\d{2}$/;
-    if (!regex.test(dateString)) return false;
+    if (!regex.test(dateString)) {
+        return false;
+    }
 
     const [year, month] = dateString.split("-").map(Number);
     return year > 0 && month >= 1 && month <= 12;
-}
+};
 
-function isValidURL(url) {
+const isValidURL = (url) => {
     const urlPattern = new RegExp(
         "^(https?:\\/\\/)?" + // protocol
             "((([a-zA-Z\\d]([a-zA-Z\\d-]*[a-zA-Z\\d])*)\\.?)+[a-zA-Z]{2,}|" + // domain name
@@ -43,11 +58,17 @@ function isValidURL(url) {
     );
 
     return !!urlPattern.test(url);
-}
+};
+
+const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+};
 
 module.exports = {
     isValidDate,
     isValidWeek,
     isValidMonth,
     isValidURL,
+    isValidEmail,
 };

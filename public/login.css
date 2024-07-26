@@ -1,4 +1,4 @@
-#login_main{
+#login_main {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -6,7 +6,7 @@
     height: 100%;
     width: 100%;
 }
-#login_input{
+#login_input {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -17,25 +17,28 @@
     border-radius: 15px;
     background-color: white;
 }
-#login_input_write{
+.login_input_write {
     width: 70%;
     height: 8%;
     border: 0;
     border-bottom: solid 1px rgb(16, 15, 15);
 }
-#login_input img{
+#login_input img {
     width: 40%;
     height: 30%;
 }
-#login_input #login_button{
+#login_input #login_button {
     background-color: rgb(255, 0, 0);
     width: 70%;
     height: 8%;
     border: 0;
     color: white;
 }
-#login_main a{
-    font-size:10px ;
-    text-decoration-line:none;
+#login_main {
+    height: 100vh;
+}
+#login_main a {
+    font-size: 10px;
+    text-decoration-line: none;
     color: black;
 }

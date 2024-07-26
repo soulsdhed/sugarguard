@@ -24,26 +24,6 @@ const recipes = [
         icon_url3: "detail-star.png",
     },
     {
-        recipe_name: "김치찌개",
-        cooking_method: "찌개",
-        meal_category: "일상",
-        ingredient_category: "육류",
-        dish_type: "메인",
-        description: "한국의 대표적인 찌개 요리, 김치찌개입니다.",
-        ingredients:
-            "[재료] 김치 1/2포기| 돼지고기 200g| 두부 1/2모| 양파 1개| 대파 1대| 고춧가루| 다진마늘",
-        recipe_amount: "4인분",
-        recipe_time: "40분",
-        instructions:
-            "1. 돼지고기를 적당한 크기로 자르고 양파를 채썰어 준비합니다. 2. 김치를 잘게 썰어냅니다. 3. 냄비에 돼지고기를 넣고 볶다가 김치를 넣고 함께 볶아줍니다. 4. 물을 붓고 끓이면서 두부와 양파를 넣습니다. 5. 고춧가루와 다진마늘로 간을 맞추고 대파를 넣고 한소끔 끓입니다.",
-        photo_url:
-            "https://recipe1.ezmember.co.kr/cache/recipe/2016/06/09/kimchi_stew.jpg",
-        recipe_difficulty: "중급",
-        icon_url: "detail-people.png",
-        icon_url2: "detail-clock.png",
-        icon_url3: "detail-star.png",
-    },
-    {
         recipe_name: "두부새우전",
         cooking_method: "부침",
         meal_category: "일상",

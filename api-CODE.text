@@ -1,0 +1,116 @@
+[ Post 방식 ]
+1. cookie 없이
+
+async function postDataWithoutCookie() {
+  try {
+    const response = await axios.post('https://example.com/api', {
+      data1: 'value1',
+      data2: 'value2'
+    });
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+postDataWithoutCookie();
+
+2. cookie 추카
+
+async function postDataWithCookie() {
+    try {
+      const response = await axios.post('https://example.com/api', {
+        data1: 'value1',
+        data2: 'value2'
+      }, {
+        withCredentials: true 쿠키를 포함하여 요청
+      });
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+  postDataWithCookie();
+
+[ Get 방식 ]
+
+1. cookie 없이
+
+async function getDataWithoutCookie() {
+  try {
+    const response = await axios.get('https://example.com/api', {
+      params: {
+        data1: 'value1',
+        data2: 'value2'
+      }
+    });
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+getDataWithoutCookie();
+
+
+
+2. cookie 추가
+
+async function getDataWithCookie() {
+  try {
+    const response = await axios.get('https://example.com/api', {
+      params: {
+        data1: 'value1',
+        data2: 'value2'
+      },
+      withCredentials: true // 쿠키를 포함하여 요청
+    });
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+getDataWithCookie();
+
+
+
+
+[ Body에 데이터 담기 (POST) ]
+# POST요청에서 body에 데이터를 담는다.
+
+async function postDataInBody() {
+  try {
+    const response = await axios.post('https://example.com/api', {
+      data1: 'value1',
+      data2: 'value2'
+    });
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+postDataInBody();
+
+
+
+[ Body에 데이터 담기 (Get) ]
+# Get 요청에서 query String에 데이터를 담는다.
+
+async function getDataInQuery() {
+  try {
+    const response = await axios.get('https://example.com/api', {
+      params: {
+        data1: 'value1',
+        data2: 'value2'
+      }
+    });
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+getDataInQuery();

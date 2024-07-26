@@ -1,311 +1,213 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto);
-
-* {
-    margin: 0;
-    padding: 0;
+/* Calendar Container */
+#calendar-container {
+    width: 100%;
+    max-width: 100%;
+    /* 화면 너비에 맞게 조정 */
+    margin: auto;
+    padding-bottom: 18px;
+    /* 네비게이션 바와의 간격을 위해 추가 */
 }
 
-*,
-*:after,
-*:before {
+#calendar-header {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    margin-left: 30px;
+    font-size: 1.2em;
+    /* 더 큰 폰트 크기 */
+    font-weight: bold;
+    width: 100%;
+    /* 전체 너비 사용 */
+    background-color: transparent;
+    /* 배경색 투명 */
+}
+
+#calendar-header span {
+    margin: 0 5px;
+}
+
+#calendar {
+    display: flex;
+    flex-wrap: nowrap;
+    /* 날짜들을 한 줄로 나열 */
+    align-items: center;
+    padding: 2px;
+    margin-left: 25px;
     box-sizing: border-box;
+    gap: 10px;
+    /* 날짜 사이 간격 */
+    background-color: transparent;
+    /* 배경색 투명 */
 }
 
-html {
-    line-height: 1.2;
+#calendar .day {
+    flex: 0 0 11.6%;
+    /* 7일이 한 줄에 들어가게 설정 */
+    height: 70px;
+    /* 날짜 셀의 높이 */
+    text-align: center;
+    /* 텍스트 중앙 정렬 */
+    width: 30px;
+    /* 날짜 셀의 너비 */
+    height: 70px;
+    /* 날짜 셀의 높이 */
+    text-align: center;
+    /* 텍스트 중앙 정렬 */
+    font-size: 13px;
+    padding: 5px;
+    cursor: pointer;
+    /* 클릭 가능한 요소로 설정 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* 내용 중앙 정렬 */
+    background-color: #FFFFFF;
+    /* 날짜 셀 배경색 투명 */
+    border-radius: 60px;
 }
 
-body {
+#calendar .day.selected {
+    background-color: rgb(65, 61, 61);
+    /* 선택된 날짜의 배경색 */
+    color: white;
+    /* 선택된 날짜의 텍스트 색상 */
+    font-weight: bold;
+    /* 선택된 날짜의 텍스트 굵게 */
+}
+
+#records-container {
+    overflow-y: auto;
+    /* 콘텐츠가 넘칠 때 스크롤바 표시 */
+    transition: max-height 0.3s ease;
+    /* 스크롤 높이 변경 시 부드러운 애니메이션 */
+    /* 초기 최대 높이 설정 */
+    max-height: calc(100vh - 100px);
+    /* 여백을 고려한 초기 최대 높이 */
+}
+
+#records-container.shrink {
+    padding-bottom: 0;
+}
+
+.record-entry {
+    position: relative;
+    background-color: white;
+    padding: 15px;
+    margin: 15px;
+    height: 100px;
+    left: 10px;
+    border-radius: 20px;
+}
+
+.record-title {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.record-time {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.close-icon {
+    color: red;
+    font-size: 16px;
+    padding: 2px 6px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+}
+
+.record-entry .record-value {
+    position: relative;
+    text-align: right;
+    align-self: flex-end;
+}
+
+.floating-buttons {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    transition: all 0.3s ease;
+}
+
+#main-toggle-button {
+    background-color: #ccc;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    font-size: 24px;
+    color: black;
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
+    transition: all 0.3s ease;
+    transition: transform 0.3s ease;
 }
 
-#sugardiary-bar1 {
-    position: relative;
-    top: 50px;
-    margin-left: 30%;
-    display: flex;
-    flex-direction: column;
+#main-toggle-button.rotate {
+    transform: rotate(45deg);
+    /* 오른쪽으로 45도 회전 */
 }
 
-
-
-#sugardiary-bar input[type="time"],
-#sugardiary-bar input[type="number"] {
-    width: 60%;
-    /* 입력 필드의 너비 조절 */
-    height: 30px;
-    /* 입력 필드의 높이 조절 */
-    font-size: 16px;
-    /* 입력 필드 안의 텍스트 크기 조절 */
-}
-
-#sugardiary-bar label {
-    font-size: 20px;
-    /* 레이블 텍스트 크기 조절 */
-    display: inline-block;
-    margin-bottom: 10px;
-    /* 레이블과 입력 필드 사이의 간격 조절 */
-}
-
-#sugardiary_main {
-    background-color: #f6f6f6;
-    height: 100vh;
-    border: 1px solid black;
-    width: 90%;
-    min-width: 480px;
-    max-width: 480px;
-    min-height: 93%;
-    max-height: 93%;
-    /* 최소 높이를 설정하여 너무 작아지지 않게 함 */
-    position: relative;
-}
-
-.container {
+.floating-button {
     background-color: white;
-    color: #333;
-    font-family: "Roboto", arial, sans-serif;
-    font-size: 16px;
-    position: relative;
-    /* 고정 위치 제거 */
-    margin: 2% 0;
-    /* 여백 조정 */
-    margin-left: 10%;
-    margin-top: 60%;
-    border-radius: 30px;
-    text-align: right;
-}
-
-
-/* 혈당, 체중, 혈압 바*/
-.dropdown1 {
-    position: relative;
-    width: 60%;
-    margin-bottom: 2%;
-}
-
-.dropdown1-button {
-    width: 100%;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
     height: 50px;
-    line-height: 50px;
-    text-align: center;
-    border-radius: 10px;
-    background-color: #34495e;
-    color: #fff;
+    margin: 5px;
+    font-size: 24px;
+    color: black;
     cursor: pointer;
-    font-size: 16px;
-    user-select: none;
-    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
 }
 
-.dropdown1-list {
+.floating-button-text {
+    margin-right: 10px;
+    font-size: 18px;
+    color: black;
     display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: #fff;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    z-index: 10;
-    max-height: 150px;
-    overflow-y: auto;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.dropdown1-list.active {
-    display: block;
+.hidden {
+    display: none;
 }
 
-.dropdown1-list div {
-    padding: 8px;
-    cursor: pointer;
-    font-size: 16px;
+#menu-buttons {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
 }
 
-.dropdown1-list div:hover {
-    background-color: #f0f0f0;
+.floating-button-container {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
 }
 
-
-
-/* dropdown list 오른쪽 하단바*/
-
-.dropdown {
-    display: inline-block;
-    text-align: right;
-    bottom: 50%;
-    right: 5%;
-    width: 90%;
-    max-width: 200px;
-
-    position: absolute;
-    perspective: 800px;
-
-    &.active {
-        .selLabel {
-            &:after {
-                content: '\25B2';
-            }
-        }
-
-        .dropdown-list {
-            li {
-                &:nth-child(1) {
-                    transform: translateY(-100%);
-                }
-
-                &:nth-child(2) {
-                    transform: translateY(-200%);
-                }
-
-                &:nth-child(3) {
-                    transform: translateY(-300%);
-                }
-
-
-            }
-        }
-    }
-
-    .dropdown-list li {
-        display: flex;
-        /* 가로 방향으로 나열 */
-        justify-content: space-between;
-        /* 양쪽 끝으로 배치 */
-        list-style: none;
-        position: absolute;
-        top: 0;
-        width: 100%;
-        transition: transform 200ms ease;
-    }
-
-    .item-description {
-        margin-left: 10px;
-        /* 리스트와 글자 사이의 간격 */
-        color: #fff;
-        /* 글자 색상 */
-    }
-
-    .dropdown-list li:nth-child(1) {
-        background-color: #1abc9c;
-        z-index: 4;
-        transform: translateY(0);
-    }
-
-    .dropdown-list li:nth-child(2) {
-        background-color: #3498db;
-        z-index: 3;
-        transform: translateY(3%);
-    }
-
-    .dropdown-list li:nth-child(3) {
-        background-color: #9b59b6;
-        z-index: 2;
-        transform: translateY(6%);
-    }
-
-    >span {
-        border-radius: 30px;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 230px;
-        height: 60px;
-        line-height: 60px;
-        color: #fff;
-        font-size: 18px;
-        letter-spacing: 2px;
-        background: #34495e;
-        display: block;
-        padding: 0 20px;
-        position: relative;
-        z-index: 9999;
-        cursor: pointer;
-
-        transform-style: preserve-3d;
-        transform-origin: 50% 0%;
-        transition: transform 300ms;
-        -webkit-backface-visibility: hidden;
-        -webkit-touch-callout: none;
-        user-select: none;
-
-        &:after {
-            display: none;
-            position: absolute;
-            right: 0px;
-            top: 15%;
-            width: 50px;
-            text-align: center;
-            font-size: 12px;
-            padding: 10px;
-            height: 70%;
-            line-height: 24px;
-        }
-
-    }
+.floating-button-container.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-.dropdown-list {
-    list-style: none;
-            padding: 0;
-            margin: 0;
-    position: absolute;
-    top: 0px;
-    width: 100%;
-    max-width: 220px;
-
-
-    li {
-        text-align: right;
-        display: block;
-        list-style: none;
-        left: 0;
-        opacity: 1;
-        transition: transform 300ms ease;
-
-        position: absolute;
-        top: 0;
-        width: 100%;
-
-        &:nth-child(1) {
-            background-color: #1abc9c;
-            z-index: 4;
-            transform: translateY(0);
-            border-radius: 30px;
-        }
-
-        &:nth-child(2) {
-            background-color: #3498db;
-            z-index: 3;
-            transform: translateY(3%);
-            border-radius: 30px;
-        }
-
-        &:nth-child(3) {
-            background-color: #9b59b6;
-            z-index: 2;
-            transform: translateY(6%);
-            border-radius: 30px;
-        }
-
-        span {
-            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-            -webkit-backface-visibility: hidden;
-            -webkit-touch-callout: none;
-            user-select: none;
-
-            border-radius: 30px;
-            width: 100%;
-            font-size: 18px;
-            line-height: 60px;
-            padding: 0 30px;
-            display: block;
-            color: #fff;
-            cursor: pointer;
-            letter-spacing: 2px;
-        }
-    }
+.floating-button:disabled {
+    background-color: #d3d3d3;
+    /* Light gray for disabled */
+    cursor: not-allowed;
 }

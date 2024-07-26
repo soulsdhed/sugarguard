@@ -1,60 +1,35 @@
 {% extends "index.html" %}{% block content %}
 <link rel="stylesheet" href="sugardiary.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-{% block head %}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 추가 -->
-{% endblock %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<div id="header">
-    <div id="date" style="float: left;"></div>
-    <div id="time" style="float: right;"></div>
-    <div style="clear: both;"></div>
-</div>
 
 <div id="sugardiary_main">
-    <div id="sugardiary-bar">
-        <form action="" id="sugardiary-bar1">
-            <label for="time">시간</label>
-            <input type="time" id="time" step="60"><br>
-            <label for="blood-sugar">혈당</label>
-            <div class="dropdown1">
-                <div class="dropdown1-button" id="blood-sugar-button">혈당 값을 선택하세요</div>
-                <div class="dropdown1-list" id="blood-sugar-list"></div>
-            </div><br>
-            <label for="blood-pressure">혈압</label>
-            <div class="dropdown1">
-                <div class="dropdown1-button" id="blood-pressure-button">혈압 값을 선택하세요</div>
-                <div class="dropdown1-list" id="blood-pressure-list"></div>
-            </div><br>
-            <label for="weight">체중</label>
-            <div class="dropdown1">
-                <div class="dropdown1-button" id="weight-button">체중 값을 선택하세요</div>
-                <div class="dropdown1-list" id="weight-list"></div>
-            </div><br>
-        </form>
+    <div id="calendar-header"></div>
+    <div id="calendar-container">
+        <div id="calendar"></div>
     </div>
+    <div id="records-container"></div>
 
-    <div class="container">
-        <div class="dropdown">
-            <span class="selLabel">
-                <h1>+</h1>
-            </span>
-            <input type="hidden" name="cd-dropdown">
-            <ul class="dropdown-list">
-                <li data-value="1">
-                    <span>운동 기록</span>
-                </li>
-                <li data-value="2">
-                    <span>식사 혈당 기록</span>
-                </li>
-                <li data-value="3">
-                    <span>혈당 기록</span>
-                </li>
-
-            </ul>
+    <div class="floating-buttons">
+        <button id="main-toggle-button" class="floating-button">+</button>
+        <div id="menu-buttons" class="hidden">
+            <div class="floating-button-container">
+                <span class="floating-button-text">운동 기록</span>
+                <button id="exercise-button" class="floating-button">+</button>
+            </div>
+            <div class="floating-button-container">
+                <span class="floating-button-text">식사 혈당 기록</span>
+                <button id="meal-sugar-button" class="floating-button">+</button>
+            </div>
+            <div class="floating-button-container">
+                <span class="floating-button-text">혈당 기록</span>
+                <button id="sugar-button" class="floating-button">+</button>
+            </div>
         </div>
     </div>
-
 </div>
 <script src="sugardiary.js"></script>
+<script src="calender.js"></script>
 {% endblock %}

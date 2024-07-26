@@ -40,4 +40,7 @@ router.get("/recipe_list", (req, res) => {
     });
 });
 
+router.get("/bs", (req, res) => {
+    res.render("bs");
+});
 module.exports = router;

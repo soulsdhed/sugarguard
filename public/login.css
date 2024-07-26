@@ -34,6 +34,9 @@
     border: 0;
     color: white;
 }
+#login_main {
+    height: 100vh;
+}
 #login_main a {
     font-size: 10px;
     text-decoration-line: none;

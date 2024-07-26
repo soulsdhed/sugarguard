@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const navIcon4 = document.getElementById("navIcon4");
     const navIcon5 = document.getElementById("navIcon5");
 
-    if (currentUrl == "/recipe_list") {
+    if (currentUrl == "/recipe") {
         navIcon1.classList.add("selected");
         navIcon2.classList.remove("selected");
         navIcon3.classList.remove("selected");
@@ -42,11 +42,11 @@ document.addEventListener("DOMContentLoaded", function () {
         navIcon4.classList.remove("selected");
         navIcon5.classList.remove("selected");
     }
-    if (currentUrl == "/") {
+    if (currentUrl == "/sugardiary") {
         navIcon1.classList.remove("selected");
         navIcon2.classList.remove("selected");
         navIcon3.classList.remove("selected");
-        navIcon4.classList.remove("selected");
+        navIcon4.classList.add("selected");
         navIcon5.classList.remove("selected");
     }
     if (currentUrl == "/mypage") {

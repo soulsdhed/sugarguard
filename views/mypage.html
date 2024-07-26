@@ -1,49 +1,75 @@
 {% extends "index.html" %}{% block content %}
 <link rel="stylesheet" href="mypage.css">
-    <div class="mypage_main">
-        <div class="mypage_profile">
-            <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721711168/%EB%B3%91%EC%9B%90%EC%9D%B4%EB%AA%A8%ED%8B%B0%EC%BD%981_sb8dna.png" alt="">
-            <a href="/login">로그인 해주세요.</a>
+<div class="mypage_main">
+    {% if not userId %}
+    <div class="mypage_profile">
+        <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721891574/%EC%A0%9C%EB%AA%A9%EC%9D%84-%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94_-008_hvrrzh.png"
+            alt="">
+        <a href="/login">로그인 해주세요.</a>
+    </div>
+    {% endif %}
+    {% if userId %}
+    <div class="mypage-chart-title">
+        <span>차트 Report</span>
+    </div>
+    <div class="mypage_blood">
+        <div class="mypage_blood_title">
+            <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721719247/blood_h0b2io.png" alt="">
+            <h3>혈당</h3>
         </div>
-        <div class="mypage_blood">
-            <div class="mypage_blood_title">
-                <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721719247/blood_h0b2io.png" alt="">
-                <h3>혈당</h3>
-            </div>
-            <div class="mypage_blood_title_detail">
-                <h1>95</h1>
-                <h4>mg/dl</h4>
-            </div>
-        </div>
-        <div class="mypage_blood">
-            <div class="mypage_blood_title">
-                <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721719663/002_cuhgi9.png" alt="">
-                <h3>운동</h3>
-            </div>
-            <div class="mypage_blood_title_detail">
-                <h1>00:00</h1>
-                <h4>m</h4>
-            </div>
-        </div>
-        <div class="mypage_blood">
-            <div class="mypage_blood_title">
-                <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721885477/%EC%A0%9C%EB%AA%A9%EC%9D%84_%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94_-005_tvsy8t.png" alt="">
-                <h3>식사</h3>
-            </div>
-            <div class="mypage_blood_title_detail">
-                <h1>00:00</h1>
-                <h4>m</h4>
-            </div>
-        </div>
-        <div class="mypage_blood">
-            <div class="mypage_blood_title">
-                <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721886987/image-removebg-preview_2_i8wb56.png" alt="">
-                <h3>체중</h3>
-            </div>
-            <div class="mypage_blood_title_detail">
-                <h1>000</h1>
-                <h4>kcal</h4>
-            </div>
+        <div id="mypage-blood-sugar-div" class="mypage_blood_title_detail">
+            <h1>--</h1>
+            <h4>mg/dl</h4>
         </div>
     </div>
+    <div class="mypage_blood">
+        <div class="mypage_blood_title">
+            <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721719663/002_cuhgi9.png" alt="">
+            <h3>운동</h3>
+        </div>
+        <div id="mypage-exercise-div" class=" mypage_blood_title_detail">
+            <h1>---</h1>
+            <h4>kacl</h4>
+        </div>
+    </div>
+    <div class="mypage_blood">
+        <div class="mypage_blood_title">
+            <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721885477/%EC%A0%9C%EB%AA%A9%EC%9D%84_%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94_-005_tvsy8t.png"
+                alt="">
+            <h3>식사</h3>
+        </div>
+        <div id="mypage-meal-div" class=" mypage_blood_title_detail">
+            <h1>---</h1>
+            <h4>kcal</h4>
+        </div>
+    </div>
+    <div class="mypage_blood">
+        <div class="mypage_blood_title">
+            <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721888337/image-removebg-preview_3_t28f17.png"
+                alt="">
+            <h3>체중</h3>
+        </div>
+        <div id="mypage-weight-div" class="mypage_blood_title_detail">
+            <h1>--</h1>
+            <h4>kg</h4>
+        </div>
+    </div>
+    <div class="mypage_blood">
+        <div class="mypage_blood_title">
+            <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721983336/%EC%A0%9C%EB%AA%A9%EC%9D%84-%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94_-009_basbm8.png"
+                alt="">
+            <h3>혈압</h3>
+        </div>
+        <div id="mypage-blood-pressure-div" class="mypage_blood_title_detail">
+            <h1>--~---</h1>
+            <h4>mmHg</h4>
+        </div>
+    </div>
+
+    <button id="mypage-logout-button">로그아웃</button>
+    {% endif %}
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="mypage.js"></script>
 {% endblock %}

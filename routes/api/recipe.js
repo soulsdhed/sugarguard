@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const axios = require('axios');
+const axios = require("axios");
 const db = require("../../conf/db");
 const authenticateToken = require("../../middlewares/authenticateToken");
 const { isValidURL } = require("../../utils/validation");
@@ -26,17 +26,20 @@ router.get("/", authenticateToken, async (req, res, next) => {
 
     // Flask 서버로 해당 내용을 보내서, have 추출
     try {
-        const response = await axios.post('http://localhost:5000/api/ingredients-detection', {
-            image_url: photo_url
-        });
+        const response = await axios.post(
+            "http://localhost:5000/api/ingredients-detection",
+            {
+                image_url: photo_url,
+            }
+        );
         // console.log(response);
 
         // have를 사진에서 추출
         have = response.data.ingredients_names;
     } catch (e) {
         return next({
-            code: "SERVER_SERVICE_UNAVAILABLE"
-        })
+            code: "SERVER_SERVICE_UNAVAILABLE",
+        });
     }
 
     // max count : 10
@@ -225,8 +228,8 @@ router.post("/", authenticateToken, (req, res, next) => {
     // 요리 시간 : 5분이내, 10분이내, 15분이내, 20분이내, 30분이내, 60분이내, 90분이내, 2시간이내, 2시간이상
     // 난이도 : 아무나, 초급, 중급, 고급, 신의경지
 
+    const { userId } = req.user;
     const {
-        userId,
         recipe_name,
         cooking_method,
         meal_category,
@@ -251,7 +254,11 @@ router.post("/", authenticateToken, (req, res, next) => {
         !dish_type ||
         !instructions ||
         !ingredients ||
-        !description
+        !description ||
+        !photo_url ||
+        !recipe_amount ||
+        !recipe_time ||
+        !recipe_difficult
     ) {
         return next({
             code: "VALIDATION_MISSING_FIELD",
@@ -326,7 +333,7 @@ router.post("/", authenticateToken, (req, res, next) => {
 });
 
 // 레시피 조회
-router.get("/:recipe_id", authenticateToken, (req, res, next) => {
+router.get("/:recipe_id", (req, res, next) => {
     const { recipe_id } = req.params;
 
     const query = `
@@ -361,11 +368,11 @@ router.get("/:recipe_id", authenticateToken, (req, res, next) => {
 
 // 레시피 승인
 router.patch("/", authenticateToken, (req, res, next) => {
-    const { recipe_id } = req.body;
     const { userId } = req.user;
+    const { recipe_id } = req.body;
 
-    // admin 확인 (일단 이렇게)
-    if (userId !== "Admin") {
+    // admin 확인
+    if (userId !== "administrator") {
         return next({
             code: "AUTH_UNAUTHORIZED",
         });

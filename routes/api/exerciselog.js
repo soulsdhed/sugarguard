@@ -40,6 +40,13 @@ router.get("/", authenticateToken, (req, res, next) => {
                 code: "VALIDATION_MISSING_FIELD",
             });
         }
+        // startDate가 endDate보다 더 뒤인 경우
+        if (new Date(startDate) > new Date(endDate)) {
+            return next({
+                code: "VALIDATION_ERROR",
+            });
+        }
+
         const startDateTime = `${startDate} 00:00:00`;
         const endDateTime = `${endDate} 23:59:59`;
 
@@ -72,8 +79,8 @@ router.get("/", authenticateToken, (req, res, next) => {
 
 // 운동 기록 등록
 router.post("/", authenticateToken, (req, res, next) => {
+    const { userId } = req.user;
     const {
-        userId,
         record_time,
         exercise_type,
         exercise_time,
@@ -144,9 +151,9 @@ router.post("/", authenticateToken, (req, res, next) => {
 
 // 운동 기록 수정
 router.patch("/", authenticateToken, (req, res, next) => {
+    const { userId } = req.user;
     const {
         el_id,
-        userId,
         record_time,
         exercise_type,
         exercise_time,
@@ -226,6 +233,38 @@ router.patch("/", authenticateToken, (req, res, next) => {
 
         // 성공
         res.success({ data });
+    });
+});
+
+// 가장 최근 기록 가져오기
+router.get("/recent", authenticateToken, (req, res, next) => {
+    const { userId } = req.user;
+
+    const query = `SELECT
+            el_id,
+            member_id,
+            record_time,
+            exercise_type,
+            exercise_time,
+            calories_burned,
+            comments
+        FROM EXERCISE_LOG_TB
+        WHERE member_id = ?
+        ORDER BY record_time DESC
+        LIMIT 1;
+    `;
+    db.execute(query, [userId], (err, rows) => {
+        if (err) {
+            console.log(err);
+            return next({
+                code: "SERVER_INTERNAL_ERROR",
+            });
+        }
+
+        return res.success({
+            count: rows.length,
+            exercise_logs: rows,
+        });
     });
 });
 

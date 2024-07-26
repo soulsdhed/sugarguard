@@ -209,4 +209,36 @@ router.patch("/", authenticateToken, (req, res, next) => {
         res.success({ data });
     });
 });
+
+// 가장 최근 기록 가져오기
+router.get("/recent", authenticateToken, (req, res, next) => {
+    const { userId } = req.user;
+
+    const query = `SELECT
+            bpl_id,
+            member_id,
+            record_time,
+            blood_pressure_min,
+            blood_pressure_max,
+            comments
+        FROM BLOOD_PRESSURE_LOG_TB
+        WHERE member_id = ?
+        ORDER BY record_time DESC
+        LIMIT 1;
+    `;
+    db.execute(query, [userId], (err, rows) => {
+        if (err) {
+            console.log(err);
+            return next({
+                code: "SERVER_INTERNAL_ERROR",
+            });
+        }
+
+        return res.success({
+            count: rows.length,
+            blood_pressure_logs: rows,
+        });
+    });
+});
+
 module.exports = router;

@@ -32,7 +32,7 @@ h2{
     height: 5%;
 }
 
-#join_new{
+.join_new{
     border: 0;
     border-bottom: solid 1px black;
     border-radius: 0;

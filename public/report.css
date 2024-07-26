@@ -1,95 +1,384 @@
-#report-title{
-    margin-top: 17px;
-    margin-bottom: 17px;
-    font-size: 20px;
-    text-align: center;
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+@font-face {
+  font-family: 'Freesentation';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-1Thin.woff2') format('woff2');
+  font-weight: 100;
+  font-style: normal;
 }
+
+@font-face {
+  font-family: 'Freesentation';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-2ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Freesentation';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-3Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Freesentation';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-4Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Freesentation';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-5Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Freesentation';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-6SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Freesentation';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-7Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Freesentation';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-8ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Freesentation';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-9Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+}
+
+#report-title {
+  margin-top: 17px;
+  margin-bottom: 17px;
+  font-size: 20px;
+  text-align: center;
+  font-family: Pretendard;
+  font-weight: 600;
+}
+
 nav {
-    position: relative;
-    padding-bottom: 12px;
-    
-  }
-  nav .line {
-    height: 2px;
-    position: absolute;
-    bottom: 0;
-    margin: 10px 0 0 0;
-    background: #FF1847;
-  }
-  nav ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    display: flex;
-  }
-  nav ul li {
-      margin: 0 80px 0 0;
-      margin-top: 20px;
-    opacity: 0.4;
-    transition: all 0.4s ease;
-  }
-  nav ul li:hover {
-    opacity: 0.7;
-  }
-  nav ul li.active {
-    opacity: 1;
-  }
-  nav ul li:last-child {
-    margin-right: 0;
-  }
-  nav ul li a {
-    text-decoration: none;
-    color: #343434;
-    text-transform: uppercase;
-    display: block;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    font-size: 18px;
-  }
-  .tab{
-    display: flex;
-    justify-content: center;
+  position: relative;
+  padding-bottom: 12px;
+
 }
+
+nav .line {
+  height: 2px;
+  position: absolute;
+  bottom: 0;
+  margin: 10px 0 0 0;
+  background: #FF1847;
+}
+
+nav ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+}
+
+nav ul li {
+  margin: 0 80px 0 0;
+  margin-top: 20px;
+  opacity: 0.4;
+  transition: all 0.4s ease;
+}
+
+nav ul li:hover {
+  opacity: 0.7;
+}
+
+nav ul li.active {
+  opacity: 1;
+}
+
+nav ul li:last-child {
+  margin-right: 0;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #343434;
+  text-transform: uppercase;
+  display: block;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  font-size: 18px;
+}
+
+.tab {
+  display: flex;
+  justify-content: center;
+}
+
 .report-content {
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column;
-    background-color: #d5d5d5;
-    height: 140px;
-    border-radius: 20px;
-    padding: 4%;
-    justify-content: space-between; /* 요소들을 수직 방향으로 간격을 자동 조정 */
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  background-color: #d5d5d5;
+  height: 140px;
+  border-radius: 20px;
+  padding: 4%;
+  justify-content: space-between;
+  /* 요소들을 수직 방향으로 간격을 자동 조정 */
 }
 
 #content-result1 {
-    text-align: left;
-    color: rgb(71, 71, 71);
-    font-size: 16px;
+  text-align: left;
+  color: rgb(71, 71, 71);
+  font-size: 16px;
+  font-family: Freesentation;
+  font-weight: 600;
+
 }
 
 #container-result {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end; /* 내부 요소들을 아래쪽에 정렬 */
-    margin-bottom: 13px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  /* 내부 요소들을 아래쪽에 정렬 */
+  margin-bottom: 13px;
 }
 
 #content-result2 {
-    color: #343434;
-    font-size: 32px;
-    font-weight: bold;
-    margin-right: 10px; /* 기원전과 20511년 사이의 간격 조정 */
+  color: #343434;
+  font-size: 32px;
+  font-weight: bold;
+  margin-right: 5px;
 }
 
 #content-result3 {
-    text-align: left;
-    color: rgb(71, 71, 71);
-    font-size: 16px;
+  text-align: left;
+  color: rgb(71, 71, 71);
+  font-size: 16px;
+  padding-bottom: 5px;
 }
+
 .chart-container {
-    width: 100%;
-    height: 500px;
-    max-width: 480px;
-    margin: 0 auto;
-    padding-top: 20px;
+  width: 100%;
+  height: 500px;
+  max-width: 480px;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-size: 24px;
+  z-index: 9999;
+}
+
+/* .loader {
+  animation: rotate 1s infinite;
+  height: 50px;
+  width: 50px;
+}
+
+.loader:before,
+.loader:after {
+  border-radius: 50%;
+  content: '';
+  display: block;
+  height: 20px;
+  width: 20px;
+}
+
+.loader:before {
+  animation: ball1 1s infinite;
+  background-color: #cb2025;
+  box-shadow: 30px 0 0 #f8b334;
+  margin-bottom: 10px;
+}
+
+.loader:after {
+  animation: ball2 1s infinite;
+  background-color: #00a096;
+  box-shadow: 30px 0 0 #97bf0d;
+}
+
+@keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0deg) scale(0.8);
+    -moz-transform: rotate(0deg) scale(0.8);
+  }
+
+  50% {
+    -webkit-transform: rotate(360deg) scale(1.2);
+    -moz-transform: rotate(360deg) scale(1.2);
+  }
+
+  100% {
+    -webkit-transform: rotate(720deg) scale(0.8);
+    -moz-transform: rotate(720deg) scale(0.8);
+  }
+}
+
+@keyframes ball1 {
+  0% {
+    box-shadow: 30px 0 0 #f8b334;
+  }
+
+  50% {
+    box-shadow: 0 0 0 #f8b334;
+    margin-bottom: 0;
+    -webkit-transform: translate(15px, 15px);
+    -moz-transform: translate(15px, 15px);
+  }
+
+  100% {
+    box-shadow: 30px 0 0 #f8b334;
+    margin-bottom: 10px;
+  }
+}
+
+@keyframes ball2 {
+  0% {
+    box-shadow: 30px 0 0 #97bf0d;
+  }
+
+  50% {
+    box-shadow: 0 0 0 #97bf0d;
+    margin-top: -20px;
+    -webkit-transform: translate(15px, 15px);
+    -moz-transform: translate(15px, 15px);
+  }
+
+  100% {
+    box-shadow: 30px 0 0 #97bf0d;
+    margin-top: 0;
+  }
+} */
+
+.spinner {
+  -webkit-animation: rotator 1.4s linear infinite;
+  animation: rotator 1.4s linear infinite;
+}
+
+@-webkit-keyframes rotator {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(270deg);
+  }
+}
+
+@keyframes rotator {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(270deg);
+  }
+}
+
+.path {
+  stroke-dasharray: 187;
+  stroke-dashoffset: 0;
+  transform-origin: center;
+  -webkit-animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+  animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+}
+
+@-webkit-keyframes colors {
+  0% {
+    stroke: #4285F4;
+  }
+
+  25% {
+    stroke: #DE3E35;
+  }
+
+  50% {
+    stroke: #F7C223;
+  }
+
+  75% {
+    stroke: #1B9A59;
+  }
+
+  100% {
+    stroke: #4285F4;
+  }
+}
+
+@keyframes colors {
+  0% {
+    stroke: #4285F4;
+  }
+
+  25% {
+    stroke: #DE3E35;
+  }
+
+  50% {
+    stroke: #F7C223;
+  }
+
+  75% {
+    stroke: #1B9A59;
+  }
+
+  100% {
+    stroke: #4285F4;
+  }
+}
+
+@-webkit-keyframes dash {
+  0% {
+    stroke-dashoffset: 187;
+  }
+
+  50% {
+    stroke-dashoffset: 46.75;
+    transform: rotate(135deg);
+  }
+
+  100% {
+    stroke-dashoffset: 187;
+    transform: rotate(450deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 187;
+  }
+
+  50% {
+    stroke-dashoffset: 46.75;
+    transform: rotate(135deg);
+  }
+
+  100% {
+    stroke-dashoffset: 187;
+    transform: rotate(450deg);
+  }
 }

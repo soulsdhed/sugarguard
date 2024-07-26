@@ -1,75 +1,170 @@
 {% extends "index.html" %}{% block content %}
-<link rel="stylesheet" href="recipe.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="recipe.css" />
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+/>
 
 <div id="content">
     <div id="recipe-title">
-        <a href="#" id="recipe-page-background"><img src="recipe-background.png" alt=""><br></a>
+        <a href="/" id="recipe-page-background"
+            ><img src="recipe-background.png" alt="" /><br
+        /></a>
         <h4>레시피 페이지</h4>
     </div>
     <div id="recipe-name">
         <h2>육류</h2>
-        <a href="#" class="toggle-active"><img src="beef.png" alt=""><br><span>소</span></a>
-        <a href="#" class="toggle-active"><img src="pig.png" alt=""><br><span>돼지</span></a>
-        <a href="#" class="toggle-active"><img src="chiken.png" alt=""><br><span>닭</span></a>
-        <a href="#" class="toggle-active"><img src="duck.png" alt=""><br><span>오리고기</span></a>
-        <a href="#" class="toggle-active"><img src="sheep.png" alt=""><br><span>양고기</span></a>
-        <a href="#" class="toggle-active"><img src="mackerel.png" alt=""><br><span>고등어</span></a>
-        <a href="#" class="toggle-active"><img src="salmon.png" alt=""><br><span>연어</span></a>
-        <a href="#" class="toggle-active"><img src="tuna.png" alt=""><br><span>참치</span></a>
+        <a href="#" class="toggle-active"
+            ><img src="beef.png" alt="" /><br /><span>소</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="pig.png" alt="" /><br /><span>돼지</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="chiken.png" alt="" /><br /><span>닭</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="duck.png" alt="" /><br /><span>오리고기</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="sheep.png" alt="" /><br /><span>양고기</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="mackerel.png" alt="" /><br /><span>고등어</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="salmon.png" alt="" /><br /><span>연어</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="tuna.png" alt="" /><br /><span>참치</span></a
+        >
         <h2>야채</h2>
-        <a href="#" class="toggle-active"><img src="onion.png" alt=""><br><span>양파</span></a>
-        <a href="#" class="toggle-active"><img src="carrot.png" alt=""><br><span>당근</span></a>
-        <a href="#" class="toggle-active"><img src="tomato.png" alt=""><br><span>토마토</span></a>
-        <a href="#" class="toggle-active"><img src="mushiroom.png" alt=""><br><span>버섯</span></a>
-        <a href="#" class="toggle-active"><img src="cabbage.png" alt=""><br><span>양배추</span></a>
-        <a href="#" class="toggle-active"><img src="cucumber.png" alt=""><br><span>오이</span></a>
-        <a href="#" class="toggle-active"><img src="potato.png" alt=""><br><span>감자</span></a>
-        <a href="#" class="toggle-active"><img src="sweetpotato.png" alt=""><br><span>고구마</span></a>
-        <a href="#" class="toggle-active"><img src="garlic.png" alt=""><br><span>마늘</span></a>
-        <a href="#" class="toggle-active"><img src="broccoli.png" alt=""><br><span>브로콜리</span></a>
-        <a href="#" class="toggle-active"><img src="greenonion.png" alt=""><br><span>대파</span></a>
-        <a href="#" class="toggle-active"><img src="radish.png" alt=""><br><span>무</span></a>
+        <a href="#" class="toggle-active"
+            ><img src="onion.png" alt="" /><br /><span>양파</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="carrot.png" alt="" /><br /><span>당근</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="tomato.png" alt="" /><br /><span>토마토</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="mushiroom.png" alt="" /><br /><span>버섯</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="cabbage.png" alt="" /><br /><span>양배추</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="cucumber.png" alt="" /><br /><span>오이</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="potato.png" alt="" /><br /><span>감자</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="sweetpotato.png" alt="" /><br /><span>고구마</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="garlic.png" alt="" /><br /><span>마늘</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="broccoli.png" alt="" /><br /><span>브로콜리</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="greenonion.png" alt="" /><br /><span>대파</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="radish.png" alt="" /><br /><span>무</span></a
+        >
         <h2>견과류</h2>
-        <a href="#" class="toggle-active"><img src="peanut.png" alt=""><br><span>땅콩</span></a>
-        <a href="#" class="toggle-active"><img src="almond.png" alt=""><br><span>아몬드</span></a>
-        <a href="#" class="toggle-active"><img src="walnut.png" alt=""><br><span>호두</span></a>
-        <a href="#" class="toggle-active"><img src="pistachio.png" alt=""><br><span>피스타치오</span></a>
+        <a href="#" class="toggle-active"
+            ><img src="peanut.png" alt="" /><br /><span>땅콩</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="almond.png" alt="" /><br /><span>아몬드</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="walnut.png" alt="" /><br /><span>호두</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="pistachio.png" alt="" /><br /><span>피스타치오</span></a
+        >
         <h2>조미료</h2>
-        <a href="#" class="toggle-active"><img src="salt.png" alt=""><br><span>소금</span></a>
-        <a href="#" class="toggle-active"><img src="pepper.png" alt=""><br><span>후추</span></a>
-        <a href="#" class="toggle-active"><img src="soysauce.png" alt=""><br><span>간장</span></a>
-        <a href="#" class="toggle-active"><img src="redpepper.png" alt=""><br><span>고추가루</span></a>
-        <a href="#" class="toggle-active"><img src="chilipepperpaste.png" alt=""><br><span>고추장</span></a>
-        <a href="#" class="toggle-active"><img src="soybeanpaste.png" alt=""><br><span>된장</span></a>
-        <a href="#" class="toggle-active"><img src="vinegar.png" alt=""><br><span>식초</span></a>
-        <a href="#" class="toggle-active"><img src="oliveoile.png" alt=""><br><span>올리브유</span></a>
+        <a href="#" class="toggle-active"
+            ><img src="salt.png" alt="" /><br /><span>소금</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="pepper.png" alt="" /><br /><span>후추</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="soysauce.png" alt="" /><br /><span>간장</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="redpepper.png" alt="" /><br /><span>고추가루</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="chilipepperpaste.png" alt="" /><br /><span
+                >고추장</span
+            ></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="soybeanpaste.png" alt="" /><br /><span>된장</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="vinegar.png" alt="" /><br /><span>식초</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="oliveoile.png" alt="" /><br /><span>올리브유</span></a
+        >
 
         <!-- % if userId % -->
         <h2>조리양</h2>
-        <a href="#" class="toggle-active"><img src="1.png" alt=""><br><span>1인분</span></a>
-        <a href="#" class="toggle-active"><img src="2.png" alt=""><br><span>2인분</span></a>
-        <a href="#" class="toggle-active"><img src="3.png" alt=""><br><span>3인분</span></a>
-        <a href="#" class="toggle-active"><img src="4.png" alt=""><br><span>4인분이상</span></a>
+        <a href="#" class="toggle-active"
+            ><img src="1.png" alt="" /><br /><span>1인분</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="2.png" alt="" /><br /><span>2인분</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="3.png" alt="" /><br /><span>3인분</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="4.png" alt="" /><br /><span>4인분이상</span></a
+        >
         <h2>요리시간</h2>
-        <a href="#" class="toggle-active"><img src="15.png" alt=""><br><span>15분</span></a>
-        <a href="#" class="toggle-active"><img src="30.png" alt=""><br><span>30분</span></a>
-        <a href="#" class="toggle-active"><img src="60.png" alt=""><br><span>60분</span></a>
-        <a href="#" class="toggle-active"><img src="120.png" alt=""><br><span>2시간이상</span></a>
+        <a href="#" class="toggle-active"
+            ><img src="15.png" alt="" /><br /><span>15분</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="30.png" alt="" /><br /><span>30분</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="60.png" alt="" /><br /><span>60분</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="120.png" alt="" /><br /><span>2시간이상</span></a
+        >
         <h2>요리난이도</h2>
-        <a href="#" class="toggle-active"><img src="veryeasy.png" alt=""><br><span>아무나</span></a>
-        <a href="#" class="toggle-active"><img src="easy.png" alt=""><br><span>초급</span></a>
-        <a href="#" class="toggle-active"><img src="normal.png" alt=""><br><span>중급</span></a>
-        <a href="#" class="toggle-active"><img src="hard.png" alt=""><br><span>고급</span></a>
+        <a href="#" class="toggle-active"
+            ><img src="veryeasy.png" alt="" /><br /><span>아무나</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="easy.png" alt="" /><br /><span>초급</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="normal.png" alt="" /><br /><span>중급</span></a
+        >
+        <a href="#" class="toggle-active"
+            ><img src="hard.png" alt="" /><br /><span>고급</span></a
+        >
         <!-- % endif % -->
     </div>
     <div id="recipe-bar">
         <span>추가 재료</span>
-        <input type="text" name="" id="">
+        <input type="text" name="" id="" />
         <button id="search-button">추천</button>
         <!-- % if userId % -->
         <button id="recipe-camera"><i class="fas fa-camera"></i></button>
-        <input type="file" accept="image/*" capture="camera" id="cameraInput">
+        <input type="file" accept="image/*" capture="camera" id="cameraInput" />
         <!-- % endif % -->
     </div>
 </div>

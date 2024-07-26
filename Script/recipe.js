@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
             anchor.classList.toggle("active"); // 'active' 클래스 토글
         });
     });
+
     // 검색 버튼 클릭 이벤트 핸들러 추가
     document.getElementById("search-button").addEventListener("click", (e) => {
         e.preventDefault(); // 폼의 기본 동작 방지
@@ -17,8 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
         activeLinks.forEach((link) => {
             console.log(link.querySelector("span").textContent);
         });
+
+        // TODO : 이미지 없는 레시피 추천
     });
 });
+
 // 카메라 앱 작동 (버튼)
 document.getElementById("recipe-camera").addEventListener("click", (e) => {
     e.preventDefault();
@@ -72,8 +76,9 @@ document
                 // });
 
                 event.target.value = "";
-            } catch (e) {
-                console.log(e);
+            } catch (err) {
+                console.log(err);
+                //TODO : 오류 핸들링 필요
             }
         }
     });

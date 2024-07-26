@@ -42,5 +42,11 @@ router.get("/recipe_list", (req, res) => {
 
 router.get("/bs", (req, res) => {
     res.render("bs");
-});
+}); // 김희은
+
+router.get("/exercise", (req, res) => {
+    res.render("exercise");
+}); // 김희은
+
+
 module.exports = router;

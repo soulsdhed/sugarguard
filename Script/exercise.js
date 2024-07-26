@@ -80,120 +80,66 @@ function displayCurrentTime() {
 displayCurrentTime();
 
 
-// HTML 요소들을 가져오기
-const mySelect = document.getElementById('mySelect');
-const div2 = document.getElementById('div2');
-const div3 = document.getElementById('div3');
 
 
-// 초기화할 때 div2의 초기 내용 저장
-const initialDiv2Content = div2.innerHTML;
+  
+  // 운동 별 일반적인 1시간당 칼로리 소모량 (kg 당 칼로리)
+  const exerciseCalories = {
+    '걷기': 3.5,
+    '조깅': 7.0,
+    '수영(경쟁)': 10.0,
+    '수영(레저)': 6.0,
+    '자전거 타기(보통)': 7.5,
+    '자전거 타기(고속)': 10.0,
+    '골프(보통)': 4.5,
+    '골프(카트 타기)': 2.5,
+    '테니스': 7.0,
+    '배드민턴': 5.5,
+    '스쿼시': 9.0,
+    '야구': 5.5,
+    '축구': 7.0,
+    '농구': 6.0,
+    '볼링': 3.0,
+    '줄넘기': 12.0,
+    '계단 오르내리기': 8.0,
+    '체조(경륜)': 8.0,
+    '스트레칭': 2.5,
+    '요가': 3.0,
+    '필라테스': 3.5,
+    '중량 훈련(보통)': 5.0,
+    '중량 훈련(강도 높음)': 7.0,
+    '줄다리기': 10.0,
+    '헬스 머신(런닝 머신, 엘리프티컬 등)': 7.0,
+    '체육 수업(보통)': 6.0,
+    '댄스(고강도)': 8.0,
+    '댄스(저강도)': 4.5,
+    '체육 수업(고강도)': 8.0,
+    '댄스(집에서)': 4.0
+  };
 
-// select 요소의 onchange 이벤트 핸들러 설정
-mySelect.addEventListener('change', function () {
-    const selectedOption = mySelect.value;
-
-
-    if (selectedOption === 'option1') {
-        // 다른 옵션이 선택된 경우 div2를 숨기고 초기 내용으로 복원
-        div3.style.display = 'none';
-        div2.innerHTML = initialDiv2Content;
-        // div3의 내용을 숨기고 초기화
-        div3.style.visibility = 'hidden';
-    } else if (selectedOption === 'option2') {
-        div3.style.display = 'none';
-        div2.innerHTML = initialDiv2Content;
-        div3.style.visibility = 'hidden';
-    } else if (selectedOption === 'option3') {
-        div3.style.display = 'none';
-        div2.innerHTML = initialDiv2Content;
-    } else if (selectedOption === 'option4') {
-        // 옵션 4 선택 시 div3의 내용을 div2로 이동
-        const div3Content = div3.innerHTML;
-        div2.innerHTML = div3Content;
-        div2.style.display = ''; // div2를 보이게 설정
-
-        // div3의 내용 초기화 (선택 시 필요에 따라)
-        // div3.innerHTML = '';
-    } else if (selectedOption === 'option5') {
-        const div3Content = div3.innerHTML;
-        div2.innerHTML = div3Content;
-        div2.style.display = '';
-    } else if (selectedOption === 'option6') {
-        const div3Content = div3.innerHTML;
-        div2.innerHTML = div3Content;
-        div2.style.display = '';
-    }
-
-});
-
-
-
-
-// 사용자가 입력한 시간 설정 함수
-function setTime() {
-    const hour = document.getElementById('hour').value;
-    const minute = document.getElementById('minute').value;
-    const second = document.getElementById('second').value;
-
-    // 유효성 검사 - 각 입력 필드가 숫자이고 범위 내에 있는지 확인
-    if (isNaN(hour) || isNaN(minute) || isNaN(second) ||
-        hour < 0 || hour > 23 ||
-        minute < 0 || minute > 59 ||
-        second < 0 || second > 59) {
-        alert('올바른 시간을 입력하세요.');
-        return;
-    }
-
-    // 입력된 시간으로 시간 설정
-    const newTime = new Date();
-    newTime.setHours(parseInt(hour, 10));
-    newTime.setMinutes(parseInt(minute, 10));
-    newTime.setSeconds(parseInt(second, 10));
-
-    // 설정된 시간을 표시
-    const hours = String(newTime.getHours()).padStart(2, '0');
-    const minutes = String(newTime.getMinutes()).padStart(2, '0');
-    const seconds = String(newTime.getSeconds()).padStart(2, '0');
-    const setTimeString = `${hours}:${minutes}:${seconds}`;
-    document.getElementById('current-time').textContent = setTimeString;
-
-
-    // 시간 입력 폼 숨기기
-    document.getElementById('time-input').style.display = 'none';
-}
-
-
-
-function checkLevelBsBefore() {
-    let inputValue = parseFloat(document.getElementById('recordBsBefore').value);
-    let resultBox1 = document.getElementById('resultBox1');
-
-    if (isNaN(inputValue)) {
-        resultBox1.style.backgroundColor = '#FFFFFF';  // 입력 값이 숫자가 아닌 경우 흰색
-    } else if (inputValue < 100) {
-        resultBox1.style.backgroundColor = '#66CC66';  // 초록색 (정상)
-    } else if (inputValue >= 100 && inputValue <= 126) {
-        resultBox1.style.backgroundColor = '#FFFF99';  // 노란색 (경고)
+  // 운동별 칼로리 소모 계산 함수
+  function calculateCalories(exercise, duration) {
+    if (exercise in exerciseCalories) {
+      const caloriesPerHour = exerciseCalories[exercise];
+      const caloriesBurned = (caloriesPerHour * duration) / 60;
+      return caloriesBurned.toFixed(2);  // 소수점 2자리까지 표시
     } else {
-        resultBox1.style.backgroundColor = '#FF9999';  // 빨간색 (위험)
+      return '운동을 찾을 수 없습니다.';
     }
-}
+  }
 
+  // 폼 제출 이벤트 처리
+  const form = document.getElementById('calorieForm');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault(); // 기본 제출 동작 방지
 
-function checkLevelBsAfter() {
-    let inputValue2 = parseFloat(document.getElementById('recordBsAfter').value);
-    let resultBox2 = document.getElementById('resultBox2');
+    const exercise = document.getElementById('exerciseSelect').value;
+    // const weight = document.getElementById('weightInput').value;
+    const duration = document.getElementById('durationInput').value;
 
-    if (isNaN(inputValue2)) {
-        resultBox2.style.backgroundColor = '#FFFFFF';  // 입력 값이 숫자가 아닌 경우 흰색
-    } else if (inputValue2 < 140) {
-        resultBox2.style.backgroundColor = '#66CC66';  // 초록색 (정상)
-    } else if (inputValue2 >= 140 && inputValue2 < 200) {
-        resultBox2.style.backgroundColor = '#FFFF99';  // 노란색 (경고)
-    } else {
-        resultBox2.style.backgroundColor = '#FF9999';  // 빨간색 (위험)
-    }
-}
+    const burnedCalories = calculateCalories(exercise,duration);
 
-
+    // 결과를 HTML에 표시
+    const resultElement = document.getElementById('result');
+    resultElement.innerHTML = `<p>${duration}분 동안 ${exercise}을(를) 하면 약 <strong>${burnedCalories}kcal</strong> 소모됩니다.</p>`;
+  });

@@ -15,8 +15,6 @@ router.get("/", authenticateToken, (req, res, next) => {
                     member_id, 
                     record_date,
                     meal_time, 
-                    pre_meal_sugar, 
-                    post_meal_sugar, 
                     medication,
                     meal_info,
                     calories,
@@ -44,6 +42,13 @@ router.get("/", authenticateToken, (req, res, next) => {
                 code: "VALIDATION_MISSING_FIELD",
             });
         }
+        // startDate가 endDate보다 더 뒤인 경우
+        if (new Date(startDate) > new Date(endDate)) {
+            return next({
+                code: "VALIDATION_ERROR",
+            });
+        }
+
         const startDateTime = `${startDate} 00:00:00`;
         const endDateTime = `${endDate} 23:59:59`;
 
@@ -52,8 +57,6 @@ router.get("/", authenticateToken, (req, res, next) => {
                     member_id, 
                     record_date,
                     meal_time, 
-                    pre_meal_sugar, 
-                    post_meal_sugar, 
                     medication,
                     meal_info,
                     calories,
@@ -79,17 +82,17 @@ router.get("/", authenticateToken, (req, res, next) => {
 
 // 식사 기록 등록
 router.post("/", authenticateToken, (req, res, next) => {
+    const { userId } = req.user;
     const {
-        userId,
         record_date = new Date(new Date().setHours(0, 0, 0, 0)),
         meal_time,
-        pre_meal_sugar,
-        post_meal_sugar,
         medication,
         meal_info,
         calories,
         comments,
     } = req.body;
+
+    // TODO : 식사 사진 받도록 (DB도 수정)
 
     if (!userId || !meal_time) {
         return next({
@@ -111,16 +114,6 @@ router.post("/", authenticateToken, (req, res, next) => {
         creates.push("meal_time");
         params.push(meal_time);
         data["meal_time"] = meal_time;
-    }
-    if (pre_meal_sugar !== null && pre_meal_sugar !== undefined) {
-        creates.push("pre_meal_sugar");
-        params.push(pre_meal_sugar);
-        data["pre_meal_sugar"] = pre_meal_sugar;
-    }
-    if (post_meal_sugar !== null && post_meal_sugar !== undefined) {
-        creates.push("post_meal_sugar");
-        params.push(post_meal_sugar);
-        data["post_meal_sugar"] = post_meal_sugar;
     }
     if (medication !== null && medication !== undefined) {
         creates.push("medication");
@@ -169,13 +162,11 @@ router.post("/", authenticateToken, (req, res, next) => {
 
 // 식사 기록 수정
 router.patch("/", authenticateToken, (req, res, next) => {
+    const { userId } = req.user;
     const {
         ml_id,
-        userId,
         record_date,
         meal_time,
-        pre_meal_sugar,
-        post_meal_sugar,
         medication,
         meal_info,
         calories,
@@ -209,21 +200,6 @@ router.patch("/", authenticateToken, (req, res, next) => {
         updates.push("meal_time = ?");
         params.push(meal_time);
         data["meal_time"] = meal_time;
-    }
-    if (pre_meal_sugar !== null && pre_meal_sugar !== undefined) {
-        updates.push("pre_meal_sugar = ?");
-        params.push(pre_meal_sugar);
-        data["pre_meal_sugar"] = pre_meal_sugar;
-    }
-    if (post_meal_sugar !== null && post_meal_sugar !== undefined) {
-        updates.push("post_meal_sugar = ?");
-        params.push(post_meal_sugar);
-        data["post_meal_sugar"] = post_meal_sugar;
-    }
-    if (post_meal_sugar !== null && post_meal_sugar !== undefined) {
-        updates.push("post_meal_sugar = ?");
-        params.push(post_meal_sugar);
-        data["post_meal_sugar"] = post_meal_sugar;
     }
     if (medication !== null && medication !== undefined) {
         updates.push("medication = ?");

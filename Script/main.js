@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
             datasets: [
                 {
                     label: "Data 1",
-                    data: getRandomValues(7, 200, 2000),
+                    data: getRandomValues(10, 200, 2000),
                     borderColor: "rgba(255, 99, 132, 1)", // 빨간색
                     backgroundColor: "rgba(255, 99, 132, 0.1)",
                     pointBackgroundColor: "rgba(255, 99, 132, 1)",
@@ -44,21 +44,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     pointRadius: 0,
                     fill: true,
                 },
-                // {
-                //     label: "Data 2",
-                //     data: getRandomValues(7, 200, 2000),
-                //     borderColor: "rgba(30, 230, 80, 1)", // 초록색
-                //     pointBackgroundColor: "rgba(75, 192, 192, 1)",
-                //     pointBorderColor: "#fff",
-                //     pointHoverBackgroundColor: "#fff",
-                //     pointHoverBorderColor: "rgba(75, 192, 192, 1)",
-                //     tension: 0.4,
-                //     pointRadius: 0,
-                //     fill: true,
-                // },
                 {
                     label: "Data 3",
-                    data: getRandomValues(7, 200, 2000),
+                    data: getRandomValues(10, 50, 1500),
                     borderColor: "rgba(54, 102, 220, 1)", // 파란색
                     backgroundColor: "rgba(54, 102, 220, 0.1)",
                     pointBackgroundColor: "rgba(54, 162, 235, 1)",
@@ -69,17 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     pointRadius: 0,
                     fill: true,
                 },
-                // {
-                //     label: "Data 4",
-                //     data: getRandomValues(7, 200, 2000),
-                //     borderColor: "rgba(54, 102, 220, 1)", // 파란색
-                //     pointBackgroundColor: "rgba(54, 162, 235, 1)",
-                //     pointBorderColor: "#fff",
-                //     pointHoverBackgroundColor: "#fff",
-                //     pointHoverBorderColor: "rgba(54, 162, 235, 1)",
-                //     tension: 0.4,
-                //     pointRadius: 0,
-                // },
             ],
         };
     };

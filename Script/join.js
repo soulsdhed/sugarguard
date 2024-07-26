@@ -1,18 +1,46 @@
+
 //한 버튼에 여러 함수를 이용할 수 있도록하는 함
 function handleButtonClick(event) {
     event.preventDefault(); // 기본 제출 동작 방지
     addInput(event);
     textChange(event);
     focus();
-    adjustButtonPosition()
+    postRequest();
 }
 const placeholders = [
     "닉네임",
     "이메일",
+    "아이디",
     "비밀번호",
     "성별",
     "생년월일"
 ];
+const join_db_list =[
+    "nickname",
+    "email",
+    "id",
+    "password",
+    "gender",
+    "birthDate"
+]
+async function postRequest() {
+    try {
+        const response = await axios.post('http://localhost:3000', {
+            userId: "id",
+            password: 'password',
+            nickname: 'nickname',
+            email:'email',
+            gender:'gender',
+            birthDate:'birthDate'
+        }, {
+            withCredentials: true
+        });
+        // output.innerHTML = `<pre>${JSON.stringify(response.data, null, 2)}</pre>`;
+    } catch (error) {
+        console.error('There was an error!', error);
+        // output.innerHTML = `<pre>${error}</pre>`;
+    }
+}
 
 // 화면이 구동되자마자 input 에 포커스가 맞춰짐
 window.onload = function() {
@@ -55,18 +83,21 @@ window.onload = function() {
 
 // 버튼을 클릭할때마다 새로운 입력칸이 구현됨
 let placeholderIndex = 0;
-const maxInput = 6;
+let join_db_index=0;
+const maxInput = 7;
 let inputCount = 1;
 function addInput(event) {
     event.preventDefault(); // 기본 제출 동작 방지
     if(inputCount<maxInput){
     const placeholder = placeholders[placeholderIndex % placeholders.length];
-    const newInputHTML = `<br><br><input type="text" placeholder=${placeholder} id="join_new";><br>`;
+    const join_db_input = join_db_list[join_db_index % join_db_list.length];
+    const newInputHTML = `<br><br><input type="text" placeholder=${placeholder} id="join_new" name=${join_db_input};><br>`;
 
         // h2 태그 바로 밑에 새로운 input 태그 추가
         const h2Tag = document.getElementById('join_change');
         h2Tag.insertAdjacentHTML('afterend', newInputHTML);
     placeholderIndex++;
+    join_db_index++;
     inputCount++;}
 }
 
@@ -95,5 +126,3 @@ function textChange(event) {
         window.location.href = "/";
     }
 }
-
-document.getElementById("change_button").addEventListener("click", textChange);

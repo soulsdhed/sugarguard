@@ -1,18 +1,21 @@
 {% extends "index.html" %}{% block content %}
 <link rel="stylesheet" href="login.css">
-        <!-- 기본 로그인 입력 -->
-    <div id="login_main">
-        <div id="login_input">
-            <br>
-            <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721706226/001_y4eee9.png" alt="Logo">
-            <h1>Login</h1><br>
-            <input type="text" id="login_input_write" placeholder="아이디 또는 이메일"><br>
-            <input type="password" id="login_input_write" placeholder="비밀번호"><br>
-            <input type="submit" id="login_button" value="로그인" >
-        </div>
-        <div>
-            <b><a href="#">아이디/비밀번호 찾기</a></b>
-            <b><a href="/join">회원가입</a><br></b>
-        </div>
+<!-- 기본 로그인 입력 -->
+<div id="login_main">
+    <div id="login_input">
+        <br>
+        <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721706226/001_y4eee9.png" alt="Logo">
+        <h1>Login</h1><br>
+        <input type="text" id="login_input_write" class="login_input_write" placeholder="아이디 또는 이메일"><br>
+        <input type="password" id="password_input_write" class="login_input_write" placeholder="비밀번호"><br>
+        <input type="submit" id="login_button" value="로그인">
     </div>
-    {% endblock %}
+    <div>
+        <b><a href="#">아이디/비밀번호 찾기</a></b>
+        <b><a href="/join">회원가입</a><br></b>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="login.js"></script>
+{% endblock %}

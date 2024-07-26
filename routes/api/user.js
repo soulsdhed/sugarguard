@@ -12,6 +12,8 @@ const {
 } = require("../../utils/jwt");
 const authenticateToken = require("../../middlewares/authenticateToken");
 
+// validation
+const { isValidEmail } = require("../../utils/validation");
 // 회원 가입
 router.post("/", async (req, res, next) => {
     const {
@@ -24,6 +26,7 @@ router.post("/", async (req, res, next) => {
         diabetesType,
     } = req.body;
 
+    // TODO : 유효성 검사 전체적으로 다시 확인 (id, 비번 영어만 가능하게)
     // ID 유효성 검사 (영어와 숫자로만, 4~12글자)
     if (userId.length < 4 || userId.length > 12) {
         return next({
@@ -44,15 +47,19 @@ router.post("/", async (req, res, next) => {
             code: "VALIDATION_ERROR",
         });
     }
-    console.log("3");
 
     // 이메일 유효성 검사 (이메일 형식)
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    if (!isValidEmail(email)) {
         return next({
             code: "VALIDATION_ERROR",
         });
     }
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // if (!emailRegex.test(email)) {
+    //     return next({
+    //         code: "VALIDATION_ERROR",
+    //     });
+    // }
 
     // 성별 유효성 검사 (남성, 여성)
     if (!["남성", "여성"].includes(gender)) {

@@ -1,5 +1,5 @@
-// a 태그를 여러개 눌렸을때 색깔 유지
 document.addEventListener("DOMContentLoaded", () => {
+    // a 태그를 여러개 눌렸을때 색깔 유지
     document.querySelectorAll("#recipe-name a").forEach((anchor) => {
         anchor.addEventListener("click", (e) => {
             e.preventDefault(); // 링크 클릭 기본 동작 방지
@@ -66,7 +66,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error(err);
             }
         });
+
+    // 로딩화면 제거
+    document.getElementById('loading-screen').style.display = 'none';
 });
+
+// 뒤로 가기 버튼
+document.getElementById("recipe-goback").addEventListener("click", (e) => {
+    history.back();
+})
 
 // 카메라 앱 작동 (버튼)
 document.getElementById("recipe-camera").addEventListener("click", (e) => {

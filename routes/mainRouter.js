@@ -15,16 +15,16 @@ router.get("/mypage", async (req, res) => {
     });
 });
 
-router.get("/login", (req, res) => {
-    res.render("login", { userId: getUserIdInRefreshToken(req) });
+router.get("/login", async (req, res) => {
+    res.render("login", { userId: await getUserIdInRefreshToken(req) });
 });
 
 router.get("/join", (req, res) => {
     res.render("join");
 });
 
-router.get("/recipe", (req, res) => {
-    res.render("recipe");
+router.get("/recipe", async (req, res) => {
+    res.render("recipe", { userId: await getUserIdInRefreshToken(req) });
 });
 
 router.get("/sugardiary", (req, res) => {
@@ -51,5 +51,11 @@ router.get("/recipe_list", (req, res) => {
 
 router.get("/bs", (req, res) => {
     res.render("bs");
-});
+}); // 김희은
+
+router.get("/exercise1", (req, res) => {
+    res.render("exercise1");
+}); // 김희은
+
+
 module.exports = router;

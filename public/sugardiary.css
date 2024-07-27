@@ -1,3 +1,8 @@
+#sugardiary_main {
+    width: 94.5%;
+    height: 90%;
+}
+
 /* Calendar Container */
 #calendar-container {
     width: 100%;
@@ -104,6 +109,13 @@
     font-weight: bold;
     font-size: 16px;
 }
+#record-title-text {
+    position: relative;
+    /* left: 50px; */
+    margin-left: 30px;
+    bottom: 28px;
+    font-size: 20px;
+}
 
 .record-time {
     font-size: 16px;
@@ -125,6 +137,7 @@
     position: relative;
     text-align: right;
     align-self: flex-end;
+    bottom: 20px;
 }
 
 .floating-buttons {
@@ -160,7 +173,7 @@
 }
 
 .floating-button {
-    background-color: white;
+    background-color: #e3e3e3;
     border: none;
     border-radius: 50%;
     width: 50px;
@@ -176,10 +189,13 @@
 }
 
 .floating-button-text {
+    background-color: #e3e3e3;
+    padding: 5px 10px;
+    border-radius: 10px;
     margin-right: 10px;
     font-size: 18px;
     color: black;
-    display: none;
+    display: inline-block;
 }
 
 .hidden {
@@ -195,7 +211,7 @@
 .floating-button-container {
     display: flex;
     align-items: center;
-    margin: 5px 0;
+    margin: 1px 0;
     opacity: 0;
     transform: translateY(10px);
     transition: all 0.3s ease;

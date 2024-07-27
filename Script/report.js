@@ -1,3 +1,33 @@
+// 재시도가 필요한 fetch의 경우 아래 함수들을 반드시 가져가야한다
+// refresh함수를 통한 accessToken 재발행 받기
+const refreshAccessToken = async () => {
+    try {
+        const response = await axios.post("/api/auth/token", {}, {
+            withCredentials: true,
+        });
+        // const { accessToken } = response.data;
+        // axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+    } catch (e) {
+        console.error("Failed to refresh access token:", e);
+        throw e;
+    }
+}
+// 재시도를 포함한 get fetch
+const fetchGetWithRetry = async (url, options = {}, retries = 1) => {
+    try {
+        const response = await axios.get(url, options);
+        return response;
+    } catch (e) {
+        if (e.response.data.error.code === "AUTH_EXPIRED_TOKEN" && retries > 0) {
+            console.log("Access token expired. Fetching new token...");
+            await refreshAccessToken();
+            return fetchGetWithRetry(url, options, retries - 1);
+        } else {
+            throw e;
+        }
+    }
+}
+
 const formatDate = (date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -70,7 +100,7 @@ const drawChart = async (period, first) => {
         unit = "mg/dl";
 
         try {
-            const response = await axios.get("/api/chart/blood-sugar", {
+            const response = await /*axios.get*/fetchGetWithRetry("/api/chart/blood-sugar", {
                 params: {
                     period: "day",
                     startDate: startDate,
@@ -120,7 +150,7 @@ const drawChart = async (period, first) => {
         unit = "kcal";
 
         try {
-            const response = await axios.get("/api/chart/exercise", {
+            const response = await /*axios.get*/fetchGetWithRetry("/api/chart/exercise", {
                 params: {
                     period: "day",
                     startDate: startDate,
@@ -170,7 +200,7 @@ const drawChart = async (period, first) => {
         unit = "kcal";
 
         try {
-            const response = await axios.get("/api/chart/meal", {
+            const response = await /*axios.get*/fetchGetWithRetry("/api/chart/meal", {
                 params: {
                     period: "day",
                     startDate: startDate,
@@ -220,7 +250,7 @@ const drawChart = async (period, first) => {
         unit = "kg";
 
         try {
-            const response = await axios.get("/api/chart/weight", {
+            const response = await /*axios.get*/fetchGetWithRetry("/api/chart/weight", {
                 params: {
                     period: "day",
                     startDate: startDate,
@@ -270,7 +300,7 @@ const drawChart = async (period, first) => {
         unit = "mmHg";
 
         try {
-            const response = await axios.get("/api/chart/blood-pressure", {
+            const response = await /*axios.get*/fetchGetWithRetry("/api/chart/blood-pressure", {
                 params: {
                     period: "day",
                     startDate: startDate,
@@ -323,7 +353,7 @@ const drawChart = async (period, first) => {
     }
 
     // Title
-    document.getElementById("report-title").textContent = title;
+    document.getElementById("report-title-text").innerText = title;
     // 날짜
     document.getElementById("content-result1").textContent = `${startDate} ~ ${endDate}`
     // 평균값
@@ -426,6 +456,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         line.style.width = wid + "px";
     }
 
+    // 탭 기능 구현 (WEEK, MONTH)
     nav.querySelectorAll("ul li a").forEach(function (anchor) {
         anchor.addEventListener("click", async function (e) {
             e.preventDefault();
@@ -482,6 +513,11 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
         });
     });
+
+    // 뒤로 가기 버튼 구현
+    document.getElementById("report-goback").addEventListener("click", e => {
+        history.back();
+    })
 
     await drawChart("WEEK", true);
 });

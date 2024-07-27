@@ -25,9 +25,8 @@
 //             if (date.toDateString() === selectedDate.toDateString()) {
 //                 dayDiv.classList.add("selected");
 //             }
-//             dayDiv.innerHTML = `${date.getDate()}<br>${
-//                 daysOfWeek[date.getDay()]
-//             }`;
+//             dayDiv.innerHTML = `${date.getDate()}<br>${daysOfWeek[date.getDay()]
+//                 }`;
 //             dayDiv.addEventListener("click", () => {
 //                 generateCalendar(date); // 새로운 날짜 생성
 //                 updateHeader(date); // 헤더 업데이트

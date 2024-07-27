@@ -1,15 +1,18 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
 h3 {
     font-family: Pretendard;
     font-weight: 900;
     font-size: 20px;
 }
+
 h4 {
     font-family: Pretendard;
     font-weight: 700;
     font-size: 15px;
     text-align: right;
 }
+
 h1 {
     font-family: Pretendard;
     font-weight: 700;
@@ -26,7 +29,32 @@ h1 {
     height: 100%;
 }
 
-.mypage_profile img {
+.mypage_profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    /* border-radius: 15px; */
+    /* background-color: white; */
+    /* box-shadow: 2px 1px rgb(196, 195, 195); */
+    /* padding-left: 10px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    margin-top: 5%; */
+    /* box-sizing: border-box; */
+}
+
+.mypage-login-div {
+    display: flex;
+    align-items: center;
+}
+
+.mypage_profile a {
+    text-decoration: none;
+}
+
+.mypage-login-div img {
     display: flex;
     width: 80px;
     height: 80px;
@@ -34,25 +62,12 @@ h1 {
     border-radius: 50px;
 }
 
-.mypage_profile a {
+.mypage-login-div span {
+    font-family: Pretendard;
+    font-weight: 600;
     text-decoration: none;
-    color: black;
+    color: rgb(31, 31, 31);
     margin-left: 5px;
-}
-
-.mypage_profile {
-    display: flex;
-    align-items: center;
-    width: 95%;
-    height: 70%;
-    border-radius: 15px;
-    background-color: white;
-    box-shadow: 2px 1px rgb(196, 195, 195);
-    padding-left: 10px;
-    padding-bottom: 20px;
-    padding-top: 20px;
-    margin-top: 5%;
-    box-sizing: border-box;
 }
 
 .mypage_blood {
@@ -60,7 +75,7 @@ h1 {
     /* height: 100%; */
     border-radius: 15px;
     background-color: white;
-    box-shadow: 2px 1px rgb(196, 195, 195);
+    /* box-shadow: 2px 1px rgb(196, 195, 195); */
     padding-left: 10px;
     padding-bottom: 50px;
     margin-bottom: 17px;
@@ -75,12 +90,14 @@ h1 {
     margin-top: 20px;
     margin-bottom: 10px;
 }
+
 .mypage-chart-title span {
     margin-left: 5px;
     font-family: Pretendard;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 20px;
 }
+
 .mypage_blood_title {
     width: 150px;
     height: 40px;
@@ -88,6 +105,7 @@ h1 {
     align-items: center;
     margin-top: 15px;
 }
+
 .mypage_blood_title_detail {
     width: 100%;
     height: 20px;

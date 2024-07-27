@@ -283,7 +283,6 @@ router.get("/recent", authenticateToken, (req, res, next) => {
     `;
     db.execute(query, [userId], (err, rows) => {
         if (err) {
-            console.log(err);
             return next({
                 code: "SERVER_INTERNAL_ERROR",
             });

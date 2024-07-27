@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SugarGuard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../index2.css" />
     <link rel="stylesheet" href="../report.css" />
     <link rel="shortcut icon" href="../Logo.ico" />
@@ -12,13 +13,19 @@
 
 <body>
     <div id="loading-screen">
-        <!-- <div class="loader"></div> -->
         <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
             <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
         </svg>
     </div>
     <div id="document">
-        <p id="report-title"></p>
+        <div id="report-title">
+            <!-- 타이틀 문자열이 적히는 곳 -->
+            <div id="report-title-text"></div>
+            <!-- 뒤로 가기 버튼 -->
+            <div id="report-goback">
+                <i class="fa-solid fa-angle-left"></i>
+            </div>
+        </div>
         <hr />
         <!-- tab bar -->
         <div class="tab">

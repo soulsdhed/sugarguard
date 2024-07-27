@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="recipe.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
+<!-- 로딩 화면 -->
 <div id="loading-screen">
     <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
         <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
@@ -76,14 +77,18 @@
     </div>
     <div id="recipe-bar">
         <span>추가 재료</span>
-        <input type="text" name="" id="" />
-        <button id="search-button">추천</button>
+        <input type="text" name="" id="recipe-search-input" />
+        <button id="recipe-search-button">추천</button>
         {% if userId %}
-        <button id="recipe-camera"><i class="fas fa-camera"></i></button>
-        <input type="file" accept="image/*" capture="camera" id="cameraInput" />
+        <button id="recipe-camera-button"><i class="fas fa-camera"></i></button>
+        <input type="file" accept="image/*" capture="camera" id="recipe-camera-input" />
         {% endif %}
     </div>
 </div>
+<script>
+    window.userIdFromTemplate = "{{ userId | safe }}";
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="recipe.js"></script>
 

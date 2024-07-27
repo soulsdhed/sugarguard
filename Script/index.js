@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const navIcon4 = document.getElementById("navIcon4");
     const navIcon5 = document.getElementById("navIcon5");
 
-    if (currentUrl == "/recipe") {
+    if (currentUrl.includes("/recipe")) {
         navIcon1.classList.add("selected");
         navIcon2.classList.remove("selected");
         navIcon3.classList.remove("selected");

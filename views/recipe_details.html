@@ -1,36 +1,63 @@
 {% extends "index.html" %}{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 <link rel="stylesheet" href="recipe_details.css" />
+
+<!-- 로딩 화면 -->
+<div id="loading-screen">
+    <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+        <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+    </svg>
+</div>
 <div id="recipe">
-    <!-- Photo -->
+    <!-- title -->
+    <div id="recipe-details-title">
+        <!-- 타이틀 문자열이 적히는 곳 -->
+        <div id="recipe-details-title-text">당뇨 맞춤 레시피</div>
+        <!-- 뒤로 가기 버튼 -->
+        <div id="recipe-details-goback">
+            <i class="fa-solid fa-angle-left"></i>
+        </div>
+    </div>
+    <!-- <hr /> -->
+
+    <!-- 요리 사진 -->
     <div class="photo">
         <img id="photo" alt="Recipe Photo" />
     </div>
 
-    <!-- Title -->
+    <!-- 요리 제목 -->
+    <div id="recipe_name"></div>
 
-    <div class="title">
-        <p id="recipe_name"><strong></strong></p>
-    </div>
+    <!-- 소개글 -->
+    <div id="instruction"></div>
 
-    <!-- RowFlex(3) -->
+    <!-- 기타 정보 -->
     <div class="rowflex">
-        <div class="recipe-detail-rowflex-div"><img src="detail-people.png">인분</div>
-        <div class="recipe-detail-rowflex-div"><img src="detail-clock.png">소요시간</div>
-        <div class="recipe-detail-rowflex-div"><img src="detail-star.png">난이도</div>
+        <div class="recipe-detail-rowflex-div">
+            <i class="fa-solid fa-users"></i>
+            <div>인분</div>
+        </div>
+        <div class="recipe-detail-rowflex-div">
+            <!-- <img src="detail-clock.png"> -->
+            <i class="fa-solid fa-hourglass-start"></i>
+            <div>소요시간</div>
+        </div>
+        <div class="recipe-detail-rowflex-div">
+            <!-- <img src="detail-star.png"> -->
+            <i class="fa-solid fa-star"></i>
+            <div>난이도</div>
+        </div>
     </div>
 
-    <!-- Content -->
-    <div class="content">
-        <p id="description"></p>
-    </div>
+    <!-- 재료 -->
+    <div id="ingredient-wrapper"></div>
 
-    <!-- ingredient -->
-    <p id="description"></p>
-    <h2 id="ingredient_title"></h2>
-    <div id="ingredients_table"></div>
-    <h2>Instructions</h2>
-    <ol id="instructions"></ol>
-    </div>
+    <!-- 요리 설명 -->
+    <div id="description-title">요리 방법</div>
+    <div id="description"></div>
 </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="recipe_details.js"></script>
 {% endblock %}

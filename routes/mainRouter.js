@@ -31,7 +31,7 @@ router.get("/sugardiary", (req, res) => {
     res.render("sugardiary");
 });
 
-router.get("/recipe_details", (req, res) => {
+router.get("/recipe-details", (req, res) => {
     res.render("recipe_details");
 });
 
@@ -42,10 +42,10 @@ router.get("/mealrecord", (req, res) => {
 router.get("/report/:type", (req, res) => {
     res.render("report");
 });
-router.get("/recipe_list", (req, res) => {
+
+router.get("/recipe-list", async (req, res) => {
     res.render("recipe_list", {
-        title: "Recipe_List",
-        currentPage: "/recipe_list",
+        userId: await getUserIdInRefreshToken(req),
     });
 });
 

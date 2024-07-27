@@ -113,6 +113,7 @@ router.get("/", authenticateToken, async (req, res, next) => {
     // query
     const query = `
         SELECT 
+            recipe_id,
             recipe_name, 
             cooking_method,
             meal_category,
@@ -183,6 +184,7 @@ router.get("/recommend", (req, res, next) => {
     // query
     const query = `
         SELECT 
+            recipe_id,
             recipe_name, 
             cooking_method,
             meal_category,

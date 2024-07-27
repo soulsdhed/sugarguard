@@ -153,7 +153,7 @@ document
         Swal.fire({
             title: "로그아웃",
             text: "로그아웃하시겠습니까?",
-            icon: "error",
+            icon: "warning",
             showCancelButton: true,
             confirmButtonText: "예",
             cancelButtonText: "아니오",

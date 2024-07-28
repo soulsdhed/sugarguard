@@ -68,53 +68,6 @@ app.use(errorHandler);
 //     });
 // });
 
-// app.get('/check-redis', async (req, res) => {
-//     try {
-//         const isConnected = await checkRedisConnection();
-//         console.log('isConnected:', isConnected); // 디버깅 로그 추가
-//         if (isConnected) {
-//             res.send('Redis is connected');
-//         } else {
-//             res.status(500).send('Redis is not connected');
-//         }
-//     } catch (error) {
-//         console.error('Error in /check-redis:', error); // 디버깅 로그 추가
-//         res.status(500).send('Redis is not connected');
-//     }
-// });
-
-// app.get("/redis-test", async (req, res) => {
-//     console.log("test");
-
-//     try {
-//         await setTemporaryValue('tempKey', 'tempValue', 60); // 60초 동안 저장
-//         res.send('Temporary value set for 60 seconds');
-//     } catch (err) {
-//         console.log(err);
-//         res.status(500).send('Error setting temporary value');
-//     }
-
-//     // try {
-//     //     await connectRedis(); // Ensure Redis is connected
-
-//     //     // Promise 사용하여 Redis set 및 get
-//     //     await redisClient.set('myKey', 'myValue');
-//     //     console.log('Set result: OK'); // OK
-
-//     //     const value = await redisClient.get('myKey');
-//     //     if (value) {
-//     //         console.log('Value:', value);
-//     //         res.send(`Value: ${value}`);
-//     //     } else {
-//     //         console.log('Key not found');
-//     //         res.send('Key not found');
-//     //     }
-//     // } catch (err) {
-//     //     console.error('Error in /redis-test:', err);
-//     //     res.status(500).send('Error in /redis-test');
-//     // }
-// });
-
 app.listen(process.env.PORT, async () => {
     console.log(`Port ${process.env.PORT} : Server Start`);
 

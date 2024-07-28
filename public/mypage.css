@@ -81,7 +81,7 @@ h1 {
     margin-bottom: 17px;
 }
 
-.mypage-chart-title {
+/* .mypage-chart-title {
     width: 95%;
     display: flex;
     flex-direction: row;
@@ -96,6 +96,42 @@ h1 {
     font-family: Pretendard;
     font-weight: 700;
     font-size: 20px;
+} */
+
+hr {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+#mypage-title {
+    margin-top: 17px;
+    margin-bottom: 17px;
+    text-align: center;
+    position: relative;
+    width: 100%;
+}
+
+#mypage-title-text {
+    height: 100%;
+    width: 100%;
+    font-size: 18px;
+    font-family: Pretendard;
+    font-weight: 700;
+}
+
+/* 뒤로 가기 버튼 */
+#mypage-goback {
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    left: 2px;
+    top: 50%;
+    transform: translate(0%, -50%);
+    z-index: 100;
+    font-size: 20px;
+    text-align: center;
+    line-height: 24px;
+    z-index: 10;
 }
 
 .mypage_blood_title {

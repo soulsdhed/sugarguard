@@ -14,7 +14,9 @@
         "moment": "^2.30.1",
         "moment-timezone": "^0.5.45",
         "mysql2": "^3.10.3",
+        "nodemailer": "^6.9.14",
         "nunjucks": "^3.2.4",
+        "redis": "^4.6.15",
         "uuid": "^10.0.0"
     },
     "name": "sugarguard",

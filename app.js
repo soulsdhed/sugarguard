@@ -1,11 +1,14 @@
 const express = require("express");
 const nunjucks = require("nunjucks");
 const cookieParser = require("cookie-parser"); // 쿠키
-// const session = require("express-session"); // 세션 + 주상이 수정함
-// const fileStore = require("session-file-store")(session); // 세션 저장소 + 주상이 수정함
 const rateLimit = require("express-rate-limit");
-// const { spawn } = require('child_process');
-// const path = require('path');
+const { client: redisClient } = require("./conf/redisClient"); // redisClient.js에서 Redis 클라이언트 및 함수 가져오기
+// const {
+//     setTemporaryValue,
+//     setPermanentValue,
+//     getValue,
+//     deleteValue
+// } = require('./utils/redisUtils');
 
 // router
 const mainRouter = require("./routes/mainRouter");
@@ -31,20 +34,6 @@ nunjucks.configure("views", {
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// app.use(
-//     session({
-//         httpOnly: true,
-//         resave: false,
-//         secret: "secret",
-//         store: new fileStore(),
-//         saveUninitialized: false,
-//         // retries: 1,
-//         // async writeFile(req, res, next) {
-//         //     await saveSession(req.session);
-//         //     next();
-//         // },
-//     })
-// );
 
 // 쿠키
 app.use(cookieParser());
@@ -71,7 +60,15 @@ app.use("/api", apiRouter);
 // 에러 처리 미들웨어
 app.use(errorHandler);
 
-app.listen(process.env.PORT, () => {
+// 서버 종료 시 Redis 클라이언트 닫기
+// process.on('SIGINT', () => {
+//     redisClient.quit(() => {
+//         console.log('Redis client disconnected');
+//         process.exit(0);
+//     });
+// });
+
+app.listen(process.env.PORT, async () => {
     console.log(`Port ${process.env.PORT} : Server Start`);
 
     // // Flask 서버를 가상 환경에서 실행

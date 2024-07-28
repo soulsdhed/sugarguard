@@ -73,7 +73,7 @@ function displayCurrentTime() {
     const minutes = String(now.getMinutes()).padStart(2, '0');
     // const seconds = String(now.getSeconds()).padStart(2, '0');
     const currentTimeString = `${hours}:${minutes}`;
-    document.getElementById('current-time').textContent = currentTimeString;
+    document.getElementById('current_time').textContent = currentTimeString;
 }
 
 // 현재 시간 표시 초기 호출

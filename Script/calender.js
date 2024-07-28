@@ -25,9 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (date.toDateString() === selectedDate.toDateString()) {
                 dayDiv.classList.add("selected");
             }
-            dayDiv.innerHTML = `${date.getDate()}<br>${
-                daysOfWeek[date.getDay()]
-            }`;
+            dayDiv.innerHTML = `${date.getDate()}<br>${daysOfWeek[date.getDay()]
+                }`;
             dayDiv.addEventListener("click", () => {
                 generateCalendar(date); // 새로운 날짜 생성
                 updateHeader(date); // 헤더 업데이트
@@ -37,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateHeader(selectedDate); // 선택된 날짜로 헤더 업데이트
         console.log("Month:", selectedDate.getMonth() + 1); // 0부터 시작하므로 +1
         console.log("Day:", selectedDate.getDate());
+<<<<<<< HEAD
 //             const dayDiv = document.createElement("div");
 //             dayDiv.classList.add("day");
 //             if (date.toDateString() === selectedDate.toDateString()) {
@@ -53,6 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
 //         updateHeader(selectedDate); // 선택된 날짜로 헤더 업데이트
 //         console.log("Month:", selectedDate.getMonth() + 1); // 0부터 시작하므로 +1
 //         console.log("Day:", selectedDate.getDate());
+=======
+>>>>>>> 4a2cb2d80e30d449f03cd21623c1c6af27ac43d3
 
     }
 

@@ -170,14 +170,14 @@ body {
     padding: 5px 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
-    width: 75%;
+    width: 72%;
 }
 
 #ingredient-wrapper td {
     padding: 5px 8px;
     text-align: center;
     border-bottom: 1px solid #ddd;
-    width: 25%;
+    width: 28%;
 }
 
 #description-title {

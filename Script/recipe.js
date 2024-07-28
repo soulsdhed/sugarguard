@@ -78,8 +78,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         if (have == "") {
                             // 아무것도 없는데 대체 왜?
                             Swal.fire(
-                                "추천 실패",
-                                "재료를 선택하거나 -list입력하셔야 합니다.",
+                                "레시피 추천 실패",
+                                "재료를 선택하거나 입력하셔야 합니다.",
                                 "error"
                             );
                         } else {
@@ -90,8 +90,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             } catch (e) {
                                 console.log(e);
                                 Swal.fire(
-                                    "추천 실패",
-                                    "서버 관리자에게 문의해주세요.",
+                                    "레시피 추천 실패",
+                                    "관리자에게 문의해주세요.",
                                     "error"
                                 );
                             }
@@ -102,22 +102,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             } else {
                 // 회원의 경우
-
+                // 레시피 디테일 페이지로 이동 (have뿐 아니라 전부 가져갈것)
+                window.location.href = `recipe-list?have=${have}&amount=${amount}&time=${time}&difficult=${difficult}`;
             }
-
-
-
-            // try {
-            //     const res = await axios.get("/api/recipes", {
-            //         params: {
-            //             have: have.join(", "),
-            //         },
-            //         withCredentials: true, // 쿠키를 포함하여 요청
-            //     });
-            //     console.log(res);
-            // } catch (err) {
-            //     console.error(err);
-            // }
         });
 
     // Element
@@ -132,6 +119,41 @@ document.addEventListener("DOMContentLoaded", () => {
         document
             .getElementById("recipe-camera-input")
             .addEventListener("change", async (event) => {
+                // 활성화된 a 태그들 선택
+                const activeLinks = document.querySelectorAll(
+                    "#recipe-name a.active"
+                );
+
+                let haveList = [];
+                let amountList = [];
+                let timeList = [];
+                let difficultList = [];
+                // 활성화된 a 태그들의 텍스트를 로그에 출력
+                activeLinks.forEach((link) => {
+                    const content = link.querySelector("span").textContent;
+
+                    if (["1인분", "2인분", "3인분", "4인분이상"].includes(content)) {
+                        amountList.push(content);
+                    } else if (["15분이내", "30분이내", "60분이내", "2시간이상"].includes(content)) {
+                        timeList.push(content);
+                    } else if (["아무나", "초급", "중급", "고급"].includes(content)) {
+                        difficultList.push(content);
+                    } else {
+                        haveList.push(content);
+                    }
+                });
+
+                // 정보 확인
+                let have = haveList.join(", ");
+                const amount = amountList.join(', ');
+                const time = timeList.join(", ");
+                const difficult = difficultList.join(", ");
+
+                // have 합치기 (추가 정보 작성 부분과)
+                have = `${have}, ${document.getElementById("recipe-search-input").value}`
+                // 뒤에 불필요한 문자열 삭제하기
+                have = have.trim().replace(/,\s*$/, '');
+
                 const file = event.target.files[0];
                 console.log(file);
 
@@ -161,16 +183,16 @@ document.addEventListener("DOMContentLoaded", () => {
                             },
                         });
 
-                        // TODO : 레시피 추천 받기
-                        // const recipePostRes = await axios.post("/api/recipe", {
-                        //     // TODO : 레시피 내용 보내기
-                        //     photo_url: key,
-                        // });
-
+                        // 레시피 디테일 페이지로 이동 (have뿐 아니라 전부 가져갈것)
+                        window.location.href = `recipe-list?have=${have}&amount=${amount}&time=${time}&difficult=${difficult}&photo_url=${key}`;
                         event.target.value = "";
                     } catch (err) {
                         console.log(err);
-                        //TODO : 오류 핸들링 필요
+                        Swal.fire(
+                            "레시피 추천 실패",
+                            "사진 업로드에 실패했습니다. 관리자에게 문의해주세요",
+                            "error"
+                        );
                     }
                 }
             });

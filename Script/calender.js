@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const date = new Date(startDate);
             date.setDate(startDate.getDate() + i);
 
-<<<<<<< HEAD
             const dayDiv = document.createElement("div");
             dayDiv.classList.add("day");
             if (date.toDateString() === selectedDate.toDateString()) {
@@ -38,7 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
         updateHeader(selectedDate); // 선택된 날짜로 헤더 업데이트
         console.log("Month:", selectedDate.getMonth() + 1); // 0부터 시작하므로 +1
         console.log("Day:", selectedDate.getDate());
-=======
 //             const dayDiv = document.createElement("div");
 //             dayDiv.classList.add("day");
 //             if (date.toDateString() === selectedDate.toDateString()) {
@@ -55,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
 //         updateHeader(selectedDate); // 선택된 날짜로 헤더 업데이트
 //         console.log("Month:", selectedDate.getMonth() + 1); // 0부터 시작하므로 +1
 //         console.log("Day:", selectedDate.getDate());
->>>>>>> 0957c9f21a61c3629d615a6355da3ae47884f402
 
     }
 

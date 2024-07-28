@@ -57,5 +57,9 @@ router.get("/exercise1", (req, res) => {
     res.render("exercise1");
 }); // 김희은
 
+router.get("/foodnutrition", (req, res) => {
+    res.render("foodnutrition");
+}); // 음식영양정보 풍규
+
 
 module.exports = router;

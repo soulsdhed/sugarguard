@@ -1,25 +1,31 @@
 {% extends 'index.html' %} {% block content %}
+
 <link rel="stylesheet" href="bs.css">
 
 <div id="content-main">
     <div id="header">
         <!-- Header -->
-        <button id="back" onclick="history.back()"><</button>
-            <h3>🩸 혈당 기록하기</h3>    
-            <button type="submit" id="bsSubmit">저장하기</button>
+        <button class="header-btn" id="back" onclick="history.back()"><h3><</h3></button>
+        <div id="header-title">
+            <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721719247/blood_h0b2io.png" alt="">
+            <h3>혈당 기록하기</h3>
+        </div>
+        <button type="submit" class="header-btn" id="bs-submit">
+            <h4>저장하기</h4>
+        </button>
     </div>
 
-
     <!-- 중앙 달력 -->
-     
-    <div id="calendar-header1"><div id="calendar-header"></div><div id="current-time"></div></div>
+    <div id="calendar-header1">
+        <div id="calendar-header"></div>
+        <div id="current-time"></div>
+    </div>
     <div id="calendar-container">
         <div id="calendar"></div>
     </div>
 
-    <div class="selectBox">
-
-        <select id="mySelect">
+    <div class="select-box">
+        <select id="my-select">
             <option value="option1">아침</option>
             <option value="option2">점심</option>
             <option value="option3">저녁</option>
@@ -27,28 +33,32 @@
             <option value="option5">자기전</option>
             <option value="option6">실시간</option>
         </select>
-        </div>
+    </div>
 
     <!-- 중앙 -->
     <div class="block-container">
 
         <div class="box1" id="div1">
-            <div class="colorBox" id="resultBox1" onchange="checkLevelBsBefore()"></div>
+            <div class="color-box" id="resultBox1" onchange="checkLevelBsBefore()"></div>
             <div>
                 <h5>식전 혈당</h5>
             </div>
-            <div><input type="number" id="recordBsBefore" min="0" max="999" onkeyup="checkLevelBsBefore()" />mg/dL
+            <div><input type="number" id="record-bs-before" min="0" max="999" onkeyup="checkLevelBsBefore()" />mg/dL
             </div>
         </div>
 
         <div class="box1" id="div2">
-            <div class="colorBox" id="resultBox2" onchange="checkLevelBsAfter()"></div>
+            <div class="color-box" id="resultBox2" onchange="checkLevelBsAfter()"></div>
             <h5>식후 혈당</h5>
-            <div><input type="number" id="recordBsAfter" min="0" max="999" onkeyup="checkLevelBsAfter()" />mg/dL
+            <div><input type="number" id="record-bs-after" min="0" max="999" onkeyup="checkLevelBsAfter()" />mg/dL
                 <form id="div3" style="visibility: hidden;">
-                    <label for="timeInput">시간을 입력하세요.</label>
-                    <input type="text" id="timeInput" placeholder="hh:mm:ss">
-                    <button id="saveTimeBtn">저장</button>
+                    <label for="time-input">
+                        <h5>시간을 입력하세요.</h5>
+                    </label>
+                    <input type="text" id="time-input" placeholder="hh:mm:ss">
+                    <button id="save-time-btn">
+                        <h5>저장</h5>
+                    </button>
             </div>
 
             </form>
@@ -56,7 +66,7 @@
 
         <div class="box2">
             <h5>특이사항</h5>
-            <input type="text", id="eatMemo">
+            <input type="text" , id="eat-memo">
         </div>
 
 

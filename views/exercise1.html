@@ -5,25 +5,31 @@
 <div id="content-main">
     <div id="header">
         <!-- Header -->
-        <button class="header_btn" id="back" onclick="history.back()"><h3><</h3></button>
-        <div id="header_title">
-        <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721719663/002_cuhgi9.png" alt=""><h3>운동 기록하기</h3></div>
-        <button type="submit" class="header_btn" id="bsSubmit">저장하기</button>
+        <button class="header-btn" id="back" onclick="history.back()">
+            <h3>
+                << /h3>
+        </button>
+        <div id="header-title">
+            <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721719663/002_cuhgi9.png" alt="">
+            <h3>운동 기록하기</h3>
+        </div>
+        <button type="submit" class="header-btn" id="bs-submit">
+            <h4>저장하기</h4>
+        </button>
     </div>
 
     <!-- 중앙 달력 -->
-    <div id="calendar_header1">
+    <div id="calendar-header1">
         <div id="calendar-header"></div>
-        <div id="current_time"></div>
+        <div>
+            <h4 id="current-time"></h4>
+        </div>
     </div>
     <div id="calendar-container">
         <div id="calendar"></div>
     </div>
 
-
-
-    
-    <div class="select_box">
+    <div class="select-box">
         <select id="my-select">
             <option value="option1">아침</option>
             <option value="option2">점심</option>
@@ -36,10 +42,12 @@
 
     <!-- 중앙 -->
     <div class="block-container">
-       
-        <div class="container">
-            <div class="box1">
-                <label for="exercise"><h5>운동 종류 :</h5></label>
+
+        <!-- <div class="container"> -->
+        <div class="box1">
+            <label for="exercise">
+                <h5>운동 종류 :</h5>
+            </label>
             <select id="exercise">
                 <option value="">운동을 선택하세요.</option>
                 <option value="걷기">걷기</option>
@@ -78,24 +86,18 @@
             </select>
         </div>
         <div class="box1">
-            <label for="duration"><h5>운동 시간 (분) :</h5></label>
+            <label for="duration">
+                <h5>운동 시간 (분) :</h5>
+            </label>
             <input type="number" id="duration" min="1" step="1" onkeyup="calculateCalories()" />
         </div>
-        <!-- <div class="box3">
-            <div><button onclick="calculateCalories()">칼로리 계산하기</button>
-                </div></div>
-                <div class="box3"><h4 id="result">소모 칼로리: </h4>
-        </div> -->
 
-        <!-- <div class="box3">
-            <div><button onclick="calculateCalories()">칼로리 계산하기</button>
-                </div></div> -->
-                <div class="box3" onchange="calculateCalories()"><h4 id="result">소모 칼로리: </h4>
+        <div class="box3" onchange="calculateCalories()">
+            <h4 id="result">소모 칼로리 : </h4>
         </div>
     </div>
-    </div>
 
-    </div>
+</div>
 </div>
 
 <script src="exercise.js"></script>

@@ -81,7 +81,7 @@ displayCurrentTime();
 
 
 // HTML 요소들을 가져오기
-const mySelect = document.getElementById('mySelect');
+const mySelect = document.getElementById('my-select');
 const div2 = document.getElementById('div2');
 const div3 = document.getElementById('div3');
 
@@ -166,7 +166,7 @@ function setTime() {
 
 
 function checkLevelBsBefore() {
-    let inputValue = parseFloat(document.getElementById('recordBsBefore').value);
+    let inputValue = parseFloat(document.getElementById('record-bs-before').value);
     let resultBox1 = document.getElementById('resultBox1');
 
     if (isNaN(inputValue)) {
@@ -182,7 +182,7 @@ function checkLevelBsBefore() {
 
 
 function checkLevelBsAfter() {
-    let inputValue2 = parseFloat(document.getElementById('recordBsAfter').value);
+    let inputValue2 = parseFloat(document.getElementById('record-bs-after').value);
     let resultBox2 = document.getElementById('resultBox2');
 
     if (isNaN(inputValue2)) {

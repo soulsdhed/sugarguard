@@ -176,7 +176,7 @@ a:active {
 }
 
 /* 로딩 화면 */
-#loading-screen {
+/* #loading-screen {
     position: fixed;
     top: 0;
     left: 0;
@@ -298,4 +298,4 @@ a:active {
         stroke-dashoffset: 187;
         transform: rotate(450deg);
     }
-}
+} */

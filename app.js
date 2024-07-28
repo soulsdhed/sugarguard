@@ -2,7 +2,7 @@ const express = require("express");
 const nunjucks = require("nunjucks");
 const cookieParser = require("cookie-parser"); // 쿠키
 const rateLimit = require("express-rate-limit");
-const { client: redisClient } = require('./conf/redisClient'); // redisClient.js에서 Redis 클라이언트 및 함수 가져오기
+const { client: redisClient } = require("./conf/redisClient"); // redisClient.js에서 Redis 클라이언트 및 함수 가져오기
 // const {
 //     setTemporaryValue,
 //     setPermanentValue,
@@ -61,12 +61,12 @@ app.use("/api", apiRouter);
 app.use(errorHandler);
 
 // 서버 종료 시 Redis 클라이언트 닫기
-process.on('SIGINT', () => {
-    redisClient.quit(() => {
-        console.log('Redis client disconnected');
-        process.exit(0);
-    });
-});
+// process.on('SIGINT', () => {
+//     redisClient.quit(() => {
+//         console.log('Redis client disconnected');
+//         process.exit(0);
+//     });
+// });
 
 // app.get('/check-redis', async (req, res) => {
 //     try {
@@ -114,7 +114,6 @@ process.on('SIGINT', () => {
 //     //     res.status(500).send('Error in /redis-test');
 //     // }
 // });
-
 
 app.listen(process.env.PORT, async () => {
     console.log(`Port ${process.env.PORT} : Server Start`);

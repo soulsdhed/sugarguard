@@ -56,6 +56,13 @@ router.get("/exercise1", (req, res) => {
     res.render("exercise1");
 }); // 김희은
 
+// 회원 정보 수정 페이지
+router.get("/modify", async (req, res) => {
+    res.render("modify", {
+        userId: await getUserIdInRefreshToken(req),
+    });
+})
+
 // 비밀번호 재설정 폼 페이지
 router.get("/reset-password-form", (req, res) => {
     res.render("reset_password_form");

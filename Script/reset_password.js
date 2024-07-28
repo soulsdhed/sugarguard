@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
         // 비밀 번호 글자수 부족 혹은 과다
         if (pwValue.length < 8 || pwValue.length > 16) {
             return Swal.fire({
-                title: "비밀번호 규칙 위반",
+                title: "비밀번호 오류",
                 text: "비밀번호 글자수가 부족하거나 너무 많습니다.",
                 icon: "error",
             });
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
         // 비밀번호에 영어, 숫자, 특문 이외의 문자가 있으면 안된다
         if (!/^[\x00-\x7F]*$/.test(pwValue)) {
             return Swal.fire({
-                title: "비밀번호 규칙 위반",
+                title: "비밀번호 오류",
                 text: "비밀 번호에는 영어, 숫자, 특수 문자 이외의 문자는 사용할 수 없습니다.",
                 icon: "error",
             });
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
         // 특수 문자 제한
         if (!specialCharPattern.test(pwValue)) {
             return Swal.fire({
-                title: "비밀번호 규칙 위반",
+                title: "비밀번호 오류",
                 text: "허용된 특수 문자만 포함될 수 있습니다 : " + allowedSpecialCharacters,
                 icon: "error",
             });

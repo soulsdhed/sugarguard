@@ -20,9 +20,7 @@ const authenticateToken = require("../../middlewares/authenticateToken");
 // redis
 const {
     setTemporaryValue,
-    setPermanentValue,
     getValue,
-    deleteValue
 } = require("../../utils/redisUtils")
 
 // validation
@@ -259,91 +257,154 @@ router.post("/login", (req, res, next) => {
 // 회원 탈퇴 (jwt)
 router.delete("/", authenticateToken, (req, res, next) => {
     const { userId } = req.user;
-    const { password } = req.body;
+    // const { password } = req.body;
 
-    // 비밀번호 확인
-    const query = `SELECT member_id, nickname, email, gender, birth_date, diabetes_type, deleted_at
-        FROM MEMBER_TB 
-        WHERE member_id = ?`;
-    db.execute(query, [userId], async (err, results) => {
-        // sql error
+    // // 비밀번호 확인
+    // const query = `SELECT member_id, nickname, email, gender, birth_date, diabetes_type, deleted_at
+    //     FROM MEMBER_TB 
+    //     WHERE member_id = ?`;
+    // db.execute(query, [userId], async (err, results) => {
+    //     // sql error
+    //     if (err) {
+    //         return next({
+    //             code: "SERVER_INTERNAL_ERROR",
+    //         });
+    //     }
+
+    //     // 유저가 1개가 아닌경우 (가능하냐?)
+    //     if (results.length != 1) {
+    //         return next({
+    //             code: "USER_NOT_FOUND",
+    //         });
+    //     }
+
+    //     // select success
+    //     const row = results[0];
+
+    //     // 비밀번호 확인
+    //     try {
+    //         const compare = await bcrypt.compare(password, row.password);
+
+    //         // 비밀번호 틀림
+    //         if (!compare) {
+    //             return next({
+    //                 code: "INVALID_USER",
+    //             });
+    //         }
+
+    //         // 삭제된 유저의 경우
+    //         if (row.deleted_at != null) {
+    //             return next({
+    //                 code: "USER_NOT_FOUND",
+    //             });
+    //         }
+
+    //         // success
+    //         // 계정 삭제 작업
+    //         const currentTime = new Date();
+    //         const query = `UPDATE MEMBER_TB SET deleted_at = ? WHERE member_id = ?;`;
+    //         db.execute(query, [currentTime, userId], (err, results) => {
+    //             if (err) {
+    //                 return next({
+    //                     code: "SERVER_INTERNAL_ERROR",
+    //                 });
+    //             }
+
+    //             // 영향받은 rows가 존재하지 않는 경우 (그럴 수 있나??)
+    //             if (results.affectedRows <= 0) {
+    //                 return next({
+    //                     code: "SERVER_INTERNAL_ERROR",
+    //                 });
+    //             }
+
+    //             // user delete success!!
+    //             return res.success({
+    //                 userId: userId,
+    //                 deletedAt: currentTime,
+    //             });
+    //         });
+    //     } catch (e) {
+    //         return next({
+    //             code: "SERVER_INTERNAL_ERROR",
+    //         });
+    //     }
+    // });
+
+    // 계정 삭제 작업
+    const currentTime = new Date();
+    const query = `UPDATE MEMBER_TB SET deleted_at = ? WHERE member_id = ?;`;
+    db.execute(query, [currentTime, userId], (err, results) => {
         if (err) {
             return next({
                 code: "SERVER_INTERNAL_ERROR",
             });
         }
 
-        // 유저가 1개가 아닌경우 (가능하냐?)
-        if (results.length != 1) {
+        // 영향받은 rows가 존재하지 않는 경우 (그럴 수 있나??)
+        if (results.affectedRows <= 0) {
+            return next({
+                code: "SERVER_INTERNAL_ERROR",
+            });
+        }
+
+        // user delete success!!
+        return res.success({
+            userId: userId,
+            deletedAt: currentTime,
+        });
+    });
+});
+
+// 회원 정보 요청
+router.get("/", authenticateToken, (req, res, next) => {
+    const { userId } = req.user;
+
+    const query = `
+        SELECT 
+            member_id, 
+            nickname, 
+            email, 
+            gender, 
+            birth_date, 
+            diabetes_type, 
+            created_at
+        FROM MEMBER_TB 
+        WHERE member_id = ?`;
+    db.execute(query, [userId], (err, rows) => {
+        if (err) {
+            return next({
+                code: "SERVER_INTERNAL_ERROR",
+            });
+        }
+
+        // 유저 존재 안함 (가능한가?)
+        if (rows.length < 1) {
             return next({
                 code: "USER_NOT_FOUND",
             });
         }
 
-        // select success
-        const row = results[0];
-
-        // 비밀번호 확인
-        try {
-            const compare = await bcrypt.compare(password, row.password);
-
-            // 비밀번호 틀림
-            if (!compare) {
-                return next({
-                    code: "INVALID_USER",
-                });
-            }
-
-            // 삭제된 유저의 경우
-            if (row.deleted_at != null) {
-                return next({
-                    code: "USER_NOT_FOUND",
-                });
-            }
-
-            // success
-            // 계정 삭제 작업
-            const currentTime = new Date();
-            const query = `UPDATE MEMBER_TB SET deleted_at = ? WHERE member_id = ?;`;
-            db.execute(query, [currentTime, userId], (err, results) => {
-                if (err) {
-                    return next({
-                        code: "SERVER_INTERNAL_ERROR",
-                    });
-                }
-
-                // 영향받은 rows가 존재하지 않는 경우 (그럴 수 있나??)
-                if (results.affectedRows <= 0) {
-                    return next({
-                        code: "SERVER_INTERNAL_ERROR",
-                    });
-                }
-
-                // user delete success!!
-                return res.success({
-                    userId: userId,
-                    deletedAt: currentTime,
-                });
-            });
-        } catch (e) {
-            return next({
-                code: "SERVER_INTERNAL_ERROR",
-            });
-        }
+        // 정보 보내주기
+        return res.success({
+            userId: rows[0].member_id,
+            nickname: rows[0].nickname,
+            email: rows[0].email,
+            gender: rows[0].gender,
+            birth_date: rows[0].birth_date,
+            diabetes_type: rows[0].diabetes_type,
+            created_at: rows[0].created_at,
+        });
     });
 });
 
 // 회원 정보 수정 (jwt)
-router.patch("/", authenticateToken, (req, res, next) => {
+router.patch("/", authenticateToken, async (req, res, next) => {
     const { userId } = req.user;
-    const { nickname, /*email,*/ gender, birthDate, diabetesType } = req.body;
+    const { nickname, password, gender, birthDate, diabetesType } = req.body;
 
-    // // userId는 반드시 있어야 한다
-    // if (!userId) {
-    //     return next({
-    //         code: "VALIDATION_MISSING_FIELD",
-    //     });
-    // }
+    // TODO : 회원 가입 유효성 검사를 이곳으로 가져와서 확인
+
+    console.log(req.body);
 
     // 업데이트할 필드 동적 생성
     const updates = [];
@@ -357,23 +418,26 @@ router.patch("/", authenticateToken, (req, res, next) => {
         params.push(nickname);
         data["nickname"] = nickname;
     }
-    // if (email !== null && email !== undefined) {
-    //     updates.push("email = ?");
-    //     params.push(email);
-    //     data["email"] = email;
-    // }
+    if (password !== null && password !== undefined) {
+        updates.push("password = ?");
+        // 암호화
+        const cryptedPassword = await bcrypt.hash(password, 10);
+        params.push(cryptedPassword);
+        // 이건 반환 안한다
+        // data["password"] = cryptedPassword;
+    }
     if (gender !== null && gender !== undefined) {
         updates.push("gender = ?");
         params.push(gender);
         data["gender"] = gender;
     }
     if (birthDate !== null && birthDate !== undefined) {
-        updates.push("birthDate = ?");
+        updates.push("birth_date = ?");
         params.push(birthDate);
         data["birthDate"] = birthDate;
     }
     if (diabetesType !== null && diabetesType !== undefined) {
-        updates.push("diabetesType = ?");
+        updates.push("diabetes_type = ?");
         params.push(diabetesType);
         data["diabetesType"] = diabetesType;
     }
@@ -391,6 +455,7 @@ router.patch("/", authenticateToken, (req, res, next) => {
         WHERE member_id = ?`;
     db.execute(query, params, (err, results) => {
         if (err) {
+            console.log(err);
             return next({
                 code: "SERVER_INTERNAL_ERROR",
             });

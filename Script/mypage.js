@@ -154,6 +154,11 @@ document.addEventListener("DOMContentLoaded", async (e) => {
             });
         });
 
+        // 회원 정보 수정 버튼
+        document.getElementById("mypage-modity-button").addEventListener("click", (e) => {
+            window.location.href = '/modify';
+        })
+
         // 로그아웃 버튼
         document
             .getElementById("mypage-logout-button")
@@ -166,6 +171,10 @@ document.addEventListener("DOMContentLoaded", async (e) => {
                     showCancelButton: true,
                     confirmButtonText: "예",
                     cancelButtonText: "아니오",
+                    customClass: {
+                        confirmButton: 'my-cancel-button',
+                        cancelButton: 'my-confirm-button'
+                    }
                 }).then(async (result) => {
                     if (result.isConfirmed) {
                         // 로그아웃 api 연결

@@ -63,6 +63,10 @@ router.get("/modify", async (req, res) => {
     });
 })
 
+router.get("/foodnutrition", (req, res) => {
+    res.render("foodnutrition");
+}); // 음식영양정보 풍규
+
 // 비밀번호 재설정 폼 페이지
 router.get("/reset-password-form", (req, res) => {
     res.render("reset_password_form");

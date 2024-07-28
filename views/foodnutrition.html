@@ -1,0 +1,26 @@
+{% extends "index.html" %}{% block content %}
+<link rel="stylesheet" href="foodnutrition.css">
+
+
+<div id="foodnutrition_main">
+    <div id="foodnutrition-title">
+        <h2>식품영양정보</h2>
+    </div>
+    <div class="divider"></div>
+    <div id="foodnutrition-search">
+        <input type="text" id="search-input" placeholder="음식명을 입력하세요">
+        <button id="foodnutrition-search-button">검색</button>
+    </div>
+    <div class="divider"></div>
+    <div id="foodnutrition-result">
+        <!-- 제공되는 정보량 -->
+    </div>
+</div>
+
+
+
+
+
+
+<script src="foodnutrition.js"></script>
+{% endblock %}

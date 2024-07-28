@@ -5,6 +5,7 @@ const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
 // TODO : 추후 30분으로 다시 수정
 const accessTokenExpiresIn = 300 * 60; // 30분
 const refreshTokenExpiresIn = 7 * 24 * 60 * 60; // 7일
+const resetPasswordTokenExpiredIn = 60 * 60; // 1시간
 
 const generateAccessToken = (res, userId) => {
     const user = { userId: userId };
@@ -53,21 +54,16 @@ const getUserIdInRefreshToken = async (req) => {
     } catch (err) {
         return undefined;
     }
-
-    // jwt.verify(token, REFRESH_TOKEN_SECRET, (err, user) => {
-    //     if (err) {
-    //         console.log("err", err);
-    //         return undefined;
-    //     }
-    //     console.log(user.userId);
-    //     return user.userId;
-    // });
 };
+
+
 
 module.exports = {
     accessTokenExpiresIn,
     refreshTokenExpiresIn,
+    resetPasswordTokenExpiredIn,
     generateAccessToken,
     generateRefreshToken,
+    verifyToken,
     getUserIdInRefreshToken,
 };

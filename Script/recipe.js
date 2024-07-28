@@ -6,7 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 뒤로 가기 버튼
     document.getElementById("recipe-goback").addEventListener("click", (e) => {
-        history.back();
+        // history.back();
+        // 여기선 메인으로
+        window.location.href = "/"
     })
 
     // a 태그를 여러개 눌렸을때 색깔 유지

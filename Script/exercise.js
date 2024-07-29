@@ -1,22 +1,42 @@
-const selectElement = document.getElementById('my-select');
-const selectedValue = selectElement.value;
+// const selectElement = document.getElementById('exercise');
+// const selectedValue = selectElement.value;
 
 
-document.getElementById('bs-submit').addEventListener('click', async () => {
-    try {
-      const response = await axios.post('/api/exercise-logs', {
-        option: selectedValue,
-        exercise_type: document.getElementById("exercise").value,
-        exercise_time: document.getElementById("duration").value,
-        calories_burned: document.getElementById("result").value,
-        record_time: document.getElementById("current-time").value,       
-    });
-      const exercise = response.data.exercise;
-      console.log('exercise success:', success); 
-      } catch (error) {
-      console.log('exercise error:', error);
-    }
-  });
+// document.getElementById('bs-submit').addEventListener('click', async () => {
+//     try {
+//       const response = await axios.post('/api/exercise-logs', {
+//         option: selectedValue,
+//         exercise_type: document.getElementById("exercise").value,
+//         exercise_time: document.getElementById("duration").value,
+//         calories_burned: document.getElementById("result").value,
+//         record_time: document.getElementById("current-time").value,       
+//     });
+//       const exercise = response.data.exercise;
+//       console.log('exercise success:', success); 
+//       } catch (error) {
+//       console.log('exercise error:', error);
+//     }
+//   });
+
+
+// document.getElementById('bs-submit').addEventListener('click', async () => {
+//     // document.getElementById('my-select');
+//     // const selectedValue = selectElement.value; // 여기서 선택된 값을 가져옵니다.
+    
+//     try {
+//         const response = await axios.post('/api/exercise-logs', {
+//             exercise_type: document.getElementById("exercise").value,
+//             exercise_time: document.getElementById("duration").value,
+//             calories_burned: document.getElementById("result").textContent.split(": ")[1] || 0, // 소모 칼로리 값 가져오기
+//             record_time: document.getElementById("my-select").value,
+//         });
+//         const exercise = response.data.exercise; // API 응답에서 운동 데이터를 가져옴
+//         console.log('exercise success:', exercise); // 수정된 부분
+//     } catch (error) {
+//         console.error('exercise error:', error); // 에러 로그를 콘솔에 출력
+//         // 2024-07-24 09:00:00
+//     }
+// });
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -117,9 +137,9 @@ document.addEventListener("DOMContentLoaded", () => {
         자전거: 7.0,
         수영: 8.0,
         줄넘기: 12.0,
-        "계단 오르기": 8.5,
+        계단오르기: 8.5,
         에어로빅: 6.0,
-        "근력 운동": 4.5,
+        근력운동: 4.5,
         요가: 4.0,
         필라테스: 5.0,
         테니스: 7.5,
@@ -134,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
         체조: 5.5,
         스쿼시: 9.0,
         복싱: 10.0,
-        "자유 웨이트": 6.0,
+        자유웨이트: 6.0,
         사이클링: 8.0,
         롤러블레이딩: 7.0,
         킥복싱: 9.0,
@@ -143,8 +163,8 @@ document.addEventListener("DOMContentLoaded", () => {
         스노우보드: 6.5,
         서핑: 7.0,
         스쿼트: 5.0,
-        "유산소 운동": 6.5,
-        "전신 운동": 8.5,
+        유산소운동: 6.5,
+        전신운동: 8.5,
     };
 
     // 시간 입력시 자동으로 소모 칼로리 계산

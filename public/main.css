@@ -1,12 +1,13 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 @font-face {
-    font-family: 'MoveSans-Bold';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-2@1.0/MoveSans-Bold.woff2') format('woff2');
+    font-family: "MoveSans-Bold";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2405-2@1.0/MoveSans-Bold.woff2")
+        format("woff2");
     font-weight: 700;
     font-style: normal;
 }
-body{
+body {
     font-family: pretendard;
 }
 #header {
@@ -35,7 +36,6 @@ body{
     margin-bottom: 50px;
 }
 
-
 .divs {
     width: 100%; /* 화면 너비의 80% */
     padding: 2%; /* 내부 여백 설정 */
@@ -48,7 +48,7 @@ body{
     height: 100%;
     grid-template-columns: 1fr;
 }
-.main-block{
+.main-block {
     width: 100%;
     height: 150px;
     border-radius: 20px;
@@ -59,25 +59,25 @@ body{
     flex-direction: row;
     cursor: pointer;
 }
-.sub-block{
+.sub-block {
     margin-top: 20px;
     margin-left: 20px;
     display: flex;
     flex-direction: column;
-    width: 70%;
-    margin-right: 50px;
+    width: 80%;
+    margin-right: 20px;
 }
-.sub-block h3{
+.sub-block h3 {
     margin-bottom: 3px;
 }
-.sub-block p{
+.sub-block p {
     margin-top: 3px;
 }
 /* img 파일 */
-#main-image{
-    width: 87%;
+#main-image {
+    width: 82%;
     max-width: 300px;
-    height: auto;
+    /* height: auto; */
 }
 
 .block-container > a {
@@ -100,25 +100,23 @@ body{
     font-weight: bold;
     margin-bottom: 10px;
 }
-.ptag{
+.ptag {
     color: rgb(145, 145, 145);
     font-size: 12px;
     margin-bottom: 6px;
 }
 
-
 /* Div 태그들 (5) */
 #chart {
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     margin-top: 25px;
-    padding: 5%
+    padding: 5%;
 }
 
 /* mainChart */
 .chart-container {
     width: 60%; /* 원래 크기의 4분의 1 */
     height: 120px; /* 원래 크기의 4분의 1 */
-
 }
 #chart {
     display: flex;
@@ -181,7 +179,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center; /* 내용 중앙 정렬 */
-    background-color: #FFFFFF; /* 날짜 셀 배경색 투명 */
+    background-color: #ffffff; /* 날짜 셀 배경색 투명 */
     border-radius: 60px;
 }
 
@@ -191,12 +189,9 @@ body{
     font-weight: bold; /* 선택된 날짜의 텍스트 굵게 */
 }
 
-
-
-
 /* mainChart2 */
 
-.chart-container2{
+.chart-container2 {
     width: 100%;
     height: 70%;
 }

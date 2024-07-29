@@ -1,3 +1,78 @@
+// 재시도가 필요한 fetch의 경우 아래 함수들을 반드시 가져가야한다
+// refresh함수를 통한 accessToken 재발행 받기
+const refreshAccessToken = async () => {
+    try {
+        const response = await axios.post(
+            "/api/auth/token",
+            {},
+            {
+                withCredentials: true,
+            }
+        );
+        // const { accessToken } = response.data;
+        // axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+    } catch (e) {
+        console.error("Failed to refresh access token:", e);
+        throw e;
+    }
+};
+// 재시도를 포함한 get fetch
+const fetchGetWithRetry = async (url, options = {}, retries = 1) => {
+    try {
+        const response = await axios.get(url, options);
+        return response;
+    } catch (e) {
+        if (
+            e.response.data.error.code === "AUTH_EXPIRED_TOKEN" &&
+            retries > 0
+        ) {
+            console.log("Access token expired. Fetching new token...");
+            await refreshAccessToken();
+            return fetchGetWithRetry(url, options, retries - 1);
+        } else {
+            throw e;
+        }
+    }
+};
+// // 재시도를 포함한 post fetch
+// const fetchPostWithRetry = async (
+//     url,
+//     data = {},
+//     options = {},
+//     retries = 1
+// ) => {
+//     try {
+//         const response = await axios.post(url, data, options);
+//         return response;
+//     } catch (e) {
+//         if (
+//             e.response.data.error.code === "AUTH_EXPIRED_TOKEN" &&
+//             retries > 0
+//         ) {
+//             console.log("Access token expired. Fetching new token...");
+//             await refreshAccessToken();
+//             return fetchPostWithRetry(url, data, options, retries - 1);
+//         } else {
+//             throw e;
+//         }
+//     }
+// };
+// // 재시도를 포함한 patch fetch
+// const fetchPatchWithRetry = async (url, data = {}, options = {}, retries = 1) => {
+//     try {
+//         const response = await axios.patch(url, data, options);
+//         return response;
+//     } catch (e) {
+//         if (e.response.data.error.code === "AUTH_EXPIRED_TOKEN" && retries > 0) {
+//             console.log("Access token expired. Fetching new token...");
+//             await refreshAccessToken();
+//             return fetchPatchWithRetry(url, data, options, retries - 1);
+//         } else {
+//             throw e;
+//         }
+//     }
+// }
+
 document.addEventListener("DOMContentLoaded", function () {
     let toggleState = false;
     let originalButtonPosition = { bottom: "70px", right: "20px" };
@@ -12,38 +87,14 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentMonth = "";
     let currentDay = "";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // 뒤로 가기 버튼
+    document
+        .getElementById("sugardiary-goback")
+        .addEventListener("click", (e) => {
+            // history.back();
+            // 여기선 메인으로
+            window.location.href = "/";
+        });
 
     recordButtons.forEach((button) => (button.disabled = true));
 
@@ -60,6 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 .querySelectorAll(".floating-button-text")
                 .forEach((el) => (el.style.display = "block"));
             recordButtons.forEach((button) => (button.disabled = false));
+            console.log("열림");
         } else {
             document
                 .querySelectorAll(".floating-button-container")
@@ -70,17 +122,65 @@ document.addEventListener("DOMContentLoaded", function () {
             setTimeout(function () {
                 menuButtons.classList.add("hidden");
                 recordButtons.forEach((button) => (button.disabled = true));
-                recordsContainer.style.maxHeight = "calc(100vh - 100px)";
             }, 300);
         }
     });
+    function convertToKSTAndFormat(record_time) {
+        // Create a Date object from the record_time string
+        const date = new Date(record_time);
 
-    function addRecord(recordType, imgUrl, recordClass) {
+        // Convert the date to KST (UTC+9)
+        const options = {
+            hour: "2-digit",
+            minute: "2-digit",
+            timeZone: "Asia/Seoul",
+            hourCycle: "h23", // 24시간 형식으로 표시
+        };
+        const formatter = new Intl.DateTimeFormat("ko-KR", options);
+        const formattedTime = formatter.format(date);
+
+        return formattedTime;
+    }
+
+    // TODO : 삭제버튼 floation button에 가려서 안먹히는 것 수정
+    // TODO : 이미 있는 기록의 경우에는 삭제 경고 알림창 띄우기
+
+    function addRecord(recordType, imgUrl, recordClass, item = null) {
         const now = new Date();
         const hours = String(now.getHours()).padStart(2, "0");
         const minutes = String(now.getMinutes()).padStart(2, "0");
-        const timeString = `${hours}:${minutes}`;
-        const valueString = "90mg/dl";
+        let timeString = `${hours}:${minutes}`;
+        let valueString = "";
+        let link = "";
+
+        // TODO : 나머지 4개도 해야함
+        if (recordClass == "exercise-record") {
+            link = "/exercise";
+            valueString = "0 kcal";
+            if (item != null) {
+                link = `${link}?el_id=${item.el_id}`;
+                valueString = `${item.calories_burned} kcal`;
+                timeString = convertToKSTAndFormat(item.record_time);
+            }
+        } else if (recordClass == "weight-record") {
+            link = "";
+            valueString = "0 kg";
+            if (item != null) link = `${link}?wl_id=${item.wl_id}`;
+        } else if (recordClass == "blood-pressure-record") {
+            link = "";
+            valueString = "0~0 mmHg";
+            if (item != null) link = `${link}?bpl_id=${item.bpl_id}`;
+        } else if (recordClass == "mealrecord-record") {
+            link = "/mealrecord";
+            valueString = "0 kcal";
+            if (item != null) link = `${link}?ml_id=${item.ml_id}`;
+        } else if (recordClass == "sugar-record") {
+            link = "/bs";
+            valueString = "0 mg/dl";
+            if (item != null) link = `${link}?bsl_id=${item.bsl_id}`;
+        }
+        console.log(item);
+        console.log(link);
 
         const recordHtml = `
             <div class="record-title">
@@ -98,22 +198,13 @@ document.addEventListener("DOMContentLoaded", function () {
         divContainer.innerHTML = recordHtml;
         recordsContainer.insertAdjacentElement("beforeend", divContainer);
 
-        let link = "";
-        if (recordClass == "exercise-record") {
-            link = "/exercise";
-        } else if (recordClass == "weight-record") {
-            link = "";
-        } else if (recordClass == "blood-pressure-record") {
-            link = "";
-        } else if (recordClass == "mealrecord-record") {
-            link = "/mealrecord";
-        } else if (recordClass == "sugar-record") {
-            link = "/bs";
-        }
-
         divContainer.addEventListener("click", () => {
             console.log(currentYear, currentMonth, currentDay);
-            window.location.href = `${link}?date=${currentYear}-${currentMonth}-${currentDay}`;
+            if (item != null) {
+                window.location.href = `${link}`;
+            } else {
+                window.location.href = `${link}?date=${currentYear}-${currentMonth}-${currentDay}`;
+            }
         });
 
         // recordsContainer.insertAdjacentHTML("beforeend", recordHtml);
@@ -132,12 +223,15 @@ document.addEventListener("DOMContentLoaded", function () {
         e.stopPropagation();
         element.parentElement.remove();
         recordsContainer.scrollTop = recordsContainer.scrollHeight;
+
+        // TODO : 기록이 있는 경우에는 삭제하면 삭제 api가 작동하도록 (또 만들어야 한다 하아....)
     };
 
     function triggerMainToggleButton() {
         mainToggleButton.click();
     }
 
+    // TODO : 추가 버튼 누르면 자동 스크롤 최하단으로 가게끔
     document
         .getElementById("exercise-button")
         .addEventListener("click", function () {
@@ -148,6 +242,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 "exercise-record"
             );
             triggerMainToggleButton();
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: "smooth",
+            });
         });
 
     document
@@ -160,6 +258,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 "weight-record"
             );
             triggerMainToggleButton();
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: "smooth",
+            });
         });
 
     document
@@ -172,6 +274,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 "blood-pressure-record"
             );
             triggerMainToggleButton();
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: "smooth",
+            });
         });
 
     document
@@ -184,6 +290,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 "mealrecord-record"
             );
             triggerMainToggleButton();
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: "smooth",
+            });
         });
 
     document
@@ -196,25 +306,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 "sugar-record"
             );
             triggerMainToggleButton();
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: "smooth",
+            });
         });
-
-    // document.addEventListener("click", function (event) {
-    //     if (event.target.classList.contains("exercise-record")) {
-    //         window.location.href = "exercise";
-    //     } else if (event.target.classList.contains("weight-record")) {
-    //         window.location.href = "";
-    //     } else if (event.target.classList.contains("blood-pressure-record")) {
-    //         window.location.href = "";
-    //     } else if (event.target.classList.contains("mealrecord-record")) {
-    //         window.location.href = "mealrecord";
-    //     } else if (event.target.classList.contains("sugar-record")) {
-    //         window.location.href = "bs";
-    //     }
-    // });
 
     // 캘린더
     const calendar = document.getElementById("calendar");
-    const calendarHeader = document.getElementById("calendar-header");
+    const calendarHeader = document.getElementById("sugar-calendar-header");
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
     let currentDate = new Date(); // 현재 날짜로 초기화
@@ -224,7 +324,7 @@ document.addEventListener("DOMContentLoaded", function () {
         calendarHeader.textContent = date.toLocaleDateString("ko-KR", options);
     }
 
-    function generateCalendar(selectedDate) {
+    async function generateCalendar(selectedDate) {
         calendar.innerHTML = ""; // 기존 캘린더 내용 제거
 
         const startDate = new Date(selectedDate);
@@ -259,16 +359,37 @@ document.addEventListener("DOMContentLoaded", function () {
             .toString()
             .padStart(2, "0");
         currentDay = selectedDate.getDate().toString().padStart(2, "0");
+        console.log(currentDate);
+
+        // 기록지 전부 삭제
+        document.querySelectorAll(".record-entry").forEach((item) => {
+            item.remove();
+        });
+
+        // TODO : 기록 api call (나머지 4개도 받아야 함)
+        try {
+            const response = await fetchGetWithRetry("/api/exercise-logs", {
+                params: {
+                    startDate: `${currentYear}-${currentMonth}-${currentDay}`,
+                    endDate: `${currentYear}-${currentMonth}-${currentDay}`,
+                },
+                withCredentials: true,
+            });
+            console.log(response);
+            console.log(response.data.data.exercise_logs);
+
+            response.data.data.exercise_logs.forEach((item) => {
+                addRecord(
+                    "운동 기록",
+                    "https://res.cloudinary.com/difzc7bsf/image/upload/v1721719663/002_cuhgi9.png",
+                    "exercise-record",
+                    item
+                );
+            });
+        } catch (e) {
+            console.log(e);
+        }
     }
 
-    // function getParameterByName(name) {
-    //     const urlParams = new URLSearchParams(window.location.search);
-    //     return urlParams.get(name);
-    // }
-
-    // const dateParam = getParameterByName("date");
-    // if (dateParam) {
-    //     currentDate = new Date(dateParam);
-    // }
     generateCalendar(currentDate); // 초기화
 });

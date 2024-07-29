@@ -1,0 +1,197 @@
+
+
+#content-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 2%; /* 내부 여백 설정 */
+    box-sizing: border-box; /* 테두리와 여백을 포함하여 크기 계산 */
+    margin-bottom: 50px;
+}
+
+
+#header{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0%;
+    margin-top: 5%; /* 상하 여백 설정 */
+    color: rgb(65, 61, 61);
+    font-size: 1em;
+}
+
+#header_title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#header img{
+    width: 10%;
+    height: 120%;
+    margin-right: 5px;
+}
+
+.header_btn{
+    width: 140px;
+    background-color: #f6f6f6;
+    color: black;
+    border: none;
+}
+
+
+
+.block-container {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 1fr;
+}
+
+
+
+/* Calendar Container */
+#calendar-container {
+    width: 100%;
+    max-width: 100%; /* 화면 너비에 맞게 조정 */
+    margin: auto;
+    padding-bottom: 18px; /* 네비게이션 바와의 간격을 위해 추가 */
+}
+
+#calendar_header1 {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    max-width: 100%;
+    width: 100%; /* 전체 너비 사용 */
+    background-color: transparent; /* 배경색 투명 */
+}
+
+#calendar-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    font-size: 1.2em; /* 더 큰 폰트 크기 */
+    font-weight: bold;
+    width: 100%; /* 전체 너비 사용 */
+    background-color: transparent; /* 배경색 투명 */
+}
+
+
+#current_time {
+    display: flex;
+    align-items: right;
+    width: 15%;
+} 
+
+
+
+#calendar {
+    display: flex;
+    flex-wrap: nowrap; /* 날짜들을 한 줄로 나열 */
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px;
+    box-sizing: border-box;
+    gap: 10px; /* 날짜 사이 간격 */
+    background-color: transparent; /* 배경색 투명 */
+}
+
+#calendar .day {
+    flex: 0 0 11.6%; /* 7일이 한 줄에 들어가게 설정 */
+    height: 70px; /* 날짜 셀의 높이 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    width: 30px; /* 날짜 셀의 너비 */
+    height: 70px; /* 날짜 셀의 높이 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    font-size: 13px;
+    padding: 5px;
+    cursor: pointer; /* 클릭 가능한 요소로 설정 */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 내용 중앙 정렬 */
+    background-color: #FFFFFF; /* 날짜 셀 배경색 투명 */
+    border-radius: 60px;
+}
+
+#calendar .day.selected {
+    background-color: rgb(65, 61, 61); /* 선택된 날짜의 배경색 */
+    color: white; /* 선택된 날짜의 텍스트 색상 */
+    font-weight: bold; /* 선택된 날짜의 텍스트 굵게 */
+}
+
+
+.select_box {
+    width: 100%;
+    height: 10%;
+    grid-template-columns: 1fr;
+}
+
+select {
+    width: 30%;
+    height: 70%;
+    border: hidden;
+    background:#FFFFFF;
+    border-radius: 10px;
+    text-align: center;
+    /* -webkit-appearance: none; /* 네이티브 외형 감추기 */
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+select option {
+    background: #ffffff;
+    border: hidden;
+    color: hidden;
+    padding: 3px 0;
+  }
+
+
+
+.box1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #ffffff;
+    width: 100%;
+    height: 30%;
+    border-radius: 10px;
+    margin-bottom: 5%;
+}
+
+.box3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    width: 100%;
+    height: 15%;
+    border-radius: 10px;
+    margin-bottom: 5%;
+}
+
+
+
+#duration {
+    border: solid 2px #f0f0f0;
+    border-radius: 5px;
+    height: 25px;
+    width: 80px;
+}
+
+#result{
+    margin-bottom: 0px;
+}

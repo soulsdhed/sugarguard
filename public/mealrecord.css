@@ -1,26 +1,62 @@
+#mealrecord {
+    min-height: 100vh;
+    max-height: 900px;
+}
+
+#mealrecord h2 {
+    position: relative;
+    color: rgba(0, 0, 0, 0.474);
+    max-width: 90%;
+    top: 10px;
+}
+
 #mealrecord-button {
-    margin-left: auto;
     position: absolute;
     right: 10px;
-    top: 10px;
-    padding: 5px 10px;
+    top: 0%;
+    padding: 15px 10px;
+    border: none;
+    background-color: #f6f6f6;
+    font-size: 16px;
 }
 
 #title {
     position: relative;
     text-align: center;
+    top: 10px;
+    left: 15px;
 }
 
-#date-time-container {
+#mealrecord-page-background {
+    position: relative;
+    bottom: 15px;
+    right: 50%;
+    top: 0%;
+
+}
+
+#mealrecord-page-background img {
+    max-width: 20px;
+}
+
+.date-time {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
-#date, #time {
+.date,
+.time {
     display: flex;
     align-items: center;
+}
+
+.date-input,
+.time-input {
+    display: none;
 }
 
 #time-meal {
@@ -29,6 +65,8 @@
     text-align: center;
     gap: 10px;
     height: 80px;
+    margin-left: 7px;
+    margin-right: 7px;
 }
 
 #time-meal a {
@@ -36,32 +74,81 @@
     border-radius: 10px;
     display: flex;
     align-items: center;
-    justify-content: center;  
-    text-decoration: none;  
-    color: black;
+    justify-content: center;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.474);
 }
+
 
 #time-meal h2 {
     text-align: center;
 }
 
-#meal-information input {
-    background-color: #e3e3e3;
-    width: 100%;
-    max-width: 400px;
-    height: 120px;
-
+#meal h2 {
+    margin-left: 7px;
 }
 
-#medicine input {
-    background-color: #e3e3e3;
-    width: 100%;
-    max-width: 400px;
-    height: 40px;
+#special h2 {
+    margin-left: 7px;
+}
+#special{
+    position: relative;
+    bottom: 10px;
+}
+
+#medicine h2 {
+    position: relative;
+    margin-left: 7px;
+    top: 30px;
+}
+
+#medicine-information {
+    position: relative;
+    margin-bottom: 40px;
+    top: 20px;
+}
+
+#medicine-information input {
+    width: 97%;
+    height: 50px;
+    font-size: 20px;
+    margin-left: 7px;
+    font-weight: 100;
+    border: 0;
+    border-radius: 10px;
 }
 
 textarea {
-    width: 100%;
-    height: 100px;
-    
+    width: 97%;
+    height: 70px;
+    margin-left: 7px;
+    border: 0;
+    border-radius: 10px;
 }
+
+/* 카메라 아이콘 */
+#mealrecord-camera {
+    height: 30px;
+    width: 97%;
+    margin-left: 2%;
+    border-radius: 10px;
+    border: white;
+}
+
+
+
+/* #record-list {
+    margin-top: 20px;
+}
+
+#records {
+    list-style-type: none;
+    padding: 0;
+}
+
+#records li {
+    background-color: #f6f6f6;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+} */

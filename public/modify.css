@@ -1,0 +1,305 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+hr {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+#modify-wrapper {
+    position: relative;
+    height: calc(100vh - 80px);
+}
+
+#modify-title {
+    margin-top: 17px;
+    margin-bottom: 17px;
+    text-align: center;
+    position: relative;
+    width: 100%;
+}
+
+#modify-title-text {
+    height: 100%;
+    width: 100%;
+    font-size: 18px;
+    font-family: Pretendard;
+    font-weight: 700;
+}
+
+#modify-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 25px;
+}
+
+#modify-content table {
+    width: 95%;
+    font-family: "Pretendard";
+}
+
+#modify-content th,
+td {
+    height: 40px;
+}
+
+#modify-content th {
+    width: 40%;
+    text-align: left;
+}
+
+#modify-content td {
+    width: 60%;
+}
+
+#modify-content input {
+    height: 30px;
+    border: none;
+    width: 180px;
+    font-family: "Pretendard";
+    font-size: 15px;
+    /* border-bottom: 1px solid #9c9c9c;
+    background-color: #f6f6f6; */
+    /* width: 150px; */
+}
+
+#modify-password {
+    margin-right: 5px;
+}
+
+#modify-content input:focus {
+    outline: none;
+}
+
+.modify-div {
+    display: flex;
+    flex-direction: row;
+}
+
+#modify-gender div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 30px;
+    width: 90px;
+    background-color: white;
+}
+
+#modify-birthday-year {
+    width: 50px !important;
+}
+
+#modify-birthday-month {
+    width: 30px !important;
+}
+
+#modify-birthday-day {
+    width: 30px !important;
+}
+
+#modify-birthday input {
+    /* width: 40px; */
+    margin-right: 3px;
+    text-align: center;
+}
+
+#modify-birthday div {
+    /* width: 50px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+}
+
+.selected-gender {
+    border: #ff5c5c 2px solid
+}
+
+#modify-resign-button {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+#modify-button {
+    margin-top: 30px;
+}
+
+.modify-button {
+    background-color: rgb(190, 190, 190);
+    border: none;
+
+    border-radius: 10px;
+    width: 95%;
+    height: 30px;
+
+    margin-bottom: 10px;
+
+    font-family: Pretendard;
+    font-size: 14px;
+    color: rgb(255, 255, 255);
+}
+
+#modify-resign-button {
+    width: 65px;
+    margin-bottom: 15px;
+    background-color: rgb(255, 92, 92);
+}
+
+button:focus {
+    outline: none;
+}
+
+/* 뒤로 가기 버튼 */
+#modify-goback {
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    left: 2px;
+    top: 50%;
+    transform: translate(0%, -50%);
+    z-index: 100;
+    font-size: 20px;
+    text-align: center;
+    line-height: 24px;
+    z-index: 10;
+}
+
+/* 로딩 화면 */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-size: 24px;
+    z-index: 9999;
+}
+
+.spinner {
+    -webkit-animation: rotator 1.4s linear infinite;
+    animation: rotator 1.4s linear infinite;
+}
+
+@-webkit-keyframes rotator {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(270deg);
+    }
+}
+
+@keyframes rotator {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(270deg);
+    }
+}
+
+.path {
+    stroke-dasharray: 187;
+    stroke-dashoffset: 0;
+    transform-origin: center;
+    -webkit-animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+    animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+}
+
+@-webkit-keyframes colors {
+    0% {
+        stroke: #4285F4;
+    }
+
+    25% {
+        stroke: #DE3E35;
+    }
+
+    50% {
+        stroke: #F7C223;
+    }
+
+    75% {
+        stroke: #1B9A59;
+    }
+
+    100% {
+        stroke: #4285F4;
+    }
+}
+
+@keyframes colors {
+    0% {
+        stroke: #4285F4;
+    }
+
+    25% {
+        stroke: #DE3E35;
+    }
+
+    50% {
+        stroke: #F7C223;
+    }
+
+    75% {
+        stroke: #1B9A59;
+    }
+
+    100% {
+        stroke: #4285F4;
+    }
+}
+
+@-webkit-keyframes dash {
+    0% {
+        stroke-dashoffset: 187;
+    }
+
+    50% {
+        stroke-dashoffset: 46.75;
+        transform: rotate(135deg);
+    }
+
+    100% {
+        stroke-dashoffset: 187;
+        transform: rotate(450deg);
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dashoffset: 187;
+    }
+
+    50% {
+        stroke-dashoffset: 46.75;
+        transform: rotate(135deg);
+    }
+
+    100% {
+        stroke-dashoffset: 187;
+        transform: rotate(450deg);
+    }
+}
+
+.my-confirm-button {
+    background-color: #6c77db !important;
+    color: white !important;
+    font-family: "Pretendard" !important;
+}
+
+.my-cancel-button {
+    background-color: rgb(255, 92, 92) !important;
+    color: white !important;
+    font-family: "Pretendard" !important;
+}

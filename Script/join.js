@@ -7,7 +7,7 @@ const placeholders = [
     "생년월일"
 ];
 const messages = [
-    "건강관리 이제 시작입니다! <br>닉네임을 입력해주세요.",
+    "닉네임을 입력해주세요.",
     "이메일을 입력해주세요.",
     "아이디을 입력해주세요.",
     "비밀번호를 입력해주세요.",
@@ -41,7 +41,9 @@ const data = {
     birthDate:"2000-08-12"
 };
 const url = '/api/users/';
-
+document.getElementById('back_button').addEventListener('click', function() {
+    window.history.go(-1);
+});
 //한 버튼에 여러 함수를 이용할 수 있도록하는 함
 function handleButtonClick(event) {
     event.preventDefault(); // 기본 제출 동작 방지
@@ -58,9 +60,7 @@ function handleButtonClick(event) {
             if (valStr.length > 20 || valStr.length < 4) {
                 Swal.fire({
                     icon: "error",
-                    title: "Oops...",
-                    text: "Something went wrong!",
-                    footer: '<a href="#">Why do I have this issue?</a>'
+                    title: "닉네임을 입력해주세요"
                   });
                 return;
             }
@@ -68,28 +68,43 @@ function handleButtonClick(event) {
             // 이메일 조건
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(valStr)) {
-                alert("Email Error");
+                Swal.fire({
+                    icon: "error",
+                    title: "이메일을 입력해주세요"
+                  });
                 return;
             }
         } else if (currentInputText == "아이디") {
             if (valStr.length < 4 || valStr.length > 12) {
-                alert("ID Error");
+                Swal.fire({
+                    icon: "error",
+                    title: "아이디를 입력해주세요"
+                  });
                 return;
             }
         } else if (currentInputText === "비밀번호") {
             if (valStr.length < 8 || valStr.length > 16) {
-                alert("password Error")
+                Swal.fire({
+                    icon: "error",
+                    title: "비밀번호를 입력해주세요"
+                  });
                 return;
             }
         } else if (currentInputText == "성별") {
             if (!["남성", "여성"].includes(valStr)) {
-                alert("gender Error")
+                Swal.fire({
+                    icon: "error",
+                    title: "성별을 선택해주세요"
+                  });
                 return;
             }
         } else if (currentInputText == "생년월일") {
             const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
             if (!dateRegex.test(valStr)) {
-                alert("Birth Date Error")
+                Swal.fire({
+                    icon: "error",
+                    title: "생년월일을 입력해주세요"
+                  });
                 return;
             }
         }
@@ -105,18 +120,14 @@ function handleButtonClick(event) {
             email: document.getElementById(join_db_list[1]).value,
             userId: document.getElementById(join_db_list[2]).value,
             password: document.getElementById(join_db_list[3]).value,
-            // gender: document.getElementById(join_db_list[4]).value,
-            birthDate: document.getElementById(join_db_list[5]).value,
-        }
-        if (true) {
-            userData.gender = "남성"
-        } else {
-            userData.gender = "여성"
+            gender: document.getElementById(join_db_list[4]).value,
+            birthDate: document.getElementById(join_db_list[5]).value
         }
         
         console.log(userData)
         postData(url, userData);
     }
+    saveState()
 }
 async function postData(url, data) {
     try {
@@ -129,7 +140,10 @@ async function postData(url, data) {
         console.error('Error:', error);
 
         // TODO : 회원 가입 실패
-        alert("회원 가입에 실패했습니다. 관리자에게 문의해주세요.")
+        Swal.fire({
+            icon: "error",
+            title: "회원가입 실패했습니다. 다시 확인해주세요."
+          });
     }
 }
   

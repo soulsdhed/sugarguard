@@ -1,28 +1,176 @@
-body {
+
+#header{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0%;
+    margin-top: 5%; /* 상하 여백 설정 */
+    color: rgb(65, 61, 61);
+    font-size: 1em;
+}
+
+#content-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 2%; /* 내부 여백 설정 */
+    box-sizing: border-box; /* 테두리와 여백을 포함하여 크기 계산 */
+    margin-bottom: 50px;
+}
+
+
+
+.block-container {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 1fr;
+}
+
+#div3 {
+    display: none; /* Hide the form initially */
+}
+
+
+#back {
+    margin-left: 5px;
+    width: 17%;
+    text-align: left;
+    color: black;
     background-color: #f6f6f6;
-    text-align: center;
-    padding: 0px;
-    table-layout: center;
+    font-size: 1.2em;
+    font-weight: bold;
 }
 
-/* .container {
-    margin-bottom: 20px;
+#bsSubmit {
+    width: 17%;
+    color : black;
+    border-color: hidden;
+    background-color: #f6f6f6;
+    font-weight: bold;
+}
+
+
+
+/* Calendar Container */
+#calendar-container {
+    width: 100%;
+    max-width: 100%; /* 화면 너비에 맞게 조정 */
+    margin: auto;
+    padding-bottom: 18px; /* 네비게이션 바와의 간격을 위해 추가 */
+}
+
+#calendar-header1 {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    max-width: 100%;
+    width: 100%; /* 전체 너비 사용 */
+    background-color: transparent; /* 배경색 투명 */
+}
+
+#calendar-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    font-size: 1.2em; /* 더 큰 폰트 크기 */
+    font-weight: bold;
+    width: 100%; /* 전체 너비 사용 */
+    background-color: transparent; /* 배경색 투명 */
+}
+
+/* #calendar-header span {
+    margin: 0 5px;
 } */
+ 
+#current-time {
+    display: flex;
+    align-items: right;
+    width: 15%;
+} 
 
-table{
-    margin-left: auto;
-    margin-right: auto;
-    width: 480px;
-    height: 500px;
+#calendar {
+    display: flex;
+    flex-wrap: nowrap; /* 날짜들을 한 줄로 나열 */
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px;
+    box-sizing: border-box;
+    gap: 10px; /* 날짜 사이 간격 */
+    background-color: transparent; /* 배경색 투명 */
 }
+
+#calendar .day {
+    flex: 0 0 11.6%; /* 7일이 한 줄에 들어가게 설정 */
+    height: 70px; /* 날짜 셀의 높이 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    width: 30px; /* 날짜 셀의 너비 */
+    height: 70px; /* 날짜 셀의 높이 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    font-size: 13px;
+    padding: 5px;
+    cursor: pointer; /* 클릭 가능한 요소로 설정 */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 내용 중앙 정렬 */
+    background-color: #FFFFFF; /* 날짜 셀 배경색 투명 */
+    border-radius: 60px;
+}
+
+#calendar .day.selected {
+    background-color: rgb(65, 61, 61); /* 선택된 날짜의 배경색 */
+    color: white; /* 선택된 날짜의 텍스트 색상 */
+    font-weight: bold; /* 선택된 날짜의 텍스트 굵게 */
+}
+
+.selectBox {
+    width: 100%;
+    height: 10%;
+    grid-template-columns: 1fr;
+}
+
+select {
+    width: 30%;
+    height: 70%;
+    border: hidden;
+    background: #ffffff;
+    border-radius: 10px;
+    text-align: center;
+    /* -webkit-appearance: none; /* 네이티브 외형 감추기 */
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+select:focus {
+  border-color: #0094e1;
+}
+
+select option {
+    width: 20%;
+    height: 50%;
+    background: #ffffff;
+    border: hidden;
+    color: hidden;
+    padding: 3px 0;
+  }
+
 
 .colorBox {
     width: 20px;
     height: 20px;
-    /* border: 2px solid #f6f6f6; */
-    margin: 20px;
     text-align: center;
-    line-height: 20px;
     background-color: #66CC66;
 }
 
@@ -31,8 +179,8 @@ table{
     align-items: center;
     justify-content: space-around;
     background-color: #ffffff;
-    width: 480px;
-    height: 50px;
+    width: 100%;
+    height: 100%;
     border-radius: 10px;
 }
 
@@ -42,8 +190,8 @@ table{
     align-items: center;
     justify-content: space-around;
     background-color: #ffffff;
-    width: 480px;
-    height: 150px;
+    width: 100%;
+    height: 100%;
     border-radius: 10px;
     margin: 0;
 }
@@ -52,68 +200,49 @@ table{
     text-align: left;
 }
 
-/* label {
-    font-weight: bold;
-} */
-
-input[type="number"], input[type="date"] {
-    padding: 5px;
-}
-
-input[type="checkbox"]{
-    width: 20px;    
-    height: 20px;
-    border: solid 5px #f0f0f0; 
-    }
 
 button {
-    padding: 8px 10px;
+    padding: 2px 2px;
     background-color: #4CAF50;
     color: white;
     border: none;
-    margin-right: 0px;
+    /* margin-right: 0px; */
     border-radius: 10px;
 }
 
-/* .bsBtn {
-    height: 30px;
-    width: 30px;
-} */
-/* 
-.record {
-    margin-bottom: 5px;
-    padding: 10px;
-    border-radius: 5px;
-} */
+#timeInput {
+    font-size: 12px;
+    padding: 3px;
+    border: 1px solid #f6f6f6;
+    border-radius: 20px;
+    height: 25px;
+    width: 100px;
+    max-width: 100px;
+  }
 
-#datePicker {
-    margin-top: 20px;
-}
-
-input[type="radio"] {
-    width:13px; height:13px; margin:0 0 2px;
-    padding:0; border: 1px solid #FFF;
-    vertical-align:middle;}
-
+  
+#saveTimeBtn {
+    color: #ffffff;
+    height: 25px;
+    width: 45px;
+    padding: 2px;
+    background-color:  #4CAF50;
+    border-radius: 15px;
+  }
+    
 
 #recordBsBefore, #recordBsAfter {
     border: solid 2px #f0f0f0;
     border-radius: 5px;
+    height: 25px;
+    width: 80px;
 }
 
 
-#eatRecord, #eatMemo {
-    height: 100px;
-    width: 400px;
+#eatMemo {
+    height: 80px;
+    width: 300px;
     border: solid 2px #f0f0f0;
     border-radius: 10px;
-    
-}
-
-#bottomMenu {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
 }
 

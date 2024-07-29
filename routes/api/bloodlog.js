@@ -265,4 +265,34 @@ router.patch("/", authenticateToken, (req, res, next) => {
     });
 });
 
+// 가장 최근 기록 가져오기
+router.get("/recent", authenticateToken, (req, res, next) => {
+    const { userId } = req.user;
+
+    const query = `SELECT
+            bsl_id,
+            member_id,
+            record_time,
+            record_type,
+            blood_sugar,
+            comments
+        FROM BLOOD_SUGAR_LOG_TB
+        WHERE member_id = ?
+        ORDER BY record_time DESC
+        LIMIT 1;
+    `;
+    db.execute(query, [userId], (err, rows) => {
+        if (err) {
+            return next({
+                code: "SERVER_INTERNAL_ERROR",
+            });
+        }
+
+        return res.success({
+            count: rows.length,
+            blood_sugar_logs: rows,
+        });
+    });
+});
+
 module.exports = router;

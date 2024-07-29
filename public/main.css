@@ -35,6 +35,7 @@ body{
     margin-bottom: 50px;
 }
 
+
 .divs {
     width: 100%; /* 화면 너비의 80% */
     padding: 2%; /* 내부 여백 설정 */
@@ -74,11 +75,12 @@ body{
 }
 /* img 파일 */
 #main-recipe{
-    margin-left: 30px;
-    margin-top: 30px;
-    width: 70%;
+    margin-left: 38px;
+    margin-top: 23px;
+    width: 60%;
     max-width: 300px;
     height: auto;
+    border-radius: 15px;
 }
 #main-diabetes{
     width: 50%;
@@ -120,7 +122,6 @@ body{
 #chart {
     background-color: #FFFFFF;
     margin-top: 25px;
-    height: 30%;
     padding: 5%
 }
 

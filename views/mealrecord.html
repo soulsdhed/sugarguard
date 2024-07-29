@@ -1,36 +1,56 @@
 {% extends "index.html" %}{% block content %}
 <link rel="stylesheet" href="mealrecord.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <div>
     <div id="mealrecord">
         <div id="title">
-            <h2>Sugar Guard</h2>
+            <h2>식사기록</h2>
+            <a href="/sugardiary" id="mealrecord-page-background"><img src="recipe-background.png" alt=""></a>
             <input type="submit" id="mealrecord-button" value="저장">
         </div><br>
-        <div id="date-time-container">
-            <div id="date">
-                <label for="date">날짜: </label>
-                <input type="date" id="date" name="date" onchange="saveDate()">
-            </div>
-            <div id="time">
-                <label for="time">시간: </label>
-                <input type="time" id="time" name="time" onchange="saveTime()">
-            </div>
+        <hr color="#e3e3e3"><br>
+        <div class="date-time">
+            <div class="date" id="date" onclick="editDateTime('date')"></div>
+            <input type="date" class="date-input" id="dateInput" onblur="updateFromInput('date')" />
+            <div class="time" id="time" onclick="editDateTime('time')"></div>
+            <input type="time" class="time-input" id="timeInput" onblur="updateFromInput('time')" />
         </div><br>
+        <hr color="#e3e3e3"><br>
         <div id="time-meal">
-            <a href="#" id="breakfast"><span><h2>아침</h2></span></a>
-            <a href="#" id="lunch"><span><h2>점심</h2></span></a>
-            <a href="#" id="dinner"><span><h2>저녁</h2></span></a>
-            <a href="#" id="snack"><span><h2>간식</h2></span></a>
+            <a href="#" id="breakfast"><span>
+                    <h3>아침</h3>
+                </span></a>
+            <a href="#" id="lunch"><span>
+                    <h3>점심</h3>
+                </span></a>
+            <a href="#" id="dinner"><span>
+                    <h3>저녁</h3>
+                </span></a>
+            <a href="#" id="snack"><span>
+                    <h3>간식</h3>
+                </span></a>
         </div><br>
-        <textarea style="font-size: 15px;" name="meal-information" id="meal-information" cols="10" rows="10" placeholder="최대 100자까지 정보 입력이 가능합니다" maxlength="100"></textarea>
+        <div id="meal">
+            <h2>식사 정보</h2><br>
+            <textarea style="font-size: 20px;" name="meal-information" id="meal-information" cols="10" rows="10"
+                placeholder="" maxlength="500"></textarea>
+        </div><br>
+        <button id="mealrecord-camera"><i class="fas fa-camera"></i></button>
         <div id="medicine">
-            <input type="text" value="약">
+            <h2>투약 정보</h2><br>
+            <div id="medicine-information">
+                <input type="text" value="">
+            </div>
         </div><br>
-        <div id="meal-information">
-            <input type="text" value="식사정보">
-        </div><br>
+        <div id="special">
+            <h2>특이사항</h2><br>
+            <textarea style="font-size: 20px;" name="special-information" id="special-information" cols="10" rows="10"
+                maxlength="500"></textarea>
+        </div>
     </div>
+
+
 </div>
 <script src="mealrecord.js"></script>
 {% endblock %}

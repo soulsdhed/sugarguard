@@ -1,92 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'index.html' %} {% block content %}
+<link rel="stylesheet" href="bs.css">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="bs.css">
-</head>
-
-<body>
-    <div id="datePicker">
-        <label for="recordDate"></label>
-        <input type="date" id="recordDate" value="" onchange="updateDate()">
+<div id="content-main">
+    <div id="header">
+        <!-- Header -->
+        <button id="back" onclick="history.back()"><</button>
+            <h3>🩸 혈당 기록하기</h3>    
+            <button type="submit" id="bsSubmit">저장하기</button>
     </div>
 
-    <div class="Table" id="bsTable">
-        <table>
 
-    <div>
-        <tr><td class="box1">
-        <div>
-            <input type="radio" name="bstime" id="아침">아침
-        <input type="radio" name="bstime" id="점심">점심
-        <input type="radio" name="bstime" id="저녁">저녁
+    <!-- 중앙 달력 -->
+     
+    <div id="calendar-header1"><div id="calendar-header"></div><div id="current-time"></div></div>
+    <div id="calendar-container">
+        <div id="calendar"></div>
+    </div>
+
+    <div class="selectBox">
+
+        <select id="mySelect">
+            <option value="option1">아침</option>
+            <option value="option2">점심</option>
+            <option value="option3">저녁</option>
+            <option value="option4">공복</option>
+            <option value="option5">자기전</option>
+            <option value="option6">실시간</option>
+        </select>
         </div>
-    </td></tr>
-    </div>
 
+    <!-- 중앙 -->
+    <div class="block-container">
 
+        <div class="box1" id="div1">
+            <div class="colorBox" id="resultBox1" onchange="checkLevelBsBefore()"></div>
             <div>
-                <tr>
-                    <td class="box1">
-                        <div class="colorBox" id="resultBox1"></div>
-                            <div><h5>식전 혈당</h5></div>
-                            <div><input type="number" id="recordBsBefore" min="0" max="999">mg/dL
-                            <button onclick="checkLevelBsBefore()">계산</button></div>
-                    </td>
-                </tr>
+                <h5>식전 혈당</h5>
             </div>
-
-            <div>
-                <tr>
-                    <td class="box1">
-                        <div class="colorBox" id="resultBox2"></div>
-                            <h5>식후 혈당</h5>
-                            <div><input type="number" id="recordBsAfter" min="0" max="999">mg/dL
-                            <button onclick="checkLevelBsAfter()">계산</button></div>
-                    </td>
-                </tr>
+            <div><input type="number" id="recordBsBefore" min="0" max="999" onkeyup="checkLevelBsBefore()" />mg/dL
             </div>
-
-            <div>
-                <tr>
-                    <td class="box1">
-                        <h5>약 섭취</h5>
-                        <input type="checkbox">
-                    </td>
-                </tr>
-            </div>
-            
-            <div>
-            <tr>
-                <td class="box2">
-                    <label for="bsDrug">
-                        <h5>식사 정보</h5>
-                    </label>
-                    <input type="text" id="eatRecord">
-                </td>
-            </tr>
-            </div>
-
-            <div>
-            <tr>
-                <td class="box2">
-                    <h5>특이사항</h5>
-                <input type="text", id="eatMemo">
-                </td>
-            </tr>
         </div>
-        </table>
-    </div>
-    <div>
-        <tr>
-            <td><input type="submit" value="+"></td>
-        </tr>
-    </div>
 
-    <script src="bs.js"></script>
-</body>
+        <div class="box1" id="div2">
+            <div class="colorBox" id="resultBox2" onchange="checkLevelBsAfter()"></div>
+            <h5>식후 혈당</h5>
+            <div><input type="number" id="recordBsAfter" min="0" max="999" onkeyup="checkLevelBsAfter()" />mg/dL
+                <form id="div3" style="visibility: hidden;">
+                    <label for="timeInput">시간을 입력하세요.</label>
+                    <input type="text" id="timeInput" placeholder="hh:mm:ss">
+                    <button id="saveTimeBtn">저장</button>
+            </div>
 
-</html>
+            </form>
+        </div>
+
+        <div class="box2">
+            <h5>특이사항</h5>
+            <input type="text", id="eatMemo">
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<script src="bs.js"></script>
+{% endblock %}

@@ -1,14 +1,35 @@
-{% extends 'index.html' %} {% block content %}
+{% extends 'index.html' %}{% block content %}
 <link rel="stylesheet" href="recipe_list.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+<!-- 로딩 화면 -->
+<!-- <div id="loading-screen">
+    <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+        <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+    </svg>
+</div> -->
 <!-- title -->
 <div class="container-title">
-    <div class="list_title"><span>SugarGuard</span></div>
-    <div class="list_search"></div>
+    <div id="recipe-list-title">
+        <!-- 타이틀 문자열이 적히는 곳 -->
+        <div id="recipe-list-title-text">당뇨 맞춤 레시피 추천 목록</div>
+        <!-- 뒤로 가기 버튼 -->
+        <div id="recipe-list-goback">
+            <i class="fa-solid fa-angle-left"></i>
+        </div>
+    </div>
+    <hr />
 </div>
 
 <!-- content -->
 <div class="content-list" id="recipe-list">
     <!-- 이곳에 레시피 목록이 뜹니다 -->
 </div>
+
+<script>
+    window.userIdFromTemplate = "{{ userId | safe }}";
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="recipe_list.js"></script>
 {% endblock %}

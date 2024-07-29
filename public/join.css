@@ -1,45 +1,52 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
-h2{
-    font-family:Pretendard;
+
+h2 {
+    font-family: Pretendard;
     font-weight: 900;
     font-size: large;
 }
-#join_main{
+
+#join_main {
     width: 100%;
-    height: 100%;
+    height: 800px;
     background-color: white;
 }
-#join_main input{
-    font-family:Pretendard;
+
+#join_main input {
+    font-family: Pretendard;
     font-weight: 900;
     font-size: medium;
 }
-#myFrom{
+
+#myFrom {
     width: 100%;
     height: 100%;
 }
-#myForm table{
+
+#myForm table {
     width: 100%;
     height: 100%;
 }
-#join_change{
+
+#join_change {
     margin-left: 4%;
 }
-#join_title{
+
+#join_title {
     display: flex;
     flex-direction: row;
-    justify-content:space-between;
+    justify-content: space-between;
     height: 5%;
 }
 
-.join_new{
+.join_new {
     border: 0;
     border-bottom: solid 1px black;
     border-radius: 0;
     margin-left: 4%;
 }
 
-#join_input{
+#join_input {
     border: 0;
     border-bottom: solid 1px black;
     border-radius: 0;
@@ -47,16 +54,15 @@ h2{
 }
 
 
-.pass_button{
-    width:50px;
+.pass_button {
+    width: 50px;
     height: 60px;
     background-color: white;
     border: none;
     color: black;
+    margin: 10px;
 }
-.pass_button input{
+
+.pass_button input {
     font-size: 50px;
 }
-
-
-

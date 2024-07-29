@@ -253,4 +253,37 @@ router.patch("/", authenticateToken, (req, res, next) => {
     });
 });
 
+// 가장 최근 기록 가져오기
+router.get("/recent", authenticateToken, (req, res, next) => {
+    const { userId } = req.user;
+
+    const query = `SELECT
+            ml_id,
+            member_id,
+            record_date,
+            meal_time,
+            medication,
+            meal_info,
+            calories,
+            comments
+        FROM MEAL_LOG_TB
+        WHERE member_id = ?
+        ORDER BY record_date DESC
+        LIMIT 1;
+    `;
+    db.execute(query, [userId], (err, rows) => {
+        if (err) {
+            console.log(err);
+            return next({
+                code: "SERVER_INTERNAL_ERROR",
+            });
+        }
+
+        return res.success({
+            count: rows.length,
+            meal_logs: rows,
+        });
+    });
+});
+
 module.exports = router;

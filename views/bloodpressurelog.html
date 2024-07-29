@@ -1,0 +1,28 @@
+{% extends 'index.html' %} {% block content %}
+
+<link rel="stylesheet" href="bloodpressurelog.css">
+
+<div id="bloodpressurelog">
+    <div id="title">
+        <a href="/sugardiary" id="bloodpressurelog_background"><img src="recipe-background.png" alt=""></a>
+        <h2>혈압기록</h2>
+        <input type="submit" id="bloodpressurelog-button" value="저장">
+    </div><br>
+    <hr color="#e3e3e3"><br>
+    <div class="date-time">
+        <div class="date" id="date" onclick="editDateTime('date')"></div>
+        <input type="date" class="date-input" id="dateInput" onblur="updateFromInput('date')" />
+        <div class="time" id="time" onclick="editDateTime('time')"></div>
+        <input type="time" class="time-input" id="timeInput" onblur="updateFromInput('time')" />
+    </div><br>
+    <hr color="#e3e3e3"><br>
+    <div id="bloodpressurelog_main">
+            <h2>혈압</h2>
+            <div id="bloodpressurelog_main_content">
+            <input type="text" id="bloodpressurelog_detail_input">
+            <h2>mmHg</h2>
+            </div>
+    </div>
+</div>
+<script src="bloodpressurelog.js"></script>
+{% endblock %}

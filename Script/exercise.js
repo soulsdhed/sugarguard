@@ -73,14 +73,14 @@ function displayCurrentTime() {
     const minutes = String(now.getMinutes()).padStart(2, '0');
     // const seconds = String(now.getSeconds()).padStart(2, '0');
     const currentTimeString = `${hours}:${minutes}`;
-    document.getElementById('current_time').textContent = currentTimeString;
+    document.getElementById('current-time').textContent = currentTimeString;
 }
 
 // 현재 시간 표시 초기 호출
 displayCurrentTime();
 
 
-
+// 운동 선택 창
 const exerciseCalories = {
     "걷기": 3.5,
     "달리기": 9.8,
@@ -117,6 +117,7 @@ const exerciseCalories = {
     "전신 운동": 8.5
 };
 
+// 시간 입력시 자동으로 소모 칼로리 계산
 function calculateCalories() {
     const exercise = document.getElementById("exercise").value;
     const duration = parseFloat(document.getElementById("duration").value);

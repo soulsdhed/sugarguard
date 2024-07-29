@@ -139,8 +139,14 @@ h4{
     display: none; /* Hide the form initially */
 }
 
+#setTime {
+    margin-bottom: 0px;
+    font-weight: bold;
+    color: #4CAF50;
+}
 
-#save-time-btn {
+
+/* #save-time-btn {
     color: #ffffff;
     height: 25px;
     width: 45px;
@@ -148,7 +154,7 @@ h4{
     background-color: #4CAF50;
     border-radius: 15px;
     border: none;
-}
+} */
 
 .select-box {
     width: 100%;
@@ -176,6 +182,7 @@ select option {
     background: #ffffff;
     border: hidden;
     color: hidden;
+    text-align: center;
   }
 
 .color-box {

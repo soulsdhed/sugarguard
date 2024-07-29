@@ -1,3 +1,20 @@
+document.getElementById('bs-submit').addEventListener('click', async () => {
+    try {
+      const response = await axios.post('/api/blood-sugar-logs', {
+        blood_sugar: 'resultBox1',
+        record_type: 'my-select',
+        record_time: 'time-input',
+        comments: 'eat-memo'
+      }, { withCredentials: true });
+      const user = response.data.user;
+      localStorage.setItem('bs', JSON.stringify(user));
+      console.log('exercise submit:', bs);
+    } catch (error) {
+      console.error('exercise error:', error);
+    }
+  });
+  
+
 document.addEventListener("DOMContentLoaded", () => {
     const calendar = document.getElementById("calendar");
     const calendarHeader = document.getElementById("calendar-header");
@@ -127,38 +144,76 @@ mySelect.addEventListener('change', function () {
 
 });
 
-//  공복, 자기전, 실시간 선택시 사용자가 입력한 시간 설정 함수
+
 function setTime() {
-    const hour = document.getElementById('hour').value;
-    const minute = document.getElementById('minute').value;
-    const second = document.getElementById('second').value;
+    const timeInput = document.getElementById('time-input').value;
+
+    // 입력된 시간이 4자리인지 확인
+    if (timeInput.length !== 4) {
+        document.getElementById('setTime').textContent = ''; // 잘못된 경우 시간 표시 지우기
+        return; // 길이가 4가 아니면 함수 종료
+    }
+
+    const hour = timeInput.substring(0, 2);  // 첫 두 자리 - 시간
+    const minute = timeInput.substring(2, 4); // 마지막 두 자리 - 분
 
     // 유효성 검사 - 각 입력 필드가 숫자이고 범위 내에 있는지 확인
-    if (isNaN(hour) || isNaN(minute) || isNaN(second) ||
+    if (isNaN(hour) || isNaN(minute) ||
         hour < 0 || hour > 23 ||
-        minute < 0 || minute > 59 ||
-        second < 0 || second > 59) {
-        alert('올바른 시간을 입력하세요.');
-        return;
+        minute < 0 || minute > 59) {
+        alert('올바른 시간을 입력하세요 (hhmm 형식).');
+        document.getElementById('setTime').textContent = ''; // 잘못된 경우 시간 표시 지우기
+        return; // 잘못된 형식이면 함수 종료
     }
 
     // 입력된 시간으로 시간 설정
     const newTime = new Date();
     newTime.setHours(parseInt(hour, 10));
     newTime.setMinutes(parseInt(minute, 10));
-    newTime.setSeconds(parseInt(second, 10));
 
     // 설정된 시간을 표시
     const hours = String(newTime.getHours()).padStart(2, '0');
     const minutes = String(newTime.getMinutes()).padStart(2, '0');
-    const seconds = String(newTime.getSeconds()).padStart(2, '0');
-    const setTimeString = `${hours}:${minutes}:${seconds}`;
-    document.getElementById('current-time').textContent = setTimeString;
-
-
-    // 시간 입력 폼 숨기기
-    document.getElementById('time-input').style.display = 'none';
+    const setTimeString = `${hours}:${minutes}`;
+    document.getElementById('setTime').textContent = setTimeString;
 }
+
+
+
+
+
+// //  공복, 자기전, 실시간 선택시 사용자가 입력한 시간 설정 함수
+// function setTime() {
+//     const hour = document.getElementById('hour').value;
+//     const minute = document.getElementById('minute').value;
+//     const second = document.getElementById('second').value;
+
+//     // 유효성 검사 - 각 입력 필드가 숫자이고 범위 내에 있는지 확인
+//     if (isNaN(hour) || isNaN(minute) || isNaN(second) ||
+//         hour < 0 || hour > 23 ||
+//         minute < 0 || minute > 59 ||
+//         second < 0 || second > 59) {
+//         alert('올바른 시간을 입력하세요.');
+//         return;
+//     }
+
+//     // 입력된 시간으로 시간 설정
+//     const newTime = new Date();
+//     newTime.setHours(parseInt(hour, 10));
+//     newTime.setMinutes(parseInt(minute, 10));
+//     newTime.setSeconds(parseInt(second, 10));
+
+//     // 설정된 시간을 표시
+//     const hours = String(newTime.getHours()).padStart(2, '0');
+//     const minutes = String(newTime.getMinutes()).padStart(2, '0');
+//     const seconds = String(newTime.getSeconds()).padStart(2, '0');
+//     const setTimeString = `${hours}:${minutes}:${seconds}`;
+//     document.getElementById('setTime').textContent = setTimeString;
+
+
+//     // 시간 입력 폼 숨기기
+//     document.getElementById('time-input').style.display = 'none';
+// }
 
 
 // 식전 혈당 정상 범위 설정

@@ -184,6 +184,7 @@ select option {
     background: #ffffff;
     border: hidden;
     color: hidden;
+    text-align: center;
 }
 
 .box1 {

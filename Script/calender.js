@@ -26,8 +26,13 @@ document.addEventListener("DOMContentLoaded", () => {
             if (currentDate.toDateString() === date.toDateString()) {
                 dayDiv.classList.add("selected");
             }
+<<<<<<< HEAD
+            dayDiv.innerHTML = `${date.getDate()}<br>${
+                daysOfWeek[date.getDay()]
+=======
             dayDiv.innerHTML = `${currentDate.getDate()}<br>${
                 daysOfWeek[currentDate.getDay()]
+>>>>>>> f3de29f0ae76b8c27ccffb1e2074cf5d6f2df222
             }`;
             dayDiv.addEventListener("click", () => {
                 generateCalendar(currentDate); // 새로운 날짜 생성
@@ -36,6 +41,27 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             calendar.appendChild(dayDiv);
         }
+<<<<<<< HEAD
+        updateHeader(selectedDate); // 선택된 날짜로 헤더 업데이트
+        console.log("Month:", selectedDate.getMonth() + 1); // 0부터 시작하므로 +1
+        console.log("Day:", selectedDate.getDate());
+        //             const dayDiv = document.createElement("div");
+        //             dayDiv.classList.add("day");
+        //             if (date.toDateString() === selectedDate.toDateString()) {
+        //                 dayDiv.classList.add("selected");
+        //             }
+        //             dayDiv.innerHTML = `${date.getDate()}<br>${daysOfWeek[date.getDay()]
+        //                 }`;
+        //             dayDiv.addEventListener("click", () => {
+        //                 generateCalendar(date); // 새로운 날짜 생성
+        //                 updateHeader(date); // 헤더 업데이트
+        //             });
+        //             calendar.appendChild(dayDiv);
+        //         }
+        //         updateHeader(selectedDate); // 선택된 날짜로 헤더 업데이트
+        //         console.log("Month:", selectedDate.getMonth() + 1); // 0부터 시작하므로 +1
+        //         console.log("Day:", selectedDate.getDate());
+=======
         // updateHeader(selectedDate); // 선택된 날짜로 헤더 업데이트
         // console.log("Month:", selectedDate.getMonth() + 1); // 0부터 시작하므로 +1
         // console.log("Day:", selectedDate.getDate());
@@ -43,6 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateHeader(date); // 선택된 날짜로 헤더 업데이트
         console.log("Month:", date.getMonth() + 1); // 0부터 시작하므로 +1
         console.log("Day:", date.getDate());
+>>>>>>> f3de29f0ae76b8c27ccffb1e2074cf5d6f2df222
     }
 
     function getParameterByName(name) {

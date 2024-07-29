@@ -1,4 +1,41 @@
-#foodnutrition-title{
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+#recipe-title {
+    margin-top: 17px;
+    margin-bottom: 17px;
+    text-align: center;
+    position: relative;
+    width: 100%;
+}
+
+#recipe-title-text {
+    height: 100%;
+    width: 100%;
+    font-size: 18px;
+    font-family: Pretendard;
+    font-weight: 700;
+}
+
+/* 뒤로 가기 버튼 */
+#recipe-goback {
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    left: 2px;
+    top: 50%;
+    transform: translate(0%, -50%);
+    z-index: 100;
+    font-size: 20px;
+    text-align: center;
+    line-height: 24px;
+    z-index: 10;
+}
+hr {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+#foodnutrition-title {
     position: relative;
     text-align: center;
     top: 20px;
@@ -8,7 +45,7 @@
 #foodnutrition-search {
     position: relative;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 #search-input {
@@ -29,7 +66,7 @@
 }
 
 #foodnutrition-result {
-    margin-top: 20px;
+    margin-top: 0px;
     text-align: center;
 }
 
@@ -37,12 +74,17 @@
     display: inline-block;
     text-align: left;
     margin-top: 10px;
+    margin-bottom: 10px;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 350px;
     background-color: white;
     border-bottom: 2px solid #000;
+}
+
+.nutrition-facts h5 {
+    margin-bottom: 8px;
 }
 
 .nutrition-facts h1 {
@@ -54,10 +96,11 @@
 
 .nutrition-facts table {
     width: 100%;
+    border-collapse: collapse;
 }
 
 .nutrition-facts td {
-    padding: 5px 25px;
+    padding: 5px 15px;
     border-bottom: 1px solid gray;
     text-align: right;
 }
@@ -75,6 +118,8 @@
     height: 1px;
     background-color: black;
     margin: 20px 0;
+
+    display: none;
 }
 
 .vitamin-info {

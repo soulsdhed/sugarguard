@@ -120,6 +120,7 @@ router.post("/", async (req, res, next) => {
             (err, results) => {
                 // sql error 또는 등록되지 않은 경우
                 if (err || results.affectedRows < 1) {
+                    console.log(err)
                     return next({
                         code: "SERVER_INTERNAL_ERROR",
                     });

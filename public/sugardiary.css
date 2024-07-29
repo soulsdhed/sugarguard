@@ -1,6 +1,45 @@
+.mypage-login-div {
+    display: flex;
+    align-items: center;
+}
+
+.mypage_profile a {
+    text-decoration: none;
+}
+
+.mypage-login-div img {
+    display: flex;
+    width: 80px;
+    height: 80px;
+    box-sizing: border-box;
+    border-radius: 50px;
+}
+
+.mypage-login-div span {
+    font-family: Pretendard;
+    font-weight: 600;
+    text-decoration: none;
+    color: rgb(31, 31, 31);
+    margin-left: 5px;
+}
 #sugardiary_main {
     width: 94.5%;
     height: 90%;
+}
+.mypage_profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: calc(100vh - 60px);
+    /* border-radius: 15px; */
+    /* background-color: white; */
+    /* box-shadow: 2px 1px rgb(196, 195, 195); */
+    /* padding-left: 10px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    margin-top: 5%; */
+    /* box-sizing: border-box; */
 }
 
 /* Calendar Container */
@@ -8,7 +47,7 @@
     width: 100%;
     max-width: 100%;
     /* 화면 너비에 맞게 조정 */
-    margin: auto;
+    /* margin: auto; */
     padding-bottom: 18px;
     /* 네비게이션 바와의 간격을 위해 추가 */
 }

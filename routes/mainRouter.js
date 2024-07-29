@@ -26,8 +26,8 @@ router.get("/recipe", async (req, res) => {
     res.render("recipe", { userId: await getUserIdInRefreshToken(req) });
 });
 
-router.get("/sugardiary", (req, res) => {
-    res.render("sugardiary");
+router.get("/sugardiary", async (req, res) => {
+    res.render("sugardiary", { userId: await getUserIdInRefreshToken(req) });
 });
 
 router.get("/recipe-details", (req, res) => {
@@ -52,8 +52,8 @@ router.get("/bs", (req, res) => {
     res.render("bs");
 }); // 김희은
 
-router.get("/exercise1", (req, res) => {
-    res.render("exercise1");
+router.get("/exercise", (req, res) => {
+    res.render("exercise");
 }); // 김희은
 
 // 회원 정보 수정 페이지
@@ -61,7 +61,7 @@ router.get("/modify", async (req, res) => {
     res.render("modify", {
         userId: await getUserIdInRefreshToken(req),
     });
-})
+});
 
 router.get("/foodnutrition", (req, res) => {
     res.render("foodnutrition");
@@ -70,7 +70,7 @@ router.get("/foodnutrition", (req, res) => {
 // 비밀번호 재설정 폼 페이지
 router.get("/reset-password-form", (req, res) => {
     res.render("reset_password_form");
-})
+});
 
 // 비밀번호 재설정 페이지
 router.get("/reset-password/:token", async (req, res) => {

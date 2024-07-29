@@ -1,10 +1,23 @@
 {% extends "index.html" %}{% block content %}
-<link rel="stylesheet" href="sugardiary.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="sugardiary.css" />
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+/>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
+{% if not userId %}
+<div class="mypage_profile">
+    <a href="/login">
+        <div class="mypage-login-div">
+            <img
+                src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721891574/%EC%A0%9C%EB%AA%A9%EC%9D%84-%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94_-008_hvrrzh.png"
+                alt=""
+            />
+            <span>로그인 해주세요</span>
+        </div>
+    </a>
+</div>
+{% endif %} {% if userId %}
 <div id="sugardiary_main">
     <div id="calendar-header"></div>
     <div id="calendar-container">
@@ -21,23 +34,32 @@
             </div>
             <div class="floating-button-container">
                 <span class="floating-button-text">체중 기록</span>
-                <button id="weight-record-button" class="floating-button">+</button>
+                <button id="weight-record-button" class="floating-button">
+                    +
+                </button>
             </div>
             <div class="floating-button-container">
                 <span class="floating-button-text">혈압 기록</span>
-                <button id="blood-pressure-button" class="floating-button">+</button>
-            </div>
-            <div class="floating-button-container">
-                <span class="floating-button-text">식사 혈당 기록</span>
-                <button id="meal-sugar-button" class="floating-button">+</button>
+                <button id="blood-pressure-button" class="floating-button">
+                    +
+                </button>
             </div>
             <div class="floating-button-container">
                 <span class="floating-button-text">혈당 기록</span>
                 <button id="sugar-button" class="floating-button">+</button>
             </div>
+            <div class="floating-button-container">
+                <span class="floating-button-text">식사 기록</span>
+                <button id="meal-sugar-button" class="floating-button">
+                    +
+                </button>
+            </div>
         </div>
     </div>
 </div>
+{% endif %}
+<script>
+    window.userIdFromTemplate = "{{ userId | safe }}";
+</script>
 <script src="sugardiary.js"></script>
-<script src="calender.js"></script>
 {% endblock %}

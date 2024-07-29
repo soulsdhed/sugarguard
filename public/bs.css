@@ -1,14 +1,5 @@
-
-#header{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0%;
-    margin-top: 5%; /* 상하 여백 설정 */
-    color: rgb(65, 61, 61);
-    font-size: 1em;
+h4{
+    font-weight: 400;
 }
 
 #content-main {
@@ -22,7 +13,47 @@
     margin-bottom: 50px;
 }
 
+#header{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0%;
+    margin-top: 5%; /* 상하 여백 설정 */
+    color: rgb(65, 61, 61);
+    font-size: 1em;
+}
 
+#header-title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    justify-content: center;
+}
+
+#header img{
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+#back {
+    text-align: left;
+    padding-left: 5px;
+}
+
+#bs-submit{
+    justify-content: right;
+    padding-left: 5px;
+}
+
+.header-btn{
+    width: 60px;
+    background-color: #f6f6f6;
+    color: black;
+    border: none;
+}
 
 .block-container {
     display: grid;
@@ -30,30 +61,6 @@
     height: 100%;
     grid-template-columns: 1fr;
 }
-
-#div3 {
-    display: none; /* Hide the form initially */
-}
-
-
-#back {
-    margin-left: 5px;
-    width: 17%;
-    text-align: left;
-    color: black;
-    background-color: #f6f6f6;
-    font-size: 1.2em;
-    font-weight: bold;
-}
-
-#bsSubmit {
-    width: 17%;
-    color : black;
-    border-color: hidden;
-    background-color: #f6f6f6;
-    font-weight: bold;
-}
-
 
 
 /* Calendar Container */
@@ -80,21 +87,12 @@
     margin-top: 10px;
     margin-bottom: 5px;
     margin-left: 5px;
+    margin-right: 5px;
     font-size: 1.2em; /* 더 큰 폰트 크기 */
     font-weight: bold;
-    width: 100%; /* 전체 너비 사용 */
+    width: 85%; /* 전체 너비 사용 */
     background-color: transparent; /* 배경색 투명 */
 }
-
-/* #calendar-header span {
-    margin: 0 5px;
-} */
- 
-#current-time {
-    display: flex;
-    align-items: right;
-    width: 15%;
-} 
 
 #calendar {
     display: flex;
@@ -130,17 +128,38 @@
     font-weight: bold; /* 선택된 날짜의 텍스트 굵게 */
 }
 
-.selectBox {
+#current-time {
+    /* display: flex; */
+    align-items: right;
+} 
+
+
+/* 공복, 자기전, 실시간 선택시 식후 혈당 창 대신 시간 입력 창이 뜨도록 설정 */
+#div3 {
+    display: none; /* Hide the form initially */
+}
+
+
+#save-time-btn {
+    color: #ffffff;
+    height: 25px;
+    width: 45px;
+    padding: 2px;
+    background-color: #4CAF50;
+    border-radius: 15px;
+    border: none;
+}
+
+.select-box {
     width: 100%;
-    height: 10%;
-    grid-template-columns: 1fr;
+    height: 20%;
 }
 
 select {
     width: 30%;
-    height: 70%;
+    height: 30px;
     border: hidden;
-    background: #ffffff;
+    background:#ffffff;
     border-radius: 10px;
     text-align: center;
     /* -webkit-appearance: none; /* 네이티브 외형 감추기 */
@@ -153,21 +172,13 @@ select::-ms-expand {
     display: none;
 }
 
-select:focus {
-  border-color: #0094e1;
-}
-
 select option {
-    width: 20%;
-    height: 50%;
     background: #ffffff;
     border: hidden;
     color: hidden;
-    padding: 3px 0;
   }
 
-
-.colorBox {
+.color-box {
     width: 20px;
     height: 20px;
     text-align: center;
@@ -180,7 +191,7 @@ select option {
     justify-content: space-around;
     background-color: #ffffff;
     width: 100%;
-    height: 100%;
+    height: 50px;
     border-radius: 10px;
 }
 
@@ -191,26 +202,13 @@ select option {
     justify-content: space-around;
     background-color: #ffffff;
     width: 100%;
-    height: 100%;
+    height: 100px;
     border-radius: 10px;
-    margin: 0;
-}
-.box2 h5{
-    margin: 0;
-    text-align: left;
+    padding : 2%
 }
 
 
-button {
-    padding: 2px 2px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    /* margin-right: 0px; */
-    border-radius: 10px;
-}
-
-#timeInput {
+#time-input {
     font-size: 12px;
     padding: 3px;
     border: 1px solid #f6f6f6;
@@ -218,31 +216,24 @@ button {
     height: 25px;
     width: 100px;
     max-width: 100px;
+    text-align: center;
   }
 
-  
-#saveTimeBtn {
-    color: #ffffff;
-    height: 25px;
-    width: 45px;
-    padding: 2px;
-    background-color:  #4CAF50;
-    border-radius: 15px;
-  }
-    
-
-#recordBsBefore, #recordBsAfter {
+#record-bs-before, #record-bs-after {
     border: solid 2px #f0f0f0;
     border-radius: 5px;
     height: 25px;
     width: 80px;
+    text-align: center;
 }
 
 
-#eatMemo {
-    height: 80px;
-    width: 300px;
+#eat-memo {
+    height: 50px;
+    width: 90%;
     border: solid 2px #f0f0f0;
     border-radius: 10px;
 }
+
+
 

@@ -56,16 +56,13 @@ router.get("/exercise1", (req, res) => {
     res.render("exercise1");
 }); // 김희은
 
-<<<<<<< HEAD
-=======
 // 회원 정보 수정 페이지
 router.get("/modify", async (req, res) => {
     res.render("modify", {
         userId: await getUserIdInRefreshToken(req),
     });
-})
+});
 
->>>>>>> 5afbb9452ddaedaa545252a7ffe3fa67ba1c69aa
 router.get("/foodnutrition", (req, res) => {
     res.render("foodnutrition");
 }); // 음식영양정보 풍규
@@ -73,7 +70,7 @@ router.get("/foodnutrition", (req, res) => {
 // 비밀번호 재설정 폼 페이지
 router.get("/reset-password-form", (req, res) => {
     res.render("reset_password_form");
-})
+});
 
 // 비밀번호 재설정 페이지
 router.get("/reset-password/:token", async (req, res) => {

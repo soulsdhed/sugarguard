@@ -72,10 +72,12 @@ function updateFromInput(type) {
         currentDate.setMinutes(minutes);
         const period = hours >= 12 ? "오후" : "오전";
         const formattedTime = `${period} ${hours % 12 || 12}:${minutes}`;
+        console.log(formattedTime);
         timeElement.textContent = formattedTime;
         timeElement.style.display = "inline-block";
         timeInput.style.display = "none";
     }
+    // updateDateTime(); // 변경된 날짜와 시간을 반영하여 업데이트
 }
 
 document.addEventListener("DOMContentLoaded", () => {

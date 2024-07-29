@@ -7,7 +7,7 @@ const placeholders = [
     "생년월일"
 ];
 const messages = [
-    "건강관리 이제 시작입니다! <br>닉네임을 입력해주세요.",
+    "닉네임을 입력해주세요.",
     "이메일을 입력해주세요.",
     "아이디을 입력해주세요.",
     "비밀번호를 입력해주세요.",
@@ -23,6 +23,14 @@ const join_db_list =[
     "gender",
     "birthDate"
 ]
+const join_input_type =[
+    "text",
+    "email",
+    "text",
+    "password",
+    "radio",
+    "text"
+]
 
 const data = {
     nickname:"nickname",
@@ -33,7 +41,9 @@ const data = {
     birthDate:"2000-08-12"
 };
 const url = '/api/users/';
-
+document.getElementById('back_button').addEventListener('click', function() {
+    window.history.go(-1);
+});
 //한 버튼에 여러 함수를 이용할 수 있도록하는 함
 function handleButtonClick(event) {
     event.preventDefault(); // 기본 제출 동작 방지
@@ -48,35 +58,53 @@ function handleButtonClick(event) {
         if (currentInputText == "닉네임"){
             // 닉네임 조건
             if (valStr.length > 20 || valStr.length < 4) {
-                alert("Nickname Error");
+                Swal.fire({
+                    icon: "error",
+                    title: "닉네임을 입력해주세요"
+                  });
                 return;
             }
         } else if (currentInputText == "이메일") {
             // 이메일 조건
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(valStr)) {
-                alert("Email Error");
+                Swal.fire({
+                    icon: "error",
+                    title: "이메일을 입력해주세요"
+                  });
                 return;
             }
         } else if (currentInputText == "아이디") {
             if (valStr.length < 4 || valStr.length > 12) {
-                alert("ID Error");
+                Swal.fire({
+                    icon: "error",
+                    title: "아이디를 입력해주세요"
+                  });
                 return;
             }
         } else if (currentInputText === "비밀번호") {
             if (valStr.length < 8 || valStr.length > 16) {
-                alert("password Error")
+                Swal.fire({
+                    icon: "error",
+                    title: "비밀번호를 입력해주세요"
+                  });
                 return;
             }
         } else if (currentInputText == "성별") {
             if (!["남성", "여성"].includes(valStr)) {
-                alert("gender Error")
+                Swal.fire({
+                    icon: "error",
+                    title: "성별을 선택해주세요"
+                  });
                 return;
             }
         } else if (currentInputText == "생년월일") {
             const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
             if (!dateRegex.test(valStr)) {
-                alert("Birth Date Error")
+                Swal.fire({
+                    icon: "error",
+                    title: "생년월일을 입력해주세요"
+                  });
                 return;
             }
         }
@@ -92,18 +120,14 @@ function handleButtonClick(event) {
             email: document.getElementById(join_db_list[1]).value,
             userId: document.getElementById(join_db_list[2]).value,
             password: document.getElementById(join_db_list[3]).value,
-            // gender: document.getElementById(join_db_list[4]).value,
-            birthDate: document.getElementById(join_db_list[5]).value,
-        }
-        if (true) {
-            userData.gender = "남성"
-        } else {
-            userData.gender = "여성"
+            gender: document.getElementById(join_db_list[4]).value,
+            birthDate: document.getElementById(join_db_list[5]).value
         }
         
         console.log(userData)
         postData(url, userData);
     }
+    saveState()
 }
 async function postData(url, data) {
     try {
@@ -111,12 +135,15 @@ async function postData(url, data) {
         console.log('Success:', response.data);
 
         // 회원 가입 성공 (메인 페이지로 이동)
-        window.location.href = "/";
+        // window.location.href = "/";
     } catch (error) {
         console.error('Error:', error);
 
         // TODO : 회원 가입 실패
-        alert("회원 가입에 실패했습니다. 관리자에게 문의해주세요.")
+        Swal.fire({
+            icon: "error",
+            title: "회원가입 실패했습니다. 다시 확인해주세요."
+          });
     }
 }
   
@@ -163,6 +190,7 @@ window.onload = function() {
 let formData = {}; 
 let placeholderIndex = 0;
 let join_db_index=0;
+let joinInputTypeIndex = 0;
 const maxInput = 7;
 let inputCount = 1;
 
@@ -171,13 +199,32 @@ function addInput(event) {
     if(inputCount<maxInput) {
         const placeholder = placeholders[placeholderIndex % placeholders.length];
         const join_db_input = join_db_list[join_db_index % join_db_list.length];
-        const newInputHTML = `<br><br><input type="text" placeholder=${placeholder} id=${join_db_input} class="join_new" name=${join_db_input};><br>`;
+        const joinInputType = join_input_type[joinInputTypeIndex % join_input_type.length]; // 동적 타입 지정
+
+        let newInputHTML;
+        if(joinInputType === "radio"){
+            newInputHTML = `
+            <br><br>
+            <label>
+                <input type="radio" name="gender" value="남성"> 남성
+            </label>
+            <label>
+                <input type="radio" name="gender" value="여성"> 여성
+            </label>
+            <br>`; 
+        }else{
+            newInputHTML = `<br><br><input type=${joinInputType} placeholder=${placeholder} id=${join_db_input} class="join_new" name=${join_db_input};><br>`;
+        }
 
         // h2 태그 바로 밑에 새로운 input 태그 추가
         const h2Tag = document.getElementById('join_change');
         h2Tag.insertAdjacentHTML('afterend', newInputHTML);
-        placeholderIndex++;
-        join_db_index++;
+        if (joinInputType !== "radio") {
+            placeholderIndex++;
+            join_db_index++;
+            joinInputTypeIndex++;
+        }
+
         inputCount++;
         return true;
     }

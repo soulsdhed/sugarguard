@@ -56,6 +56,8 @@ router.get("/exercise1", (req, res) => {
     res.render("exercise1");
 }); // 김희은
 
+<<<<<<< HEAD
+=======
 // 회원 정보 수정 페이지
 router.get("/modify", async (req, res) => {
     res.render("modify", {
@@ -63,6 +65,7 @@ router.get("/modify", async (req, res) => {
     });
 })
 
+>>>>>>> 5afbb9452ddaedaa545252a7ffe3fa67ba1c69aa
 router.get("/foodnutrition", (req, res) => {
     res.render("foodnutrition");
 }); // 음식영양정보 풍규

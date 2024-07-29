@@ -58,7 +58,7 @@ router.post("/", async (req, res, next) => {
     // }
 
     // 닉네임 유효성 검사 (4~20글자)
-    if (nickname.length < 4 || nickname.length > 20) {
+    if (nickname.length < 3 || nickname.length > 10) {
         return next({
             code: "VALIDATION_ERROR",
         });

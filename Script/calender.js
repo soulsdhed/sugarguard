@@ -4,41 +4,73 @@ document.addEventListener("DOMContentLoaded", () => {
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
     let currentDate = new Date(); // 현재 날짜로 초기화
+    let selectedDate = currentDate; // 선택된 날짜로 초기화
 
     function updateHeader(date) {
         const options = { year: "numeric", month: "long" };
         calendarHeader.textContent = date.toLocaleDateString("ko-KR", options);
     }
 
-    function generateCalendar(selectedDate) {
+    function generateCalendar(date) {
         calendar.innerHTML = ""; // 기존 캘린더 내용 제거
 
-        const startDate = new Date(selectedDate);
+        const startDate = new Date(date);
         startDate.setDate(startDate.getDate() - Math.floor(7 / 2)); // 선택된 날짜를 중앙에 배치
 
         for (let i = 0; i < 7; i++) {
-            const date = new Date(startDate);
-            date.setDate(startDate.getDate() + i);
+            const currentDate = new Date(startDate);
+            currentDate.setDate(startDate.getDate() + i);
 
             const dayDiv = document.createElement("div");
             dayDiv.classList.add("day");
-            if (date.toDateString() === selectedDate.toDateString()) {
+            if (currentDate.toDateString() === date.toDateString()) {
                 dayDiv.classList.add("selected");
             }
-            dayDiv.innerHTML = `${date.getDate()}<br>${daysOfWeek[date.getDay()]
-                }`;
+            dayDiv.innerHTML = `${currentDate.getDate()}<br>${
+                daysOfWeek[currentDate.getDay()]
+            }`;
             dayDiv.addEventListener("click", () => {
-                generateCalendar(date); // 새로운 날짜 생성
-                updateHeader(date); // 헤더 업데이트
+                generateCalendar(currentDate); // 새로운 날짜 생성
+                updateHeader(currentDate); // 헤더 업데이트
+                selectedDate = currentDate; // 선택된 날짜 업데이트
             });
             calendar.appendChild(dayDiv);
         }
+<<<<<<< HEAD
         updateHeader(selectedDate); // 선택된 날짜로 헤더 업데이트
         console.log("Month:", selectedDate.getMonth() + 1); // 0부터 시작하므로 +1
         console.log("Day:", selectedDate.getDate());
 
+=======
+        updateHeader(date); // 선택된 날짜로 헤더 업데이트
+        console.log("Month:", date.getMonth() + 1); // 0부터 시작하므로 +1
+        console.log("Day:", date.getDate());
+>>>>>>> ad20559aad4abfc19fa7e82a2b399cd34374e1c6
     }
 
-    // 초기화
-    generateCalendar(currentDate);
+    function getParameterByName(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
+
+    const dateParam = getParameterByName("date");
+    if (dateParam) {
+        selectedDate = new Date(dateParam);
+    }
+    generateCalendar(selectedDate); // 초기화
+
+    // div 링크
+    document.querySelectorAll(".LinkRecipe").forEach((div) => {
+        div.addEventListener("click", function () {
+            window.location.href = this.getAttribute("data-href");
+        });
+    });
+    document
+        .querySelectorAll(".LinkDiabetes, .LinkExercise, .LinkMeal")
+        .forEach((div) => {
+            div.addEventListener("click", function () {
+                const formattedDate = selectedDate.toISOString().split("T")[0]; // YYYY-MM-DD 형식으로 변환
+                window.location.href = `${this.getAttribute("data-href")}?date=${formattedDate}`;
+            });
+        });
 });

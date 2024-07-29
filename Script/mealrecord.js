@@ -139,13 +139,21 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // 식사버튼을 누를때 색깔 변하는거
+    document.querySelectorAll("#time-meal a").forEach((anchor) => {
+        anchor.addEventListener("click", (e) => {
+            e.preventDefault(); // 링크 클릭 기본 동작 방지
+            anchor.classList.toggle("clicked"); // 'active' 클래스 토글
+        });
+    });
+
     // Edit date and time buttons
-    document
-        .getElementById("edit-date-button")
-        .addEventListener("click", () => editDateTime("date"));
-    document
-        .getElementById("edit-time-button")
-        .addEventListener("click", () => editDateTime("time"));
+    // document
+    //     .getElementById("edit-date-button")
+    //     .addEventListener("click", () => editDateTime("date"));
+    // document
+    //     .getElementById("edit-time-button")
+    //     .addEventListener("click", () => editDateTime("time"));
 
     // Update from input fields
     document

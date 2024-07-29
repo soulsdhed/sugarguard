@@ -1,3 +1,24 @@
+const selectElement = document.getElementById('my-select');
+const selectedValue = selectElement.value;
+
+
+document.getElementById('bs-submit').addEventListener('click', async () => {
+    try {
+      const response = await axios.post('/api/exercise-logs', {
+        option: selectedValue,
+        exercise_type: document.getElementById("exercise").value,
+        exercise_time: document.getElementById("duration").value,
+        calories_burned: document.getElementById("result").value,
+        record_time: document.getElementById("current-time").value,       
+    });
+      const exercise = response.data.exercise;
+      console.log('exercise success:', success); 
+      } catch (error) {
+      console.log('exercise error:', error);
+    }
+  });
+
+
 document.addEventListener("DOMContentLoaded", () => {
     // URL 파라미터에서 날짜를 가져오는 함수
     function getParameterByName(name) {

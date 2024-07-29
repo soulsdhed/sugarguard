@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const moment = require("moment-timezone");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 const db = require("../../conf/db");
 const { sendResetEmail } = require("../../conf/mailer");
@@ -21,10 +21,15 @@ const authenticateToken = require("../../middlewares/authenticateToken");
 const {
     setTemporaryValue,
     getValue,
-} = require("../../utils/redisUtils")
+    deleteValue,
+} = require("../../utils/redisUtils");
 
 // validation
-const { isValidDate, isValidEmail, isValidPassword } = require("../../utils/validation");
+const {
+    isValidDate,
+    isValidEmail,
+    isValidPassword,
+} = require("../../utils/validation");
 // 회원 가입
 router.post("/", async (req, res, next) => {
     const {
@@ -148,11 +153,11 @@ router.post("/", async (req, res, next) => {
 // 로그인
 router.post("/login", (req, res, next) => {
     const { userId, password } = req.body;
-    let whereQuery = "member_id"
+    let whereQuery = "member_id";
 
     // userId가 이메일 형식으로 왔는지 확인 (이메일 형식이면 이메일 검사)
     if (isValidEmail(userId)) {
-        whereQuery = "email"
+        whereQuery = "email";
     }
 
     // query
@@ -262,7 +267,7 @@ router.delete("/", authenticateToken, (req, res, next) => {
 
     // // 비밀번호 확인
     // const query = `SELECT member_id, nickname, email, gender, birth_date, diabetes_type, deleted_at
-    //     FROM MEMBER_TB 
+    //     FROM MEMBER_TB
     //     WHERE member_id = ?`;
     // db.execute(query, [userId], async (err, results) => {
     //     // sql error
@@ -599,21 +604,29 @@ router.post("/password-reset-requests", (req, res, next) => {
 
         // 유저 존재한다면 리셋링크가 담긴 메일을 보내준다
         // TODO : 서버의 url이 실제 서비스되는 url이어야 한다.
-        const token = jwt.sign({ email }, process.env.RESET_PASSWORD_TOKEN_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign(
+            { email },
+            process.env.RESET_PASSWORD_TOKEN_SECRET,
+            { expiresIn: "1h" }
+        );
         const resetLink = `http://localhost:3000/reset-password/${token}`;
 
         try {
+            // redis에 email을 key로 token을 저장
+            await setTemporaryValue(email, token, resetPasswordTokenExpiredIn);
+
+            // 메일 전송
             await sendResetEmail(email, resetLink);
             return res.success({
                 email: email,
-            })
+            });
         } catch (e) {
             // console.log(e);
             return next({
-                code: "SERVER_SERVICE_UNAVAILABLE"
-            })
+                code: "SERVER_SERVICE_UNAVAILABLE",
+            });
         }
-    })
+    });
 });
 
 // 비밀 번호 재설정
@@ -622,18 +635,23 @@ router.put("/password/:token", async (req, res, next) => {
     const { password } = req.body;
 
     try {
-        // 이미 비번 변경에 사용한 토큰인지 검사 (redis)
-        const getRedisToken = await getValue(token);
-        if (getRedisToken != null) {
-            // 사용한 토큰 (만료로 표시)
+        // jwt를 통해 decode
+        const user = await verifyToken(
+            token,
+            process.env.RESET_PASSWORD_TOKEN_SECRET
+        );
+        const email = user.email;
+        console.log(email);
+
+        // redis에 존재하는 token인지 확인
+        const getRedisToken = await getValue(email);
+        // redis에 토큰이 없거나 다른 경우 (null 검사도 하는 이유는 둘 모두 null일 수 있으므로)
+        if (getRedisToken == null || token != getRedisToken) {
+            // 비정상 토큰
             return next({
                 code: "AUTH_EXPIRED_TOKEN",
-            })
+            });
         }
-
-        // 사용한 토큰이 아니라면 jwt를 통해 decode
-        const user = await verifyToken(token, process.env.RESET_PASSWORD_TOKEN_SECRET);
-        console.log(user.email);
 
         // 토큰에 문제가 없으면 비밀번호 변경
         // password 암호화
@@ -642,43 +660,47 @@ router.put("/password/:token", async (req, res, next) => {
             UPDATE MEMBER_TB
             SET password = ?
             WHERE email = ?`;
-        db.execute(query, [cryptedPassword, user.email], async (err, results) => {
-            if (err) {
-                return next({
-                    code: "SERVER_INTERNAL_ERROR",
-                })
-            }
+        db.execute(
+            query,
+            [cryptedPassword, user.email],
+            async (err, results) => {
+                if (err) {
+                    return next({
+                        code: "SERVER_INTERNAL_ERROR",
+                    });
+                }
 
-            // 비번 변경이 안된 경우 (유저 없다)
-            if (results.affectedRows < 1) {
-                return next({
-                    code: "USER_NOT_FOUND",
-                })
-            }
+                // 비번 변경이 안된 경우 (유저 없다)
+                if (results.affectedRows < 1) {
+                    return next({
+                        code: "USER_NOT_FOUND",
+                    });
+                }
 
-            // 변경이 정상적으로 된 경우
-            // 한 번 사용한 토큰을 다시 사용할 수 없도록 redis에 저장 (1시간만 - 어차피 1시간 후엔 만료되니까)
-            try {
-                await setTemporaryValue(token, 'invalid', resetPasswordTokenExpiredIn);
+                // 변경이 정상적으로 된 경우
+                // 한 번 사용한 토큰을 다시 사용할 수 없도록 redis에서 삭제
+                try {
+                    await deleteValue(email);
 
-                // 성공 응답
-                return res.success({
-                    email: user.email,
-                })
-            } catch (e) {
-                // Redis 저장 실패
-                return next({
-                    code: "SERVER_INTERNAL_ERROR",
-                })
+                    // 성공 응답
+                    return res.success({
+                        email: user.email,
+                    });
+                } catch (e) {
+                    // Redis 저장 실패
+                    return next({
+                        code: "SERVER_INTERNAL_ERROR",
+                    });
+                }
             }
-        })
+        );
     } catch (e) {
         // 토큰에 문제가 있다! 에러 발생 (클라이언트에서는 무조건 만료로 띄워줄 것)
         // console.log(e);
         return next({
             code: "AUTH_EXPIRED_TOKEN",
-        })
+        });
     }
-})
+});
 
 module.exports = router;

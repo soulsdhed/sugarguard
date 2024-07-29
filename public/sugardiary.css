@@ -8,7 +8,7 @@
     width: 100%;
     max-width: 100%;
     /* 화면 너비에 맞게 조정 */
-    margin: auto;
+    /* margin: auto; */
     padding-bottom: 18px;
     /* 네비게이션 바와의 간격을 위해 추가 */
 }

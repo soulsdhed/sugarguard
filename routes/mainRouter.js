@@ -56,12 +56,10 @@ router.get("/exercise1", (req, res) => {
     res.render("exercise1");
 }); // 김희은
 
-<<<<<<< HEAD
 router.get("/foodnutrition", (req, res) => {
     res.render("foodnutrition");
 }); // 음식영양정보 풍규
 
-=======
 // 비밀번호 재설정 폼 페이지
 router.get("/reset-password-form", (req, res) => {
     res.render("reset_password_form");
@@ -79,6 +77,5 @@ router.get("/reset-password/:token", async (req, res) => {
         res.render("reset_password_error");
     }
 });
->>>>>>> 4a2cb2d80e30d449f03cd21623c1c6af27ac43d3
 
 module.exports = router;

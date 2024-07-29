@@ -56,7 +56,7 @@ $(document).ready(function () {
     $('#exercise-button').click(function () {
         lastClickedButton = $(this);
         addRecord('운동 기록', 'https://res.cloudinary.com/difzc7bsf/image/upload/v1721719663/002_cuhgi9.png');
-        triggerMainToggleButton();
+        triggerMainToggleButton('');
     });
 
     $('#weight-record-button').click(function () {
@@ -73,7 +73,7 @@ $(document).ready(function () {
 
     $('#meal-sugar-button').click(function () {
         lastClickedButton = $(this);
-        addRecord('식사 혈당 기록', 'https://res.cloudinary.com/difzc7bsf/image/upload/v1721885477/%EC%A0%9C%EB%AA%A9%EC%9D%84_%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94_-005_tvsy8t.png');
+        addRecord('식사 기록', 'https://res.cloudinary.com/difzc7bsf/image/upload/v1721885477/%EC%A0%9C%EB%AA%A9%EC%9D%84_%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94_-005_tvsy8t.png');
         triggerMainToggleButton();
     });
 

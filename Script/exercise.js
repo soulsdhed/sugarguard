@@ -1,23 +1,32 @@
-const selectElement = document.getElementById('my-select');
+const selectElement = document.getElementById('exercise');
 const selectedValue = selectElement.value;
-
+let record_date = "";
+let record_time = "";
 
 document.getElementById('bs-submit').addEventListener('click', async () => {
+    // document.getElementById('my-select');
+    // const selectedValue = selectElement.value; // 여기서 선택된 값을 가져옵니다.
     try {
-      const response = await axios.post('/api/exercise-logs', {
-        option: selectedValue,
-        exercise_type: document.getElementById("exercise").value,
-        exercise_time: document.getElementById("duration").value,
-        calories_burned: document.getElementById("result").value,
-        record_time: document.getElementById("current-time").value,       
-    });
-      const exercise = response.data.exercise;
-      console.log('exercise success:', success); 
-      } catch (error) {
-      console.log('exercise error:', error);
+        const response = await axios.post('/api/exercise-logs', {
+            exercise_type: document.getElementById("exercise").value,
+            exercise_time: document.getElementById("duration").value,
+            calories_burned: document.getElementById("result").textContent.split(" ")[3] || 0, // 소모 칼로리 값 가져오기
+            record_time: `${record_date} ${record_time}`,
+        });
+        const exercise = response.data.data; // API 응답에서 운동 데이터를 가져옴
+        console.log('exercise success:', exercise); // 수정된 부분
+    } catch (error) {
+        console.error('exercise error:', error); // 에러 로그를 콘솔에 출력
+        // 2024-07-24 09:00:00
     }
-  });
+});
 
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 0부터 시작하므로 +1
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     // URL 파라미터에서 날짜를 가져오는 함수
@@ -67,6 +76,10 @@ document.addEventListener("DOMContentLoaded", () => {
             calendar.appendChild(dayDiv);
         }
         updateHeader(selectedDate); // 선택된 날짜로 헤더 업데이트
+        record_date = formatDate(selectedDate);
+
+        // console.log(record_date);
+        // console.log(record_time);
     }
 
     // Infinite scroll logic
@@ -105,6 +118,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const minutes = String(now.getMinutes()).padStart(2, "0");
         const currentTimeString = `${hours}:${minutes}`;
         document.getElementById("current-time").textContent = currentTimeString;
+
+        record_time = `${hours}:${minutes}:00`
     }
 
     // 현재 시간 표시 초기 호출
@@ -117,9 +132,9 @@ document.addEventListener("DOMContentLoaded", () => {
         자전거: 7.0,
         수영: 8.0,
         줄넘기: 12.0,
-        "계단 오르기": 8.5,
+        계단오르기: 8.5,
         에어로빅: 6.0,
-        "근력 운동": 4.5,
+        근력운동: 4.5,
         요가: 4.0,
         필라테스: 5.0,
         테니스: 7.5,
@@ -134,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
         체조: 5.5,
         스쿼시: 9.0,
         복싱: 10.0,
-        "자유 웨이트": 6.0,
+        자유웨이트: 6.0,
         사이클링: 8.0,
         롤러블레이딩: 7.0,
         킥복싱: 9.0,
@@ -143,8 +158,8 @@ document.addEventListener("DOMContentLoaded", () => {
         스노우보드: 6.5,
         서핑: 7.0,
         스쿼트: 5.0,
-        "유산소 운동": 6.5,
-        "전신 운동": 8.5,
+        유산소운동: 6.5,
+        전신운동: 8.5,
     };
 
     // 시간 입력시 자동으로 소모 칼로리 계산

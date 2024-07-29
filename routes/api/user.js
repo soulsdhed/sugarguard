@@ -1,19 +1,30 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../../conf/db");
 const bcrypt = require("bcrypt");
 const moment = require("moment-timezone");
+const jwt = require('jsonwebtoken');
+
+const db = require("../../conf/db");
+const { sendResetEmail } = require("../../conf/mailer");
 
 // jwt
 const {
     refreshTokenExpiresIn,
+    resetPasswordTokenExpiredIn,
     generateAccessToken,
     generateRefreshToken,
+    verifyToken,
 } = require("../../utils/jwt");
 const authenticateToken = require("../../middlewares/authenticateToken");
 
+// redis
+const {
+    setTemporaryValue,
+    getValue,
+} = require("../../utils/redisUtils")
+
 // validation
-const { isValidEmail } = require("../../utils/validation");
+const { isValidDate, isValidEmail, isValidPassword } = require("../../utils/validation");
 // 회원 가입
 router.post("/", async (req, res, next) => {
     const {
@@ -26,7 +37,7 @@ router.post("/", async (req, res, next) => {
         diabetesType,
     } = req.body;
 
-    // TODO : 유효성 검사 전체적으로 다시 확인 (id, 비번 영어만 가능하게)
+    // TODO : 유효성 검사 전체적으로 다시 확인 (id, 영어만 가능하게)
     // ID 유효성 검사 (영어와 숫자로만, 4~12글자)
     if (userId.length < 4 || userId.length > 12) {
         return next({
@@ -35,11 +46,16 @@ router.post("/", async (req, res, next) => {
     }
 
     // 비밀번호 유효성 검사 (8이상, 16자 이하)
-    if (password.length < 8 || password.length > 16) {
+    if (!isValidPassword(password)) {
         return next({
             code: "VALIDATION_ERROR",
         });
     }
+    // if (password.length < 8 || password.length > 16) {
+    //     return next({
+    //         code: "VALIDATION_ERROR",
+    //     });
+    // }
 
     // 닉네임 유효성 검사 (4~20글자)
     if (nickname.length < 4 || nickname.length > 20) {
@@ -54,12 +70,6 @@ router.post("/", async (req, res, next) => {
             code: "VALIDATION_ERROR",
         });
     }
-    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // if (!emailRegex.test(email)) {
-    //     return next({
-    //         code: "VALIDATION_ERROR",
-    //     });
-    // }
 
     // 성별 유효성 검사 (남성, 여성)
     if (!["남성", "여성"].includes(gender)) {
@@ -69,8 +79,13 @@ router.post("/", async (req, res, next) => {
     }
 
     // 날짜 유효성 검사 (형식 검사)
-    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-    if (!dateRegex.test(birthDate)) {
+    // const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    // if (!dateRegex.test(birthDate)) {
+    //     return next({
+    //         code: "VALIDATION_ERROR",
+    //     });
+    // }
+    if (!isValidDate(birthDate)) {
         return next({
             code: "VALIDATION_ERROR",
         });
@@ -132,6 +147,12 @@ router.post("/", async (req, res, next) => {
 // 로그인
 router.post("/login", (req, res, next) => {
     const { userId, password } = req.body;
+    let whereQuery = "member_id"
+
+    // userId가 이메일 형식으로 왔는지 확인 (이메일 형식이면 이메일 검사)
+    if (isValidEmail(userId)) {
+        whereQuery = "email"
+    }
 
     // query
     const query = `
@@ -142,14 +163,14 @@ router.post("/login", (req, res, next) => {
             email, 
             gender, 
             birth_date, 
-            diabetes_type, 
-            deleted_at
+            diabetes_type
         FROM MEMBER_TB 
-        WHERE member_id = ?`;
-
+        WHERE ${whereQuery} = ? AND deleted_at IS NULL
+    `;
     db.execute(query, [userId], async (err, results) => {
         // sql error
         if (err) {
+            console.log(err);
             return next({
                 code: "SERVER_INTERNAL_ERROR",
             });
@@ -189,21 +210,6 @@ router.post("/login", (req, res, next) => {
             const accessToken = generateAccessToken(res, row.member_id);
             const refreshToken = generateRefreshToken(res, row.member_id);
 
-            // const user = {
-            //     userId: row.member_id,
-            // };
-            // const accessToken = generateAccessToken(user);
-            // const refreshToken = generateRefreshToken(user);
-            // // 쿠키에 저장
-            // res.cookie("accessToken", accessToken, {
-            //     httpOnly: true,
-            //     maxAge: accessTokenExpiresIn * 1000,
-            // });
-            // res.cookie("refreshToken", refreshToken, {
-            //     httpOnly: true,
-            //     maxAge: refreshTokenExpiresIn * 1000,
-            // });
-
             // refresh token table에 저장
             const refreshTokenInsertQuery = `INSERT INTO REFRESH_TOKEN_TB 
                 (refresh_token, member_id, expires_at) 
@@ -212,7 +218,7 @@ router.post("/login", (req, res, next) => {
                 refreshTokenInsertQuery,
                 [
                     refreshToken,
-                    userId,
+                    row.member_id,
                     new Date(Date.now() + refreshTokenExpiresIn * 1000), // 7일
                 ],
                 (err, results) => {
@@ -226,7 +232,7 @@ router.post("/login", (req, res, next) => {
                     // 리프레쉬 토큰 추가 성공
                     // client에 응답 (login success)
                     return res.success({
-                        userId: row.userId,
+                        userId: row.member_id,
                         nickname: row.nickname,
                         email: row.email,
                         gender: row.gender,
@@ -251,91 +257,154 @@ router.post("/login", (req, res, next) => {
 // 회원 탈퇴 (jwt)
 router.delete("/", authenticateToken, (req, res, next) => {
     const { userId } = req.user;
-    const { password } = req.body;
+    // const { password } = req.body;
 
-    // 비밀번호 확인
-    const query = `SELECT member_id, password, nickname, email, gender, birth_date, diabetes_type, deleted_at
-        FROM MEMBER_TB 
-        WHERE member_id = ?`;
-    db.execute(query, [userId], async (err, results) => {
-        // sql error
+    // // 비밀번호 확인
+    // const query = `SELECT member_id, nickname, email, gender, birth_date, diabetes_type, deleted_at
+    //     FROM MEMBER_TB 
+    //     WHERE member_id = ?`;
+    // db.execute(query, [userId], async (err, results) => {
+    //     // sql error
+    //     if (err) {
+    //         return next({
+    //             code: "SERVER_INTERNAL_ERROR",
+    //         });
+    //     }
+
+    //     // 유저가 1개가 아닌경우 (가능하냐?)
+    //     if (results.length != 1) {
+    //         return next({
+    //             code: "USER_NOT_FOUND",
+    //         });
+    //     }
+
+    //     // select success
+    //     const row = results[0];
+
+    //     // 비밀번호 확인
+    //     try {
+    //         const compare = await bcrypt.compare(password, row.password);
+
+    //         // 비밀번호 틀림
+    //         if (!compare) {
+    //             return next({
+    //                 code: "INVALID_USER",
+    //             });
+    //         }
+
+    //         // 삭제된 유저의 경우
+    //         if (row.deleted_at != null) {
+    //             return next({
+    //                 code: "USER_NOT_FOUND",
+    //             });
+    //         }
+
+    //         // success
+    //         // 계정 삭제 작업
+    //         const currentTime = new Date();
+    //         const query = `UPDATE MEMBER_TB SET deleted_at = ? WHERE member_id = ?;`;
+    //         db.execute(query, [currentTime, userId], (err, results) => {
+    //             if (err) {
+    //                 return next({
+    //                     code: "SERVER_INTERNAL_ERROR",
+    //                 });
+    //             }
+
+    //             // 영향받은 rows가 존재하지 않는 경우 (그럴 수 있나??)
+    //             if (results.affectedRows <= 0) {
+    //                 return next({
+    //                     code: "SERVER_INTERNAL_ERROR",
+    //                 });
+    //             }
+
+    //             // user delete success!!
+    //             return res.success({
+    //                 userId: userId,
+    //                 deletedAt: currentTime,
+    //             });
+    //         });
+    //     } catch (e) {
+    //         return next({
+    //             code: "SERVER_INTERNAL_ERROR",
+    //         });
+    //     }
+    // });
+
+    // 계정 삭제 작업
+    const currentTime = new Date();
+    const query = `UPDATE MEMBER_TB SET deleted_at = ? WHERE member_id = ?;`;
+    db.execute(query, [currentTime, userId], (err, results) => {
         if (err) {
             return next({
                 code: "SERVER_INTERNAL_ERROR",
             });
         }
 
-        // 유저가 1개가 아닌경우 (가능하냐?)
-        if (results.length != 1) {
+        // 영향받은 rows가 존재하지 않는 경우 (그럴 수 있나??)
+        if (results.affectedRows <= 0) {
+            return next({
+                code: "SERVER_INTERNAL_ERROR",
+            });
+        }
+
+        // user delete success!!
+        return res.success({
+            userId: userId,
+            deletedAt: currentTime,
+        });
+    });
+});
+
+// 회원 정보 요청
+router.get("/", authenticateToken, (req, res, next) => {
+    const { userId } = req.user;
+
+    const query = `
+        SELECT 
+            member_id, 
+            nickname, 
+            email, 
+            gender, 
+            birth_date, 
+            diabetes_type, 
+            created_at
+        FROM MEMBER_TB 
+        WHERE member_id = ?`;
+    db.execute(query, [userId], (err, rows) => {
+        if (err) {
+            return next({
+                code: "SERVER_INTERNAL_ERROR",
+            });
+        }
+
+        // 유저 존재 안함 (가능한가?)
+        if (rows.length < 1) {
             return next({
                 code: "USER_NOT_FOUND",
             });
         }
 
-        // select success
-        const row = results[0];
-
-        // 비밀번호 확인
-        try {
-            const compare = await bcrypt.compare(password, row.password);
-
-            // 비밀번호 틀림
-            if (!compare) {
-                return next({
-                    code: "INVALID_USER",
-                });
-            }
-
-            // 삭제된 유저의 경우
-            if (row.deleted_at != null) {
-                return next({
-                    code: "USER_NOT_FOUND",
-                });
-            }
-
-            // success
-            // 계정 삭제 작업
-            const currentTime = new Date();
-            const query = `UPDATE MEMBER_TB SET deleted_at = ? WHERE member_id = ?;`;
-            db.execute(query, [currentTime, userId], (err, results) => {
-                if (err) {
-                    return next({
-                        code: "SERVER_INTERNAL_ERROR",
-                    });
-                }
-
-                // 영향받은 rows가 존재하지 않는 경우 (그럴 수 있나??)
-                if (results.affectedRows <= 0) {
-                    return next({
-                        code: "SERVER_INTERNAL_ERROR",
-                    });
-                }
-
-                // user delete success!!
-                return res.success({
-                    userId: userId,
-                    deletedAt: currentTime,
-                });
-            });
-        } catch (e) {
-            return next({
-                code: "SERVER_INTERNAL_ERROR",
-            });
-        }
+        // 정보 보내주기
+        return res.success({
+            userId: rows[0].member_id,
+            nickname: rows[0].nickname,
+            email: rows[0].email,
+            gender: rows[0].gender,
+            birth_date: rows[0].birth_date,
+            diabetes_type: rows[0].diabetes_type,
+            created_at: rows[0].created_at,
+        });
     });
 });
 
 // 회원 정보 수정 (jwt)
-router.patch("/", authenticateToken, (req, res, next) => {
+router.patch("/", authenticateToken, async (req, res, next) => {
     const { userId } = req.user;
-    const { nickname, /*email,*/ gender, birthDate, diabetesType } = req.body;
+    const { nickname, password, gender, birthDate, diabetesType } = req.body;
 
-    // // userId는 반드시 있어야 한다
-    // if (!userId) {
-    //     return next({
-    //         code: "VALIDATION_MISSING_FIELD",
-    //     });
-    // }
+    // TODO : 회원 가입 유효성 검사를 이곳으로 가져와서 확인
+
+    console.log(req.body);
 
     // 업데이트할 필드 동적 생성
     const updates = [];
@@ -349,23 +418,26 @@ router.patch("/", authenticateToken, (req, res, next) => {
         params.push(nickname);
         data["nickname"] = nickname;
     }
-    // if (email !== null && email !== undefined) {
-    //     updates.push("email = ?");
-    //     params.push(email);
-    //     data["email"] = email;
-    // }
+    if (password !== null && password !== undefined) {
+        updates.push("password = ?");
+        // 암호화
+        const cryptedPassword = await bcrypt.hash(password, 10);
+        params.push(cryptedPassword);
+        // 이건 반환 안한다
+        // data["password"] = cryptedPassword;
+    }
     if (gender !== null && gender !== undefined) {
         updates.push("gender = ?");
         params.push(gender);
         data["gender"] = gender;
     }
     if (birthDate !== null && birthDate !== undefined) {
-        updates.push("birthDate = ?");
+        updates.push("birth_date = ?");
         params.push(birthDate);
         data["birthDate"] = birthDate;
     }
     if (diabetesType !== null && diabetesType !== undefined) {
-        updates.push("diabetesType = ?");
+        updates.push("diabetes_type = ?");
         params.push(diabetesType);
         data["diabetesType"] = diabetesType;
     }
@@ -383,6 +455,7 @@ router.patch("/", authenticateToken, (req, res, next) => {
         WHERE member_id = ?`;
     db.execute(query, params, (err, results) => {
         if (err) {
+            console.log(err);
             return next({
                 code: "SERVER_INTERNAL_ERROR",
             });
@@ -494,7 +567,117 @@ router.get("/exists/email", (req, res, next) => {
     });
 });
 
-// TODO : 천천히 하자.... 메일 보내고 생지랄 해야하자너
-// 비밀 번호 찾기 (jwt)
+// 비밀 번호 재설정 요청
+router.post("/password-reset-requests", (req, res, next) => {
+    const { email } = req.body;
+
+    // 유효한 이메일인지 확인
+    const query = `
+        SELECT member_id, 
+            nickname, 
+            email, 
+            gender, 
+            birth_date, 
+            diabetes_type
+        FROM MEMBER_TB 
+        WHERE email = ? AND deleted_at IS NULL
+    `;
+    db.execute(query, [email], async (err, rows) => {
+        if (err) {
+            return next({
+                code: "SERVER_INTERNAL_ERROR",
+            });
+        }
+
+        // 유저 없음
+        if (rows.length < 1) {
+            return next({
+                code: "USER_NOT_FOUND",
+            });
+        }
+
+        // 유저 존재한다면 리셋링크가 담긴 메일을 보내준다
+        // TODO : 서버의 url이 실제 서비스되는 url이어야 한다.
+        const token = jwt.sign({ email }, process.env.RESET_PASSWORD_TOKEN_SECRET, { expiresIn: '1h' });
+        const resetLink = `http://localhost:3000/reset-password/${token}`;
+
+        try {
+            await sendResetEmail(email, resetLink);
+            return res.success({
+                email: email,
+            })
+        } catch (e) {
+            // console.log(e);
+            return next({
+                code: "SERVER_SERVICE_UNAVAILABLE"
+            })
+        }
+    })
+});
+
+// 비밀 번호 재설정
+router.put("/password/:token", async (req, res, next) => {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    try {
+        // 이미 비번 변경에 사용한 토큰인지 검사 (redis)
+        const getRedisToken = await getValue(token);
+        if (getRedisToken != null) {
+            // 사용한 토큰 (만료로 표시)
+            return next({
+                code: "AUTH_EXPIRED_TOKEN",
+            })
+        }
+
+        // 사용한 토큰이 아니라면 jwt를 통해 decode
+        const user = await verifyToken(token, process.env.RESET_PASSWORD_TOKEN_SECRET);
+        console.log(user.email);
+
+        // 토큰에 문제가 없으면 비밀번호 변경
+        // password 암호화
+        const cryptedPassword = await bcrypt.hash(password, 10);
+        const query = `
+            UPDATE MEMBER_TB
+            SET password = ?
+            WHERE email = ?`;
+        db.execute(query, [cryptedPassword, user.email], async (err, results) => {
+            if (err) {
+                return next({
+                    code: "SERVER_INTERNAL_ERROR",
+                })
+            }
+
+            // 비번 변경이 안된 경우 (유저 없다)
+            if (results.affectedRows < 1) {
+                return next({
+                    code: "USER_NOT_FOUND",
+                })
+            }
+
+            // 변경이 정상적으로 된 경우
+            // 한 번 사용한 토큰을 다시 사용할 수 없도록 redis에 저장 (1시간만 - 어차피 1시간 후엔 만료되니까)
+            try {
+                await setTemporaryValue(token, 'invalid', resetPasswordTokenExpiredIn);
+
+                // 성공 응답
+                return res.success({
+                    email: user.email,
+                })
+            } catch (e) {
+                // Redis 저장 실패
+                return next({
+                    code: "SERVER_INTERNAL_ERROR",
+                })
+            }
+        })
+    } catch (e) {
+        // 토큰에 문제가 있다! 에러 발생 (클라이언트에서는 무조건 만료로 띄워줄 것)
+        // console.log(e);
+        return next({
+            code: "AUTH_EXPIRED_TOKEN",
+        })
+    }
+})
 
 module.exports = router;

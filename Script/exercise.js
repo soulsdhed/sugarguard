@@ -80,7 +80,7 @@ function displayCurrentTime() {
 displayCurrentTime();
 
 
-
+// 운동 선택 창
 const exerciseCalories = {
     "걷기": 3.5,
     "달리기": 9.8,
@@ -117,6 +117,7 @@ const exerciseCalories = {
     "전신 운동": 8.5
 };
 
+// 시간 입력시 자동으로 소모 칼로리 계산
 function calculateCalories() {
     const exercise = document.getElementById("exercise").value;
     const duration = parseFloat(document.getElementById("duration").value);

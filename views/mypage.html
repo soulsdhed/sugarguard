@@ -1,4 +1,5 @@
 {% extends "index.html" %}{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="mypage.css">
 <div class="mypage_main">
     <!-- 로딩 화면 -->
@@ -20,9 +21,15 @@
     </div>
     {% endif %}
     {% if userId %}
-    <div class="mypage-chart-title">
-        <span>차트 Report</span>
+    <div id="mypage-title">
+        <!-- 타이틀 문자열이 적히는 곳 -->
+        <div id="mypage-title-text">차트 Report</div>
+        <!-- 뒤로 가기 버튼 -->
+        <div id="mypage-goback">
+            <i class="fa-solid fa-angle-left"></i>
+        </div>
     </div>
+    <hr />
     <div class="mypage_blood">
         <div class="mypage_blood_title">
             <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721719247/blood_h0b2io.png" alt="">
@@ -77,9 +84,13 @@
         </div>
     </div>
 
-    <button id="mypage-logout-button">로그아웃</button>
+    <button id="mypage-modity-button" class="mypage-button">회원 정보 수정</button>
+    <button id="mypage-logout-button" class="mypage-button">로그아웃</button>
     {% endif %}
 </div>
+<script>
+    window.userIdFromTemplate = "{{ userId | safe }}";
+</script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="mypage.js"></script>

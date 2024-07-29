@@ -127,10 +127,7 @@ mySelect.addEventListener('change', function () {
 
 });
 
-
-
-
-// 사용자가 입력한 시간 설정 함수
+//  공복, 자기전, 실시간 선택시 사용자가 입력한 시간 설정 함수
 function setTime() {
     const hour = document.getElementById('hour').value;
     const minute = document.getElementById('minute').value;
@@ -164,7 +161,7 @@ function setTime() {
 }
 
 
-
+// 식전 혈당 정상 범위 설정
 function checkLevelBsBefore() {
     let inputValue = parseFloat(document.getElementById('record-bs-before').value);
     let resultBox1 = document.getElementById('resultBox1');
@@ -180,7 +177,7 @@ function checkLevelBsBefore() {
     }
 }
 
-
+// 식후 혈당 정상 범위 설정
 function checkLevelBsAfter() {
     let inputValue2 = parseFloat(document.getElementById('record-bs-after').value);
     let resultBox2 = document.getElementById('resultBox2');

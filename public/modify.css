@@ -1,24 +1,16 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
-#content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    height: 90%;
-    /* padding: 2%; 내부 여백 설정 */
-    box-sizing: border-box;
-    /* 테두리와 여백을 포함하여 크기 계산 */
-    /* margin-bottom: 50px; */
-    /* margin-top: 40px; */
-}
-
 hr {
     width: 100%;
     margin-bottom: 15px;
 }
 
-#recipe-title {
+#modify-wrapper {
+    position: relative;
+    height: calc(100vh - 80px);
+}
+
+#modify-title {
     margin-top: 17px;
     margin-bottom: 17px;
     text-align: center;
@@ -26,7 +18,7 @@ hr {
     width: 100%;
 }
 
-#recipe-title-text {
+#modify-title-text {
     height: 100%;
     width: 100%;
     font-size: 18px;
@@ -34,8 +26,134 @@ hr {
     font-weight: 700;
 }
 
+#modify-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 25px;
+}
+
+#modify-content table {
+    width: 95%;
+    font-family: "Pretendard";
+}
+
+#modify-content th,
+td {
+    height: 40px;
+}
+
+#modify-content th {
+    width: 40%;
+    text-align: left;
+}
+
+#modify-content td {
+    width: 60%;
+}
+
+#modify-content input {
+    height: 30px;
+    border: none;
+    width: 180px;
+    font-family: "Pretendard";
+    font-size: 15px;
+    /* border-bottom: 1px solid #9c9c9c;
+    background-color: #f6f6f6; */
+    /* width: 150px; */
+}
+
+#modify-password {
+    margin-right: 5px;
+}
+
+#modify-content input:focus {
+    outline: none;
+}
+
+.modify-div {
+    display: flex;
+    flex-direction: row;
+}
+
+#modify-gender div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 30px;
+    width: 90px;
+    background-color: white;
+}
+
+#modify-birthday-year {
+    width: 50px !important;
+}
+
+#modify-birthday-month {
+    width: 30px !important;
+}
+
+#modify-birthday-day {
+    width: 30px !important;
+}
+
+#modify-birthday input {
+    /* width: 40px; */
+    margin-right: 3px;
+    text-align: center;
+}
+
+#modify-birthday div {
+    /* width: 50px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+}
+
+.selected-gender {
+    border: #ff5c5c 2px solid
+}
+
+#modify-resign-button {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+#modify-button {
+    margin-top: 30px;
+}
+
+.modify-button {
+    background-color: rgb(190, 190, 190);
+    border: none;
+
+    border-radius: 10px;
+    width: 95%;
+    height: 30px;
+
+    margin-bottom: 10px;
+
+    font-family: Pretendard;
+    font-size: 14px;
+    color: rgb(255, 255, 255);
+}
+
+#modify-resign-button {
+    width: 65px;
+    margin-bottom: 15px;
+    background-color: rgb(255, 92, 92);
+}
+
+button:focus {
+    outline: none;
+}
+
 /* 뒤로 가기 버튼 */
-#recipe-goback {
+#modify-goback {
     position: absolute;
     height: 24px;
     width: 24px;
@@ -47,104 +165,6 @@ hr {
     text-align: center;
     line-height: 24px;
     z-index: 10;
-}
-
-#recipe-name {
-    background-color: #f6f6f6;
-    /* width: 80%; */
-    /* min-width: 400px;
-    max-width: 400px; */
-    width: 90%;
-    min-width: 90%;
-    max-width: 90%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    /* 각 링크 사이의 간격을 줄임 */
-    margin-bottom: 20px;
-}
-
-#recipe-name h2 {
-    font-family: Pretendard;
-    font-size: 22px;
-    /* font-weight: 800; */
-    grid-column: span 4;
-}
-
-#recipe-name a {
-    display: inline-block;
-    font-size: 12px;
-    /* padding: 15px 15px; 내부 여백을 줄임 */
-    padding-top: 12px;
-    padding-bottom: 12px;
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    background-color: #f6f6f6;
-    text-decoration: none;
-    color: #000;
-    border-radius: 10px;
-    text-align: center;
-    box-sizing: border-box;
-    /* 요소 크기에 패딩과 테두리를 포함 */
-    transition: background-color 0.3s;
-}
-
-/* 클릭 및 포커스 시 색상 유지 */
-#recipe-name a.active {
-    background-color: #cfcfcf;
-    /* 클릭 및 포커스 시 배경색 설정 (원하는 색상으로 변경) */
-}
-
-#recipe-name img {
-    width: 100%;
-    height: auto;
-    max-width: 40px;
-    /* 원하는 최대 크기로 설정 */
-    border-radius: 10px;
-    margin-bottom: 5px;
-}
-
-#recipe-bar {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-
-    padding-bottom: 20px;
-    width: 100%;
-
-    gap: 7px;
-}
-
-#recipe-camera-input {
-    display: none;
-}
-
-#recipe-bar input {
-    width: 45%;
-    font-size: 14px;
-    font-family: Pretendard;
-}
-
-#recipe-bar button {
-    padding: 5px;
-    /* background-color: white; */
-    border: none;
-    border-radius: 8px;
-    width: 40px;
-}
-
-#recipe-bar span,
-button {
-    font-family: Pretendard;
-    font-weight: 500;
-    font-size: 15px;
-}
-
-.button-group1 {
-    display: flex;
-    flex-direction: row;
 }
 
 /* 로딩 화면 */
@@ -270,4 +290,16 @@ button {
         stroke-dashoffset: 187;
         transform: rotate(450deg);
     }
+}
+
+.my-confirm-button {
+    background-color: #6c77db !important;
+    color: white !important;
+    font-family: "Pretendard" !important;
+}
+
+.my-cancel-button {
+    background-color: rgb(255, 92, 92) !important;
+    color: white !important;
+    font-family: "Pretendard" !important;
 }

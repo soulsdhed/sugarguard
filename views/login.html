@@ -1,5 +1,12 @@
 {% extends "index.html" %}{% block content %}
 <link rel="stylesheet" href="login.css">
+
+<!-- 로딩 화면 -->
+<div id="loading-screen">
+    <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+        <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+    </svg>
+</div>
 <!-- 기본 로그인 입력 -->
 <div id="login_main">
     <div id="login_input">
@@ -7,13 +14,16 @@
         <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721706226/001_y4eee9.png" alt="Logo">
         <h1>Login</h1><br>
         <input type="text" id="login_input_write" class="login_input_write" placeholder="아이디 또는 이메일"><br>
-        <input type="password" id="password_input_write" class="login_input_write" placeholder="비밀번호"><br>
+        <input type="password" id="password_input_write" class="login_input_write" placeholder="비밀번호"
+            maxlength="16"><br>
         <input type="submit" id="login_button" value="로그인">
+        <div id="register-link">
+            <b><a href="/reset-password-form">비밀번호 재설정</a></b>
+            <b><a href="/join">회원가입</a><br></b>
+        </div>
     </div>
-    <div>
-        <b><a href="#">아이디/비밀번호 찾기</a></b>
-        <b><a href="/join">회원가입</a><br></b>
-    </div>
+
+
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

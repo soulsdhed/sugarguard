@@ -166,24 +166,24 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 // div 링크
 document.querySelectorAll(".LinkRecipe").forEach((div) => {
-    div.addEventListener("touchstart", function () {
+    div.addEventListener("click", function () {
         window.location.href = this.getAttribute("data-href");
     });
 });
 document.querySelectorAll(".LinkDiabetes").forEach((div) => {
-    div.addEventListener("touchstart", function () {
+    div.addEventListener("click", function () {
         window.location.href = this.getAttribute("data-href");
     });
 });
 
 document.querySelectorAll(".LinkExercise").forEach((div) => {
-    div.addEventListener("touchstart", function () {
+    div.addEventListener("click", function () {
         window.location.href = this.getAttribute("data-href");
     });
 });
 
 document.querySelectorAll(".LinkMeal").forEach((div) => {
-    div.addEventListener("touchstart", function () {
+    div.addEventListener("click", function () {
         window.location.href = this.getAttribute("data-href");
     });
 });

@@ -23,6 +23,14 @@ const join_db_list =[
     "gender",
     "birthDate"
 ]
+const join_input_type =[
+    "text",
+    "email",
+    "text",
+    "password",
+    "radio",
+    "text"
+]
 
 const data = {
     nickname:"nickname",
@@ -48,7 +56,12 @@ function handleButtonClick(event) {
         if (currentInputText == "닉네임"){
             // 닉네임 조건
             if (valStr.length > 20 || valStr.length < 4) {
-                alert("Nickname Error");
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                    footer: '<a href="#">Why do I have this issue?</a>'
+                  });
                 return;
             }
         } else if (currentInputText == "이메일") {
@@ -111,7 +124,7 @@ async function postData(url, data) {
         console.log('Success:', response.data);
 
         // 회원 가입 성공 (메인 페이지로 이동)
-        window.location.href = "/";
+        // window.location.href = "/";
     } catch (error) {
         console.error('Error:', error);
 
@@ -163,6 +176,7 @@ window.onload = function() {
 let formData = {}; 
 let placeholderIndex = 0;
 let join_db_index=0;
+let joinInputTypeIndex = 0;
 const maxInput = 7;
 let inputCount = 1;
 
@@ -171,13 +185,32 @@ function addInput(event) {
     if(inputCount<maxInput) {
         const placeholder = placeholders[placeholderIndex % placeholders.length];
         const join_db_input = join_db_list[join_db_index % join_db_list.length];
-        const newInputHTML = `<br><br><input type="text" placeholder=${placeholder} id=${join_db_input} class="join_new" name=${join_db_input};><br>`;
+        const joinInputType = join_input_type[joinInputTypeIndex % join_input_type.length]; // 동적 타입 지정
+
+        let newInputHTML;
+        if(joinInputType === "radio"){
+            newInputHTML = `
+            <br><br>
+            <label>
+                <input type="radio" name="gender" value="남성"> 남성
+            </label>
+            <label>
+                <input type="radio" name="gender" value="여성"> 여성
+            </label>
+            <br>`; 
+        }else{
+            newInputHTML = `<br><br><input type=${joinInputType} placeholder=${placeholder} id=${join_db_input} class="join_new" name=${join_db_input};><br>`;
+        }
 
         // h2 태그 바로 밑에 새로운 input 태그 추가
         const h2Tag = document.getElementById('join_change');
         h2Tag.insertAdjacentHTML('afterend', newInputHTML);
-        placeholderIndex++;
-        join_db_index++;
+        if (joinInputType !== "radio") {
+            placeholderIndex++;
+            join_db_index++;
+            joinInputTypeIndex++;
+        }
+
         inputCount++;
         return true;
     }

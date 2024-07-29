@@ -61,7 +61,7 @@ router.get("/modify", async (req, res) => {
     res.render("modify", {
         userId: await getUserIdInRefreshToken(req),
     });
-})
+});
 
 router.get("/foodnutrition", (req, res) => {
     res.render("foodnutrition");
@@ -70,7 +70,7 @@ router.get("/foodnutrition", (req, res) => {
 // 비밀번호 재설정 폼 페이지
 router.get("/reset-password-form", (req, res) => {
     res.render("reset_password_form");
-})
+});
 
 // 비밀번호 재설정 페이지
 router.get("/reset-password/:token", async (req, res) => {

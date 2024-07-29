@@ -145,8 +145,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (date.toDateString() === selectedDate.toDateString()) {
                 dayDiv.classList.add("selected");
             }
-            dayDiv.innerHTML = `${date.getDate()}<br>${daysOfWeek[date.getDay()]
-                }`;
+            dayDiv.innerHTML = `${date.getDate()}<br>${
+                daysOfWeek[date.getDay()]
+            }`;
             dayDiv.addEventListener("click", () => {
                 generateCalendar(date); // 새로운 날짜 생성
                 updateHeader(date); // 헤더 업데이트
@@ -162,4 +163,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 초기화
     generateCalendar(currentDate);
+});
+// div 링크
+document.querySelectorAll(".LinkRecipe").forEach((div) => {
+    div.addEventListener("touchstart", function () {
+        window.location.href = this.getAttribute("data-href");
+    });
+});
+document.querySelectorAll(".LinkDiabetes").forEach((div) => {
+    div.addEventListener("touchstart", function () {
+        window.location.href = this.getAttribute("data-href");
+    });
+});
+
+document.querySelectorAll(".LinkExercise").forEach((div) => {
+    div.addEventListener("touchstart", function () {
+        window.location.href = this.getAttribute("data-href");
+    });
+});
+
+document.querySelectorAll(".LinkMeal").forEach((div) => {
+    div.addEventListener("touchstart", function () {
+        window.location.href = this.getAttribute("data-href");
+    });
 });

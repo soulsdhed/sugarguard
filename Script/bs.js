@@ -81,7 +81,7 @@ displayCurrentTime();
 
 
 // HTML 요소들을 가져오기
-const mySelect = document.getElementById('mySelect');
+const mySelect = document.getElementById('my-select');
 const div2 = document.getElementById('div2');
 const div3 = document.getElementById('div3');
 
@@ -127,10 +127,7 @@ mySelect.addEventListener('change', function () {
 
 });
 
-
-
-
-// 사용자가 입력한 시간 설정 함수
+//  공복, 자기전, 실시간 선택시 사용자가 입력한 시간 설정 함수
 function setTime() {
     const hour = document.getElementById('hour').value;
     const minute = document.getElementById('minute').value;
@@ -164,9 +161,9 @@ function setTime() {
 }
 
 
-
+// 식전 혈당 정상 범위 설정
 function checkLevelBsBefore() {
-    let inputValue = parseFloat(document.getElementById('recordBsBefore').value);
+    let inputValue = parseFloat(document.getElementById('record-bs-before').value);
     let resultBox1 = document.getElementById('resultBox1');
 
     if (isNaN(inputValue)) {
@@ -180,9 +177,9 @@ function checkLevelBsBefore() {
     }
 }
 
-
+// 식후 혈당 정상 범위 설정
 function checkLevelBsAfter() {
-    let inputValue2 = parseFloat(document.getElementById('recordBsAfter').value);
+    let inputValue2 = parseFloat(document.getElementById('record-bs-after').value);
     let resultBox2 = document.getElementById('resultBox2');
 
     if (isNaN(inputValue2)) {

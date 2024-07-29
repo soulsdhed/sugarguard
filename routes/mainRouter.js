@@ -26,8 +26,8 @@ router.get("/recipe", async (req, res) => {
     res.render("recipe", { userId: await getUserIdInRefreshToken(req) });
 });
 
-router.get("/sugardiary", (req, res) => {
-    res.render("sugardiary");
+router.get("/sugardiary", async (req, res) => {
+    res.render("sugardiary", { userId: await getUserIdInRefreshToken(req) });
 });
 
 router.get("/recipe-details", (req, res) => {

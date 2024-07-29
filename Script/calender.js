@@ -67,7 +67,9 @@ document.addEventListener("DOMContentLoaded", () => {
         .forEach((div) => {
             div.addEventListener("click", function () {
                 const formattedDate = selectedDate.toISOString().split("T")[0]; // YYYY-MM-DD 형식으로 변환
-                window.location.href = `${this.getAttribute("data-href")}?date=${formattedDate}`;
+                window.location.href = `${this.getAttribute(
+                    "data-href"
+                )}?date=${formattedDate}`;
             });
         });
 });

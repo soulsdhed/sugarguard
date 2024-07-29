@@ -36,16 +36,13 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             calendar.appendChild(dayDiv);
         }
-<<<<<<< HEAD
-        updateHeader(selectedDate); // 선택된 날짜로 헤더 업데이트
-        console.log("Month:", selectedDate.getMonth() + 1); // 0부터 시작하므로 +1
-        console.log("Day:", selectedDate.getDate());
+        // updateHeader(selectedDate); // 선택된 날짜로 헤더 업데이트
+        // console.log("Month:", selectedDate.getMonth() + 1); // 0부터 시작하므로 +1
+        // console.log("Day:", selectedDate.getDate());
 
-=======
         updateHeader(date); // 선택된 날짜로 헤더 업데이트
         console.log("Month:", date.getMonth() + 1); // 0부터 시작하므로 +1
         console.log("Day:", date.getDate());
->>>>>>> ad20559aad4abfc19fa7e82a2b399cd34374e1c6
     }
 
     function getParameterByName(name) {

@@ -1,5 +1,4 @@
 // 달력js
-<<<<<<< HEAD
 // $(document).ready(function () {
 //     $(".selLabel").on('touchstart', function () {
 //         $('.dropdown').toggleClass('active');
@@ -21,29 +20,6 @@
 //         return options;
 //     };
 // });
-=======
-$(document).ready(function () {
-    $(".selLabel").on("touchstart", function () {
-        $(".dropdown").toggleClass("active");
-    });
-
-    $(".dropdown-list li").on("touchstart", function () {
-        $(".selLabel").text($(this).text());
-        $(".dropdown").removeClass("active");
-        $(".selected-item p span").text($(".selLabel").text());
-    });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    const createOptions = (min, max, step) => {
-        let options = "";
-        for (let i = min; i <= max; i += step) {
-            options += `<div data-value="${i}">${i}</div>`;
-        }
-        return options;
-    };
-});
->>>>>>> ad20559aad4abfc19fa7e82a2b399cd34374e1c6
 
 // 기록생성버튼js
 $(document).ready(function () {
@@ -81,67 +57,31 @@ $(document).ready(function () {
 
     $("#exercise-button").click(function () {
         lastClickedButton = $(this);
-<<<<<<< HEAD
         addRecord('운동 기록', 'https://res.cloudinary.com/difzc7bsf/image/upload/v1721719663/002_cuhgi9.png', 'exercise-record');
         triggerMainToggleButton();
-=======
-        addRecord(
-            "운동 기록",
-            "https://res.cloudinary.com/difzc7bsf/image/upload/v1721719663/002_cuhgi9.png"
-        );
-        triggerMainToggleButton("");
->>>>>>> ad20559aad4abfc19fa7e82a2b399cd34374e1c6
     });
 
     $("#weight-record-button").click(function () {
         lastClickedButton = $(this);
-<<<<<<< HEAD
         addRecord('체중 기록', 'https://res.cloudinary.com/difzc7bsf/image/upload/v1721888337/image-removebg-preview_3_t28f17.png', 'weight-record');
-=======
-        addRecord(
-            "체중 기록",
-            "https://res.cloudinary.com/difzc7bsf/image/upload/v1721888337/image-removebg-preview_3_t28f17.png"
-        );
->>>>>>> ad20559aad4abfc19fa7e82a2b399cd34374e1c6
         triggerMainToggleButton();
     });
 
     $("#blood-pressure-button").click(function () {
         lastClickedButton = $(this);
-<<<<<<< HEAD
         addRecord('혈압 기록', 'https://res.cloudinary.com/difzc7bsf/image/upload/v1721983336/%EC%A0%9C%EB%AA%A9%EC%9D%84-%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94_-009_basbm8.png', 'blood-pressure-record');
-=======
-        addRecord(
-            "혈압 기록",
-            "https://res.cloudinary.com/difzc7bsf/image/upload/v1721983336/%EC%A0%9C%EB%AA%A9%EC%9D%84-%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94_-009_basbm8.png"
-        );
->>>>>>> ad20559aad4abfc19fa7e82a2b399cd34374e1c6
         triggerMainToggleButton();
     });
 
     $("#meal-sugar-button").click(function () {
         lastClickedButton = $(this);
-<<<<<<< HEAD
         addRecord('식사 기록', 'https://res.cloudinary.com/difzc7bsf/image/upload/v1721885477/%EC%A0%9C%EB%AA%A9%EC%9D%84_%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94_-005_tvsy8t.png', 'mealrecord-record');
-=======
-        addRecord(
-            "식사 기록",
-            "https://res.cloudinary.com/difzc7bsf/image/upload/v1721885477/%EC%A0%9C%EB%AA%A9%EC%9D%84_%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94_-005_tvsy8t.png"
-        );
->>>>>>> ad20559aad4abfc19fa7e82a2b399cd34374e1c6
         triggerMainToggleButton();
     });
 
     $("#sugar-button").click(function () {
         lastClickedButton = $(this);
-<<<<<<< HEAD
         addRecord('혈당 기록', 'https://res.cloudinary.com/difzc7bsf/image/upload/v1721719247/blood_h0b2io.png', 'sugar-record');
-=======
-        addRecord(
-            "혈당 기록",
-            "https://res.cloudinary.com/difzc7bsf/image/upload/v1721719247/blood_h0b2io.png"
-        );
->>>>>>> ad20559aad4abfc19fa7e82a2b399cd34374e1c6
         triggerMainToggleButton();
     });
 
@@ -220,10 +160,8 @@ $(document).ready(function () {
 // }
 
 // + 버튼을 다시 클릭하는 함수
-<<<<<<< HEAD
-=======
 
-// 캘린더
+// // 캘린더
 
 const calendar = document.getElementById("calendar");
 const calendarHeader = document.getElementById("calendar-header");
@@ -276,4 +214,3 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
     generateCalendar(currentDate); // 초기화
 });
->>>>>>> ad20559aad4abfc19fa7e82a2b399cd34374e1c6

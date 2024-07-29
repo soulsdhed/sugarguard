@@ -1,0 +1,99 @@
+{% extends "index.html" %}{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="modify.css">
+<!-- 로딩 화면 -->
+<div id="loading-screen">
+    <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+        <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+    </svg>
+</div>
+
+<div id="modify-wrapper">
+    <div id="modify-title">
+        <!-- 타이틀 문자열이 적히는 곳 -->
+        <div id="modify-title-text">회원 정보 수정</div>
+        <!-- 뒤로 가기 버튼 -->
+        <div id="modify-goback">
+            <i class="fa-solid fa-angle-left"></i>
+        </div>
+    </div>
+    <hr />
+
+    <div id="modify-content">
+        <table>
+            <tr>
+                <th>아이디</th>
+                <td id="id-td">test</td>
+            </tr>
+            <tr>
+                <th>비밀번호</th>
+                <td>
+                    <input type="password" id="modify-password" maxlength="16">
+                </td>
+            </tr>
+            <tr>
+                <th>이메일</th>
+                <td id="email-td">test@test.com</td>
+            </tr>
+            <tr>
+                <th>닉네임</th>
+                <td>
+                    <input type="text" id="modify-nickname" maxlength="20">
+                </td>
+            </tr>
+            <tr>
+                <th>성별</th>
+                <td>
+                    <div id="modify-gender" class="modify-div">
+                        <div class="selected-gender">남성</div>
+                        <div>여성</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>생일</th>
+                <td>
+                    <div id="modify-birthday" class="modify-div">
+                        <input type="text" id="modify-birthday-year" value="1985" maxlength="4">
+                        <div>년</div>
+                        <input type="text" id="modify-birthday-month" value="8" maxlength="2">
+                        <div>월</div>
+                        <input type="text" id="modify-birthday-day" value="12" maxlength="2">
+                        <div>일</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>당뇨 유형</th>
+                <td>
+                    <input type="text" id="modify-diabetes-type">
+                </td>
+            </tr>
+            <tr>
+                <th>가입일</th>
+                <td id="created-at-td">2024-07-27</td>
+            </tr>
+        </table>
+        <button id="modify-button" class="modify-button">회원 정보 수정</button>
+    </div>
+
+    <div>
+        <button id="modify-resign-button" class="modify-button">회원탈퇴</button>
+    </div>
+</div>
+
+
+<script>
+    window.userIdFromTemplate = "{{ userId | safe }}";
+</script>
+<script>
+    function selectOption(element) {
+        var button = document.querySelector('.dropbtn');
+        button.textContent = element.textContent;
+        button.appendChild(document.createTextNode(' \u25BC'));
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="modify.js"></script>
+{% endblock %}

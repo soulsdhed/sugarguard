@@ -52,11 +52,10 @@ const getUserIdInRefreshToken = async (req) => {
         const user = await verifyToken(token, REFRESH_TOKEN_SECRET);
         return user.userId;
     } catch (err) {
+        console.log(err);
         return undefined;
     }
 };
-
-
 
 module.exports = {
     accessTokenExpiresIn,

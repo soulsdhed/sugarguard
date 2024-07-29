@@ -2,23 +2,30 @@
 // refresh함수를 통한 accessToken 재발행 받기
 const refreshAccessToken = async () => {
     try {
-        const response = await axios.post("/api/auth/token", {}, {
-            withCredentials: true,
-        });
+        const response = await axios.post(
+            "/api/auth/token",
+            {},
+            {
+                withCredentials: true,
+            }
+        );
         // const { accessToken } = response.data;
         // axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     } catch (e) {
         console.error("Failed to refresh access token:", e);
         throw e;
     }
-}
+};
 // 재시도를 포함한 get fetch
 const fetchGetWithRetry = async (url, options = {}, retries = 1) => {
     try {
         const response = await axios.get(url, options);
         return response;
     } catch (e) {
-        if (e.response.data.error.code === "AUTH_EXPIRED_TOKEN" && retries > 0) {
+        if (
+            e.response.data.error.code === "AUTH_EXPIRED_TOKEN" &&
+            retries > 0
+        ) {
             console.log("Access token expired. Fetching new token...");
             await refreshAccessToken();
             return fetchGetWithRetry(url, options, retries - 1);
@@ -26,7 +33,7 @@ const fetchGetWithRetry = async (url, options = {}, retries = 1) => {
             throw e;
         }
     }
-}
+};
 // // 재시도를 포함한 post fetch
 // const fetchPostWithRetry = async (url, data = {}, options = {}, retries = 1) => {
 //     try {
@@ -67,25 +74,33 @@ document.addEventListener("DOMContentLoaded", async (e) => {
     if (userId) {
         // 혈당
         try {
-            const response = await fetchGetWithRetry("/api/blood-sugar-logs/recent", {
-                withCredentials: true,
-            });
+            const response = await fetchGetWithRetry(
+                "/api/blood-sugar-logs/recent",
+                {
+                    withCredentials: true,
+                }
+            );
             // console.log(response.data.data.blood_sugar_logs[0].blood_sugar);
             document.querySelector("#mypage-blood-sugar-div h1").textContent =
                 response.data.data.blood_sugar_logs[0].blood_sugar || 0;
         } catch (e) {
             console.log("error", e);
+            location.reload();
         }
         // 운동
         try {
-            const response = await fetchGetWithRetry("/api/exercise-logs/recent", {
-                withCredentials: true,
-            });
+            const response = await fetchGetWithRetry(
+                "/api/exercise-logs/recent",
+                {
+                    withCredentials: true,
+                }
+            );
             // console.log(response.data.data.exercise_logs[0].calories_burned);
             document.querySelector("#mypage-exercise-div h1").textContent =
                 response.data.data.exercise_logs[0].calories_burned || 0;
         } catch (e) {
             console.log("error", e);
+            location.reload();
         }
         // 식사
         try {
@@ -97,12 +112,16 @@ document.addEventListener("DOMContentLoaded", async (e) => {
                 response.data.data.meal_logs[0].calories || 0;
         } catch (e) {
             console.log("error", e);
+            location.reload();
         }
         // 체중
         try {
-            const response = await fetchGetWithRetry("/api/weight-logs/recent", {
-                withCredentials: true,
-            });
+            const response = await fetchGetWithRetry(
+                "/api/weight-logs/recent",
+                {
+                    withCredentials: true,
+                }
+            );
             // console.log(response.data.data.weight_logs[0].weight);
             document.querySelector("#mypage-weight-div h1").textContent =
                 parseFloat(
@@ -110,12 +129,16 @@ document.addEventListener("DOMContentLoaded", async (e) => {
                 ) || 0;
         } catch (e) {
             console.log("error", e);
+            location.reload();
         }
         // 혈압
         try {
-            const response = await fetchGetWithRetry("/api/blood-pressure-logs/recent", {
-                withCredentials: true,
-            });
+            const response = await fetchGetWithRetry(
+                "/api/blood-pressure-logs/recent",
+                {
+                    withCredentials: true,
+                }
+            );
             // console.log(
             //     response.data.data.blood_pressure_logs[0].blood_pressure_min
             // );
@@ -124,19 +147,27 @@ document.addEventListener("DOMContentLoaded", async (e) => {
             // );
             document.querySelector(
                 "#mypage-blood-pressure-div h1"
-            ).textContent = `${response.data.data.blood_pressure_logs[0].blood_pressure_min || 0
-            }~${response.data.data.blood_pressure_logs[0].blood_pressure_max || 0}`;
+            ).textContent = `${
+                response.data.data.blood_pressure_logs[0].blood_pressure_min ||
+                0
+            }~${
+                response.data.data.blood_pressure_logs[0].blood_pressure_max ||
+                0
+            }`;
         } catch (e) {
             console.log("error", e);
+            location.reload();
         }
 
         // Element
         // 뒤로 가기 버튼
-        document.getElementById("mypage-goback").addEventListener("click", (e) => {
-            // history.back();
-            // 여기선 메인으로
-            window.location.href = "/"
-        })
+        document
+            .getElementById("mypage-goback")
+            .addEventListener("click", (e) => {
+                // history.back();
+                // 여기선 메인으로
+                window.location.href = "/";
+            });
 
         // element 이벤트 연결 : 해당 부분이 안에 있을 경우 생길 수 있는 문제가 있다
         // chart 링크
@@ -154,6 +185,13 @@ document.addEventListener("DOMContentLoaded", async (e) => {
             });
         });
 
+        // 회원 정보 수정 버튼
+        document
+            .getElementById("mypage-modity-button")
+            .addEventListener("click", (e) => {
+                window.location.href = "/modify";
+            });
+
         // 로그아웃 버튼
         document
             .getElementById("mypage-logout-button")
@@ -166,6 +204,10 @@ document.addEventListener("DOMContentLoaded", async (e) => {
                     showCancelButton: true,
                     confirmButtonText: "예",
                     cancelButtonText: "아니오",
+                    customClass: {
+                        confirmButton: "my-cancel-button",
+                        cancelButton: "my-confirm-button",
+                    },
                 }).then(async (result) => {
                     if (result.isConfirmed) {
                         // 로그아웃 api 연결
@@ -192,5 +234,5 @@ document.addEventListener("DOMContentLoaded", async (e) => {
     }
 
     // 로딩화면 제거
-    document.getElementById('loading-screen').style.display = 'none';
+    document.getElementById("loading-screen").style.display = "none";
 });

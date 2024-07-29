@@ -2,7 +2,7 @@ const express = require("express");
 const nunjucks = require("nunjucks");
 const cookieParser = require("cookie-parser"); // 쿠키
 const rateLimit = require("express-rate-limit");
-const { client: redisClient } = require("./conf/redisClient"); // redisClient.js에서 Redis 클라이언트 및 함수 가져오기
+// const { client: redisClient } = require("./conf/redisClient"); // redisClient.js에서 Redis 클라이언트 및 함수 가져오기
 // const {
 //     setTemporaryValue,
 //     setPermanentValue,

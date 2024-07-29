@@ -22,6 +22,8 @@ router.post("/token", (req, res, next) => {
 
         // 그래도 없으면 Error
         if (!refreshToken) {
+            res.clearCookie("refreshToken");
+            res.clearCookie("accessToken");
             return next({
                 code: "AUTH_INVALID_TOKEN",
             });
@@ -33,6 +35,8 @@ router.post("/token", (req, res, next) => {
         WHERE refresh_token = ?`;
     db.execute(query, [refreshToken], async (err, rows) => {
         if (err || rows.length <= 0) {
+            res.clearCookie("refreshToken");
+            res.clearCookie("accessToken");
             return next({
                 code: "AUTH_INVALID_TOKEN",
             });

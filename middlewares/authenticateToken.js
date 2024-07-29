@@ -29,15 +29,15 @@ const authenticateToken = (req, res, next) => {
                 // 정상 토큰이 아니거나 만료된 경우 (조작 토큰!?)
                 if (err) {
                     return next({
-                        code: "AUTH_INVALID_TOKEN"
-                    })
+                        code: "AUTH_INVALID_TOKEN",
+                    });
                 }
 
                 // 정상 토큰인 경우 (access token이 만료되었단다.)
                 return next({
                     code: "AUTH_EXPIRED_TOKEN",
                 });
-            })
+            });
         }
     }
 

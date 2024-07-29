@@ -1,8 +1,9 @@
 {% extends "index.html" %}{% block content %}
-<link rel="stylesheet" href="sugardiary.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="sugardiary.css" />
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+/>
 
 
 <div id="sugardiary_main">
@@ -21,23 +22,28 @@
             </div>
             <div class="floating-button-container">
                 <span class="floating-button-text">체중 기록</span>
-                <button id="weight-record-button" class="floating-button">+</button>
+                <button id="weight-record-button" class="floating-button">
+                    +
+                </button>
             </div>
             <div class="floating-button-container">
                 <span class="floating-button-text">혈압 기록</span>
-                <button id="blood-pressure-button" class="floating-button">+</button>
-            </div>
-            <div class="floating-button-container">
-                <span class="floating-button-text">식사 혈당 기록</span>
-                <button id="meal-sugar-button" class="floating-button">+</button>
+                <button id="blood-pressure-button" class="floating-button">
+                    +
+                </button>
             </div>
             <div class="floating-button-container">
                 <span class="floating-button-text">혈당 기록</span>
                 <button id="sugar-button" class="floating-button">+</button>
             </div>
+            <div class="floating-button-container">
+                <span class="floating-button-text">식사 기록</span>
+                <button id="meal-sugar-button" class="floating-button">
+                    +
+                </button>
+            </div>
         </div>
     </div>
 </div>
 <script src="sugardiary.js"></script>
-<script src="calender.js"></script>
 {% endblock %}

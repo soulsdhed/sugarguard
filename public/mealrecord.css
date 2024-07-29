@@ -79,9 +79,12 @@
     color: rgba(0, 0, 0, 0.474);
 }
 
-
 #time-meal h2 {
     text-align: center;
+}
+
+#time-meal img{
+    
 }
 
 #meal h2 {

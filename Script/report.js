@@ -2,23 +2,30 @@
 // refresh함수를 통한 accessToken 재발행 받기
 const refreshAccessToken = async () => {
     try {
-        const response = await axios.post("/api/auth/token", {}, {
-            withCredentials: true,
-        });
+        const response = await axios.post(
+            "/api/auth/token",
+            {},
+            {
+                withCredentials: true,
+            }
+        );
         // const { accessToken } = response.data;
         // axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     } catch (e) {
         console.error("Failed to refresh access token:", e);
         throw e;
     }
-}
+};
 // 재시도를 포함한 get fetch
 const fetchGetWithRetry = async (url, options = {}, retries = 1) => {
     try {
         const response = await axios.get(url, options);
         return response;
     } catch (e) {
-        if (e.response.data.error.code === "AUTH_EXPIRED_TOKEN" && retries > 0) {
+        if (
+            e.response.data.error.code === "AUTH_EXPIRED_TOKEN" &&
+            retries > 0
+        ) {
             console.log("Access token expired. Fetching new token...");
             await refreshAccessToken();
             return fetchGetWithRetry(url, options, retries - 1);
@@ -26,7 +33,7 @@ const fetchGetWithRetry = async (url, options = {}, retries = 1) => {
             throw e;
         }
     }
-}
+};
 
 const formatDate = (date) => {
     const year = date.getFullYear();
@@ -60,10 +67,14 @@ const drawChart = async (period, first) => {
         oneWeekAgo.setDate(today.getDate() - 6);
         startDate = formatDate(oneWeekAgo);
         endDate = formatDate(today);
-    } else if (period === 'MONTH') {
+    } else if (period === "MONTH") {
         const today = new Date();
-        startDate = formatDate(new Date(today.getFullYear(), today.getMonth(), 1));
-        endDate = formatDate(new Date(today.getFullYear(), today.getMonth() + 1, 0));
+        startDate = formatDate(
+            new Date(today.getFullYear(), today.getMonth(), 1)
+        );
+        endDate = formatDate(
+            new Date(today.getFullYear(), today.getMonth() + 1, 0)
+        );
     }
 
     console.log(startDate, endDate);
@@ -100,14 +111,17 @@ const drawChart = async (period, first) => {
         unit = "mg/dl";
 
         try {
-            const response = await /*axios.get*/fetchGetWithRetry("/api/chart/blood-sugar", {
-                params: {
-                    period: "day",
-                    startDate: startDate,
-                    endDate: endDate,
-                },
-                withCredentials: true,
-            });
+            const response = await /*axios.get*/ fetchGetWithRetry(
+                "/api/chart/blood-sugar",
+                {
+                    params: {
+                        period: "day",
+                        startDate: startDate,
+                        endDate: endDate,
+                    },
+                    withCredentials: true,
+                }
+            );
 
             // 데이터 제작
             const chartData = [];
@@ -135,7 +149,11 @@ const drawChart = async (period, first) => {
                     borderWidth: 0,
                 },
             ];
-            average = chartData.filter(x => x !== null).reduce((a, b, _, { length }) => a + b / length, 0).toFixed(2).toString();
+            average = chartData
+                .filter((x) => x !== null)
+                .reduce((a, b, _, { length }) => a + b / length, 0)
+                .toFixed(2)
+                .toString();
         } catch (e) {
             console.log(e);
         }
@@ -150,14 +168,17 @@ const drawChart = async (period, first) => {
         unit = "kcal";
 
         try {
-            const response = await /*axios.get*/fetchGetWithRetry("/api/chart/exercise", {
-                params: {
-                    period: "day",
-                    startDate: startDate,
-                    endDate: endDate,
-                },
-                withCredentials: true,
-            });
+            const response = await /*axios.get*/ fetchGetWithRetry(
+                "/api/chart/exercise",
+                {
+                    params: {
+                        period: "day",
+                        startDate: startDate,
+                        endDate: endDate,
+                    },
+                    withCredentials: true,
+                }
+            );
 
             // 데이터 제작
             const chartData = [];
@@ -171,9 +192,7 @@ const drawChart = async (period, first) => {
                     (item) => item.period == date.toISOString().split("T")[0]
                 );
 
-                chartData.push(
-                    entry ? entry.average_calories_per_day : null
-                );
+                chartData.push(entry ? entry.average_calories_per_day : null);
             }
             // 데이터셋 제작
             datasets = [
@@ -185,7 +204,11 @@ const drawChart = async (period, first) => {
                     borderWidth: 0,
                 },
             ];
-            average = chartData.filter(x => x !== null).reduce((a, b, _, { length }) => a + b / length, 0).toFixed(2).toString();
+            average = chartData
+                .filter((x) => x !== null)
+                .reduce((a, b, _, { length }) => a + b / length, 0)
+                .toFixed(2)
+                .toString();
         } catch (e) {
             console.log(e);
         }
@@ -200,14 +223,17 @@ const drawChart = async (period, first) => {
         unit = "kcal";
 
         try {
-            const response = await /*axios.get*/fetchGetWithRetry("/api/chart/meal", {
-                params: {
-                    period: "day",
-                    startDate: startDate,
-                    endDate: endDate,
-                },
-                withCredentials: true,
-            });
+            const response = await /*axios.get*/ fetchGetWithRetry(
+                "/api/chart/meal",
+                {
+                    params: {
+                        period: "day",
+                        startDate: startDate,
+                        endDate: endDate,
+                    },
+                    withCredentials: true,
+                }
+            );
 
             // 데이터 제작
             const chartData = [];
@@ -221,9 +247,7 @@ const drawChart = async (period, first) => {
                     (item) => item.period == date.toISOString().split("T")[0]
                 );
 
-                chartData.push(
-                    entry ? entry.average_calories_per_day : null
-                );
+                chartData.push(entry ? entry.average_calories_per_day : null);
             }
             // 데이터셋 제작
             datasets = [
@@ -235,7 +259,11 @@ const drawChart = async (period, first) => {
                     borderWidth: 0,
                 },
             ];
-            average = chartData.filter(x => x !== null).reduce((a, b, _, { length }) => a + b / length, 0).toFixed(2).toString();
+            average = chartData
+                .filter((x) => x !== null)
+                .reduce((a, b, _, { length }) => a + b / length, 0)
+                .toFixed(2)
+                .toString();
         } catch (e) {
             console.log(e);
         }
@@ -250,14 +278,17 @@ const drawChart = async (period, first) => {
         unit = "kg";
 
         try {
-            const response = await /*axios.get*/fetchGetWithRetry("/api/chart/weight", {
-                params: {
-                    period: "day",
-                    startDate: startDate,
-                    endDate: endDate,
-                },
-                withCredentials: true,
-            });
+            const response = await /*axios.get*/ fetchGetWithRetry(
+                "/api/chart/weight",
+                {
+                    params: {
+                        period: "day",
+                        startDate: startDate,
+                        endDate: endDate,
+                    },
+                    withCredentials: true,
+                }
+            );
 
             // 데이터 제작
             const chartData = [];
@@ -271,9 +302,7 @@ const drawChart = async (period, first) => {
                     (item) => item.period == date.toISOString().split("T")[0]
                 );
 
-                chartData.push(
-                    entry ? entry.average_weight_per_entry : null
-                );
+                chartData.push(entry ? entry.average_weight_per_entry : null);
             }
             // 데이터셋 제작
             datasets = [
@@ -285,7 +314,11 @@ const drawChart = async (period, first) => {
                     borderWidth: 0,
                 },
             ];
-            average = chartData.filter(x => x !== null).reduce((a, b, _, { length }) => a + b / length, 0).toFixed(2).toString();
+            average = chartData
+                .filter((x) => x !== null)
+                .reduce((a, b, _, { length }) => a + b / length, 0)
+                .toFixed(2)
+                .toString();
         } catch (e) {
             console.log(e);
         }
@@ -300,14 +333,17 @@ const drawChart = async (period, first) => {
         unit = "mmHg";
 
         try {
-            const response = await /*axios.get*/fetchGetWithRetry("/api/chart/blood-pressure", {
-                params: {
-                    period: "day",
-                    startDate: startDate,
-                    endDate: endDate,
-                },
-                withCredentials: true,
-            });
+            const response = await /*axios.get*/ fetchGetWithRetry(
+                "/api/chart/blood-pressure",
+                {
+                    params: {
+                        period: "day",
+                        startDate: startDate,
+                        endDate: endDate,
+                    },
+                    withCredentials: true,
+                }
+            );
 
             // 데이터 제작
             const chartDataLow = [];
@@ -346,7 +382,15 @@ const drawChart = async (period, first) => {
                     borderWidth: 0,
                 },
             ];
-            average = `${chartDataLow.filter(x => x !== null).reduce((a, b, _, { length }) => a + b / length, 0).toFixed(0).toString()} ~ ${chartDataHigh.filter(x => x !== null).reduce((a, b, _, { length }) => a + b / length, 0).toFixed(0).toString()}`;
+            average = `${chartDataLow
+                .filter((x) => x !== null)
+                .reduce((a, b, _, { length }) => a + b / length, 0)
+                .toFixed(0)
+                .toString()} ~ ${chartDataHigh
+                .filter((x) => x !== null)
+                .reduce((a, b, _, { length }) => a + b / length, 0)
+                .toFixed(0)
+                .toString()}`;
         } catch (e) {
             console.log(e);
         }
@@ -355,7 +399,9 @@ const drawChart = async (period, first) => {
     // Title
     document.getElementById("report-title-text").innerText = title;
     // 날짜
-    document.getElementById("content-result1").textContent = `${startDate} ~ ${endDate}`
+    document.getElementById(
+        "content-result1"
+    ).textContent = `${startDate} ~ ${endDate}`;
     // 평균값
     document.getElementById("content-result2").textContent = average;
     // 단위
@@ -372,7 +418,6 @@ const drawChart = async (period, first) => {
         bottomLeft: 0,
         bottomRight: 0,
     };
-
 
     if (first) {
         chart = new Chart(ctx, {
@@ -433,8 +478,8 @@ const drawChart = async (period, first) => {
     }
 
     // 로딩화면 제거
-    document.getElementById('loading-screen').style.display = 'none';
-}
+    document.getElementById("loading-screen").style.display = "none";
+};
 
 let period = "WEEK";
 document.addEventListener("DOMContentLoaded", async function () {
@@ -465,7 +510,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             // 차트 다시 그리기
             if (period != parent.textContent) {
-                period = parent.textContent
+                period = parent.textContent;
                 await drawChart(period, false);
             }
 
@@ -515,9 +560,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
 
     // 뒤로 가기 버튼 구현
-    document.getElementById("report-goback").addEventListener("click", e => {
+    document.getElementById("report-goback").addEventListener("click", (e) => {
         history.back();
-    })
+    });
 
     await drawChart("WEEK", true);
 });

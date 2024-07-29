@@ -52,8 +52,8 @@ router.get("/bs", (req, res) => {
     res.render("bs");
 }); // 김희은
 
-router.get("/exercise1", (req, res) => {
-    res.render("exercise1");
+router.get("/exercise", (req, res) => {
+    res.render("exercise");
 }); // 김희은
 
 // 회원 정보 수정 페이지

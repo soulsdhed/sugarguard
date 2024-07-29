@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
         navIcon4.classList.remove("selected");
         navIcon5.classList.remove("selected");
     }
-    if (currentUrl == "/123123") {
+    if (currentUrl == "/foodnutrition") {
         navIcon1.classList.remove("selected");
         navIcon2.classList.add("selected");
         navIcon3.classList.remove("selected");

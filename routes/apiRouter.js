@@ -11,6 +11,7 @@ const weightRouter = require("./api/wieghtlog");
 const bloodPressureRouter = require("./api/bloodpressurelog");
 const mealRouter = require("./api/meallog");
 const giRouter = require("./api/gi.js");
+const foodNutritionRouter = require("./api/foodnutrition.js");
 const chartRouter = require("./api/chart");
 
 router.use("/auth", authRouter);
@@ -22,6 +23,7 @@ router.use("/weight-logs", weightRouter);
 router.use("/blood-pressure-logs", bloodPressureRouter);
 router.use("/meal-logs", mealRouter);
 router.use("/gi", giRouter);
+router.use("/food-nutrition", foodNutritionRouter);
 router.use("/chart", chartRouter);
 
 module.exports = router;

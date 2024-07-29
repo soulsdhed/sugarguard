@@ -5,7 +5,19 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
 />
 
-
+{% if not userId %}
+<div class="mypage_profile">
+    <a href="/login">
+        <div class="mypage-login-div">
+            <img
+                src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721891574/%EC%A0%9C%EB%AA%A9%EC%9D%84-%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94_-008_hvrrzh.png"
+                alt=""
+            />
+            <span>로그인 해주세요</span>
+        </div>
+    </a>
+</div>
+{% endif %} {% if userId %}
 <div id="sugardiary_main">
     <div id="calendar-header"></div>
     <div id="calendar-container">
@@ -45,5 +57,9 @@
         </div>
     </div>
 </div>
+{% endif %}
+<script>
+    window.userIdFromTemplate = "{{ userId | safe }}";
+</script>
 <script src="sugardiary.js"></script>
 {% endblock %}

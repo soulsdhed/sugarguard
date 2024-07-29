@@ -1,4 +1,5 @@
 #mealrecord {
+    width: 98%;
     min-height: 100vh;
     max-height: 900px;
 }
@@ -64,13 +65,13 @@
     grid-template-columns: repeat(4, 1fr);
     text-align: center;
     gap: 10px;
-    height: 80px;
+    height: 70px;
     margin-left: 7px;
     margin-right: 7px;
 }
 
 #time-meal a {
-    background-color: #e3e3e3;
+    background-color: white;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -79,12 +80,19 @@
     color: rgba(0, 0, 0, 0.474);
 }
 
-#time-meal h2 {
+#time-meal a.active {
+    background-color: #e3e3e3;
+}
+
+#time-meal h3 {
     text-align: center;
+    writing-mode: vertical-lr; /* 세로로 변환 */
+    
 }
 
 #time-meal img{
-    
+    width: 50px;
+    height: 50px;
 }
 
 #meal h2 {
@@ -136,6 +144,7 @@ textarea {
     margin-left: 2%;
     border-radius: 10px;
     border: white;
+    background-color: #e3e3e3;
 }
 
 

@@ -25,6 +25,11 @@ h4{
     font-size: 1em;
 }
 
+#content-main hr {
+    border-width: 1px;
+    width: 100%;
+}
+
 #header-title{
     display: flex;
     align-items: center;
@@ -81,6 +86,8 @@ h4{
 }
 
 #calendar-header {
+    position: relative;
+    bottom: 2px;
     display: flex;
     align-items: center;
     flex-wrap: nowrap;

@@ -12,6 +12,39 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentMonth = "";
     let currentDay = "";
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     recordButtons.forEach((button) => (button.disabled = true));
 
     mainToggleButton.addEventListener("click", function () {

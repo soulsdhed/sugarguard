@@ -67,3 +67,6 @@ h2 {
 .pass_button input {
     font-size: 50px;
 }
+input:focus {
+    outline: none;
+}

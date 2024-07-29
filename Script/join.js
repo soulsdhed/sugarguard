@@ -3,7 +3,7 @@ const placeholders = [
     "이메일",
     "아이디",
     "비밀번호",
-    "성별",
+    "성별(남성/여성)",
     "생년월일"
 ];
 const messages = [
@@ -26,30 +26,20 @@ const join_db_list =[
 const join_input_type =[
     "text",
     "email",
-    "text",
+    "id",
     "password",
-    "radio",
+    "text",
     "text"
 ]
-
-const data = {
-    nickname:"nickname",
-    email:"testemail@test.com",
-    userId:"testuserid",
-    password:"password",
-    gender:"남성",
-    birthDate:"2000-08-12"
-};
 const url = '/api/users/';
+let userData = {};
 document.getElementById('back_button').addEventListener('click', function() {
     window.history.go(-1);
 });
 //한 버튼에 여러 함수를 이용할 수 있도록하는 함
 function handleButtonClick(event) {
     event.preventDefault(); // 기본 제출 동작 방지
-
     // 제한 조건 확인
-    // TODO : 에러 처리 조건 따로 예쁘게 변경할 것
     if (inputCount > 1 ){
         const index = inputCount - 2;
         const currentInputText = placeholders[index]
@@ -123,30 +113,106 @@ function handleButtonClick(event) {
             gender: document.getElementById(join_db_list[4]).value,
             birthDate: document.getElementById(join_db_list[5]).value
         }
-        
-        console.log(userData)
-        postData(url, userData);
+        console.log(userData);
+        postData(url,userData);
+        console.log('데이터 넘어감');
     }
-    saveState()
 }
-async function postData(url, data) {
+//post 정보 보내기
+async function postData(url,userData) {
     try {
-        const response = await axios.post(url, data);
-        console.log('Success:', response.data);
+        const response = await axios.post(url, userData);
+        console.log('Success:', response.userData);
 
-        // 회원 가입 성공 (메인 페이지로 이동)
-        // window.location.href = "/";
+        //회원 가입 성공 (메인 페이지로 이동)
+        window.location.href = "/login";
+        console.log('넘어가기');
     } catch (error) {
-        console.error('Error:', error);
+        console.log('Error:', error);
 
-        // TODO : 회원 가입 실패
+        //회원 가입 실패
         Swal.fire({
             icon: "error",
             title: "회원가입 실패했습니다. 다시 확인해주세요."
           });
     }
 }
-  
+//email 버튼 함수
+async function duplication(email) {
+    // event.preventDefault(); // 기본 제출 동작 방지
+    checkEmail();
+}
+//email 중복검사
+function checkEmail() {
+    const eamilInput = document.getElementById('email');
+    console.log(eamilInput);
+    const email = document.getElementById('email').value;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // 이메일 형식 확인을 위한 정규 표현식
+
+    if (!emailRegex.test(email)) {
+        Swal.fire({
+            icon: "warning",
+            title: "유효한 이메일 형식을 입력하세요."
+        });
+        return;
+    }
+        
+    axios.get('http://localhost:3000/api/users/exists/email', { params: { email } })
+        .then(response => {
+            console.log(response.data.data.exists);
+            if (response.data.data.exists === true) {
+                Swal.fire({
+                    icon: "error",
+                    title: "이메일을 사용한 계정이 있습니다."
+                  });
+            } else {
+                Swal.fire({
+                    icon: "success",
+                    title: "사용가능한 이메일 입니다."
+                  });
+                  eamilInput.disabled = true;
+            }
+        })
+        .catch(error => {
+            console.log('Error:', error);
+            
+        });
+};
+// id 중복 검사
+async function duplicationId(id) {
+    // event.preventDefault(); // 기본 제출 동작 방지
+    checkUserId();
+}
+// id 중복 검사 함수
+function checkUserId() {
+    const idInput = document.getElementById('userId');
+    const userId = document.getElementById('userId').value;
+
+    if (!userId) {
+        return next({
+            code: "VALIDATION_MISSING_FIELD",
+        });
+    }
+        
+    axios.get('http://localhost:3000/api/users/exists/userId', { params: { userId } })
+        .then(response => {
+            if (response.data.data.exists) {
+                Swal.fire({
+                    icon: "error",
+                    title: "중복된 ID가 있습니다."
+                  });
+            } else {
+                Swal.fire({
+                    icon: "success",
+                    title: "사용 가능한 ID입니다."
+                  });
+                  idInput.disabled = true;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+};
 // 화면이 구동되자마자 input 에 포커스가 맞춰짐
 window.onload = function() {
     var input = document.getElementById('join_input');
@@ -160,9 +226,7 @@ window.onload = function() {
 //새로운 input에 포커스가 맞춰짐
 window.onload = function() {
     var input = document.getElementById('join_new');
-    setTimeout(function() {
-        input.focus();
-    });
+    
     var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             mutation.addedNodes.forEach(function(node) {
@@ -201,29 +265,40 @@ function addInput(event) {
         const join_db_input = join_db_list[join_db_index % join_db_list.length];
         const joinInputType = join_input_type[joinInputTypeIndex % join_input_type.length]; // 동적 타입 지정
 
-        let newInputHTML;
-        if(joinInputType === "radio"){
+        let newInputHTML='';
+        
+        if (joinInputType === 'email') {
+            // joinInputType이 'userid' 또는 'email'일 때 다른 input 태그와 button 태그 생성
             newInputHTML = `
-            <br><br>
-            <label>
-                <input type="radio" name="gender" value="남성"> 남성
-            </label>
-            <label>
-                <input type="radio" name="gender" value="여성"> 여성
-            </label>
-            <br>`; 
-        }else{
-            newInputHTML = `<br><br><input type=${joinInputType} placeholder=${placeholder} id=${join_db_input} class="join_new" name=${join_db_input};><br>`;
+                <br><br>
+                <input type="text" placeholder="${placeholder}" id="${join_db_input}" class="join_new" name="${join_db_input}">
+                <button type="button" onclick="duplication('${joinInputType}')">중복검사</button>
+                <br>
+            `;
+        } 
+        else if(joinInputType === 'id' ){
+            newInputHTML = `
+                <br><br>
+                <input type="text" placeholder="${placeholder}" id="${join_db_input}" class="join_new" name="${join_db_input}">
+                <button type="button" onclick="duplicationId('${joinInputType}')">중복검사</button>
+                <br>
+            `;
         }
-
+        else {
+            // 일반 input 태그 생성
+            newInputHTML = `
+                <br><br>
+                <input type="${joinInputType}" placeholder="${placeholder}" id="${join_db_input}" class="join_new" name="${join_db_input}">
+                <br>
+            `;
+        }
         // h2 태그 바로 밑에 새로운 input 태그 추가
         const h2Tag = document.getElementById('join_change');
         h2Tag.insertAdjacentHTML('afterend', newInputHTML);
-        if (joinInputType !== "radio") {
-            placeholderIndex++;
-            join_db_index++;
-            joinInputTypeIndex++;
-        }
+        
+        placeholderIndex++;
+        join_db_index++;
+        joinInputTypeIndex++;
 
         inputCount++;
         return true;
@@ -248,5 +323,3 @@ function textChange(event) {
         // window.location.href = "/";
     }
 }
-
-// postData();

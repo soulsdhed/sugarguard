@@ -1,4 +1,5 @@
 #mealrecord {
+    width: 98%;
     min-height: 100vh;
     max-height: 900px;
 }

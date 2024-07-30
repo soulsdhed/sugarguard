@@ -1,0 +1,44 @@
+{% extends 'index.html' %} {% block content %}
+
+<link rel="stylesheet" href="bloodpressurelog.css">
+
+<div id="bloodpressurelog">
+    <div id="title">
+        <a href="/sugardiary" id="bloodpressurelog_background"><img src="recipe-background.png" alt=""></a>
+        <h2>혈압기록</h2>
+        <input type="submit" id="bloodpressurelog-button" value="저장" onclick="bpClick(event)">
+    </div><br>
+    <hr color="#e3e3e3"><br>
+    <div id="calendar-header1">
+        <div id="calendar-header"></div>
+        <div>
+            <h4 id="bp-current-time"></h4>
+        </div>
+    </div>
+    <br><hr color="#e3e3e3"><br>
+    <div id="calendar-container">
+        <div id="calendar"></div>
+    </div><br>
+    <hr color="#e3e3e3"><br>
+    <div id="bloodpressurelog_main_max">
+            <div id="bloodpressurelog_main_content_title">
+                <h2>수축기혈압</h2>
+            </div>
+            <div id="bloodpressurelog_main_content">
+                <input type="text" id="bloodpressurelog_detail_input_max">
+                <h3>mmHg</h3>
+            </div>
+    </div>
+    <div id="bloodpressurelog_main_min">
+        <div id="bloodpressurelog_main_content_title">
+            <h2>이완기혈압</h2>
+        </div>
+        <div id="bloodpressurelog_main_content">
+            <input type="text" id="bloodpressurelog_detail_input_min">
+            <h3>mmHg</h3>
+        </div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="bp-bloodpressurelog.js"></script>
+{% endblock %}

@@ -47,11 +47,12 @@ app.use(successHandler);
 
 app.use("/", mainRouter);
 
+// TODO : 제한 100개로
 // api call 제한
 app.use(
     rateLimit({
         windowMs: 1 * 60 * 1000, // 1분
-        max: 100, // 최대 100개 요청
+        max: 1000, // 최대 100개 요청
         message: "API rate limit exceeded.",
     })
 );

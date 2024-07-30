@@ -1,34 +1,130 @@
-// document.getElementById('bs-submit').addEventListener('click', async () => {
-//     try {
-//       const response = await axios.post('/api/blood-sugar-logs', {
-//         blood_sugar: 'resultBox1',
-//         record_type: 'my-select',
-//         record_time: 'time-input',
-//         comments: 'eat-memo'
-//       }, { withCredentials: true });
-//       const user = response.data.user;
-//       localStorage.setItem('bs', JSON.stringify(user));
-//       console.log('exercise submit:', bs);
-//     } catch (error) {
-//       console.error('exercise error:', error);
-//     }
-//   });
-  
+// API 연동 문제
+
+// 아침 식전 ~ 저녁 식후, 취침 전 등 중간에 공백 들어간 옵션들만 오류 남.
+// 공복, 실시간은 제대로 연동
+// 공복, 실시간도 '아침 식전 ~ 저녁 식후, 취침 전 등 공백 들어간 옵션' 선택 후 다시 선택하면 오류난 횟수만큼 공복, 실시간 값이 입력됨
+// ex3) 2번 오류난 후 공복 입력시 3번 등록
+
+// 식전, 식후 혈당 범위 제대로 됨
+// css 맞추기
+
+const selectElement = document.getElementById('bs');
+// const selectedValue = selectElement.value;
+let record_date = "";
+let record_time = "";
+
+document.getElementById('bs-submit').addEventListener('click', async () => {
+
+
+    // 혈당 값이 유효한지 확인하는 함수
+    function validateBloodSugar(value) {
+        if (value === "" || isNaN(value)) {
+            alert("혈당 값을 올바르게 입력하세요."); // 유효하지 않은 입력에 대한 경고
+            return false;
+        }
+        return true;
+    }
+
+    // 혈당 값을 저장하는 함수
+    async function saveBloodSugar(selectedValue) {
+        let bloodSugarValue;
+
+        // 선택된 식사 유형에 따라 혈당 값 가져오기
+        if (selectedValue === "아침 식전" || selectedValue === "점심 식전" || selectedValue === "저녁 식전" ||
+            selectedValue === "공복" || selectedValue === "취침 전" || selectedValue === "실시간") {
+            bloodSugarValue = document.getElementById("record-bs-before").value; // 식전 혈당
+        } else {
+            bloodSugarValue = document.getElementById("record-bs-after").value; // 식후 혈당
+        }
+
+        // 혈당 값 유효성 확인
+        if (!validateBloodSugar(bloodSugarValue)) {
+            return;
+        }
+
+        try {
+            const response = await axios.post('/api/blood-sugar-logs', {
+                blood_sugar: bloodSugarValue, // 선택된 혈당 값
+                record_type: selectedValue, // 선택된 식사 유형
+                record_time: `${record_date} ${record_time}`, // 기록 시간
+                comments: document.getElementById("eat-memo").value, // 추가 메모
+            });
+
+            const exercise = response.data.data; // API 응답에서 운동 데이터를 가져옴
+            console.log('exercise success:', exercise); // 성공 로그
+            Swal.fire({
+                icon: "success",
+                title: "혈당 기록이 성공적으로 저장되었습니다."
+            }); // 성공적으로 저장되었음을 알림
+        } catch (error) {
+            console.error('exercise error:', error); // 에러 로그를 콘솔에 출력
+            Swal.fire({
+                icon: "error",
+                title: "혈당 기록 저장 중 오류가 발생했습니다. 다시 시도해주세요."
+            }); // 오류 알림
+        }
+    }
+
+    // submit 버튼 클릭 이벤트 리스너
+    document.getElementById('bs-submit').addEventListener('click', async () => {
+        const selectedValue = document.getElementById('my-select').value; // 선택된 값을 가져옵니다.
+        await saveBloodSugar(selectedValue); // 혈당 값을 저장
+    });
+
+    // 선택된 옵션에 따라 div2와 div1의 내용을 업데이트하는 코드
+    const mySelect = document.getElementById('my-select');
+    const div1 = document.getElementById('div1');
+    const div2 = document.getElementById('div2');
+
+    // 초기화할 때 div2의 초기 내용 저장
+    const initialDiv1Content = div1.innerHTML;
+
+    // select 요소의 onchange 이벤트 핸들러 설정
+    mySelect.addEventListener('change', function () {
+        const selectedOption = mySelect.value;
+
+        if (["아침 식전", "점심 식전", "저녁 식전", "공복", "취침 전", "실시간"].includes(selectedOption)) {
+            div2.style.display = 'none';
+            div1.innerHTML = initialDiv1Content; // div1를 초기 내용으로 복원
+        } else {
+            div2.style.display = ''; // div2를 보이게 설정
+            div1.innerHTML = ''; // div1 초기화
+        }
+    })
+});
+
+// 날짜와 시간을 표시하는 함수
+
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 0부터 시작하므로 +1
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
 
 document.addEventListener("DOMContentLoaded", () => {
+    // URL 파라미터에서 날짜를 가져오는 함수
+    function getParameterByName(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
+
+    // URL 파라미터로 전달된 날짜를 받아옵니다.
+    const dateParam = getParameterByName("date");
+    let currentDate = new Date(); // 현재 날짜로 초기화
+    if (dateParam) {
+        currentDate = new Date(dateParam);
+    }
+
     const calendar = document.getElementById("calendar");
     const calendarHeader = document.getElementById("calendar-header");
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const mySelect = document.getElementById("my-select");
-    const div2 = document.getElementById("div2");
-    const div3 = document.getElementById("div3");
-    const initialDiv2Content = div2.innerHTML;
 
-    let currentDate = new Date(); // 현재 날짜로 초기화
+    // let currentDate = new Date(); // 현재 날짜로 초기화
 
     function updateHeader(date) {
-        const options = { year: "numeric", month: "long" };
-        calendarHeader.textContent = date.toLocaleDateString("ko-KR", options);
+        const options = { year: 'numeric', month: 'long' };
+        calendarHeader.textContent = date.toLocaleDateString('ko-KR', options);
     }
 
     function generateCalendar(selectedDate) {
@@ -46,29 +142,19 @@ document.addEventListener("DOMContentLoaded", () => {
             if (date.toDateString() === selectedDate.toDateString()) {
                 dayDiv.classList.add("selected");
             }
-            dayDiv.innerHTML = `${date.getDate()}<br>${
-                daysOfWeek[date.getDay()]
-            }`;
+            dayDiv.innerHTML = `${date.getDate()}<br>${daysOfWeek[date.getDay()]}`;
             dayDiv.addEventListener("click", () => {
                 generateCalendar(date); // 새로운 날짜 생성
                 updateHeader(date); // 헤더 업데이트
-                currentDate = date; // 현재 날짜 업데이트
             });
             calendar.appendChild(dayDiv);
         }
         updateHeader(selectedDate); // 선택된 날짜로 헤더 업데이트
-    }
+        record_date = formatDate(selectedDate);
 
-    function getParameterByName(name) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(name);
+        // console.log(record_date);
+        // console.log(record_time);
     }
-
-    const dateParam = getParameterByName("date");
-    if (dateParam) {
-        currentDate = new Date(dateParam);
-    }
-    generateCalendar(currentDate); // 초기화
 
     // Infinite scroll logic
     let isLoading = false;
@@ -96,284 +182,115 @@ document.addEventListener("DOMContentLoaded", () => {
         .getElementById("calendar-container")
         .addEventListener("scroll", handleScroll);
 
-    // 현재 시간 표시 함수
-    function displayCurrentTime() {
-        const now = new Date();
-        const hours = String(now.getHours()).padStart(2, "0");
-        const minutes = String(now.getMinutes()).padStart(2, "0");
-        const currentTimeString = `${hours}:${minutes}`;
-        document.getElementById("current-time").textContent = currentTimeString;
-    }
+    // 초기화
+    generateCalendar(currentDate);
+});
 
-    // 현재 시간 표시 초기 호출
-    displayCurrentTime();
 
-    // select 요소의 onchange 이벤트 핸들러 설정
-    mySelect.addEventListener("change", function () {
-        const selectedOption = mySelect.value;
+// 현재 시간 표시 함수
+function displayCurrentTime() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    // const seconds = String(now.getSeconds()).padStart(2, '0');
+    const currentTimeString = `${hours}:${minutes}`;
+    document.getElementById('current-time').textContent = currentTimeString;
 
-        if (selectedOption === "option1") {
-            div3.style.display = "none";
-            div2.innerHTML = initialDiv2Content;
-            div3.style.visibility = "hidden";
-        } else if (selectedOption === "option2") {
-            div3.style.display = "none";
-            div2.innerHTML = initialDiv2Content;
-            div3.style.visibility = "hidden";
-        } else if (selectedOption === "option3") {
-            div3.style.display = "none";
-            div2.innerHTML = initialDiv2Content;
-        } else if (selectedOption === "option4") {
-            const div3Content = div3.innerHTML;
-            div2.innerHTML = div3Content;
-            div2.style.display = "";
-        } else if (selectedOption === "option5") {
-            const div3Content = div3.innerHTML;
-            div2.innerHTML = div3Content;
-            div2.style.display = "";
-        } else if (selectedOption === "option6") {
-            const div3Content = div3.innerHTML;
-            div2.innerHTML = div3Content;
-            div2.style.display = "";
-        }
-    });
+    record_time = `${hours}:${minutes}:00`
+}
 
-    // 공복, 자기전, 실시간 선택시 사용자가 입력한 시간 설정 함수
-    function setTime() {
-        const hour = document.getElementById("hour").value;
-        const minute = document.getElementById("minute").value;
-        const second = document.getElementById("second").value;
+// 현재 시간 표시 초기 호출
+displayCurrentTime();
 
-        if (
-            isNaN(hour) ||
-            isNaN(minute) ||
-            isNaN(second) ||
-            hour < 0 ||
-            hour > 23 ||
-            minute < 0 ||
-            minute > 59 ||
-            second < 0 ||
-            second > 59
-        ) {
-            alert("올바른 시간을 입력하세요.");
-            return;
-        }
 
-        const newTime = new Date();
-        newTime.setHours(parseInt(hour, 10));
-        newTime.setMinutes(parseInt(minute, 10));
-        newTime.setSeconds(parseInt(second, 10));
 
-        const hours = String(newTime.getHours()).padStart(2, "0");
-        const minutes = String(newTime.getMinutes()).padStart(2, "0");
-        const seconds = String(newTime.getSeconds()).padStart(2, "0");
-        const setTimeString = `${hours}:${minutes}:${seconds}`;
-        document.getElementById("current-time").textContent = setTimeString;
+// HTML 요소들을 가져오기
+const mySelect = document.getElementById('my-select');
+const div1 = document.getElementById('div1');
+const div2 = document.getElementById('div2');
 
-        document.getElementById("time-input").style.display = "none";
-    }
 
-    // 식전 혈당 정상 범위 설정
-    function checkLevelBsBefore() {
-        let inputValue = parseFloat(
-            document.getElementById("record-bs-before").value
-        );
-        let resultBox1 = document.getElementById("resultBox1");
+// 초기화할 때 div2의 초기 내용 저장
+const initialDiv1Content = div1.innerHTML;
 
-        if (isNaN(inputValue)) {
-            resultBox1.style.backgroundColor = "#FFFFFF";
-        } else if (inputValue < 100) {
-            resultBox1.style.backgroundColor = "#66CC66";
-        } else if (inputValue >= 100 && inputValue <= 126) {
-            resultBox1.style.backgroundColor = "#FFFF99";
-        } else {
-            resultBox1.style.backgroundColor = "#FF9999";
-        }
-    }
+// select 요소의 onchange 이벤트 핸들러 설정
+mySelect.addEventListener('change', function () {
+    const selectedOption = mySelect.value;
 
-    // 식후 혈당 정상 범위 설정
-    function checkLevelBsAfter() {
-        let inputValue2 = parseFloat(
-            document.getElementById("record-bs-after").value
-        );
-        let resultBox2 = document.getElementById("resultBox2");
 
-        if (isNaN(inputValue2)) {
-            resultBox2.style.backgroundColor = "#FFFFFF";
-        } else if (inputValue2 < 140) {
-            resultBox2.style.backgroundColor = "#66CC66";
-        } else if (inputValue2 >= 140 && inputValue2 < 200) {
-            resultBox2.style.backgroundColor = "#FFFF99";
-        } else {
-            resultBox2.style.backgroundColor = "#FF9999";
-        }
+    if (selectedOption === '아침 식전') {
+        // 다른 옵션이 선택된 경우 div2를 숨기고 초기 내용으로 복원
+        div2.style.display = 'none';
+        div1.innerHTML = initialDiv1Content;
+        // div2의 내용을 숨기고 초기화
+        div2.style.visibility = 'hidden';
+    } else if (selectedOption === '점심 식전') {
+        div2.style.display = 'none';
+        div1.innerHTML = initialDiv1Content;
+        div2.style.visibility = 'hidden';
+    } else if (selectedOption === '저녁 식전') {
+        div2.style.display = 'none';
+        div1.innerHTML = initialDiv1Content;
+        div2.style.visibility = 'hidden';
+    } else if (selectedOption === '공복') {
+        div2.style.display = 'none';
+        div1.innerHTML = initialDiv1Content;
+        div2.style.visibility = 'hidden';
+    } else if (selectedOption === '취침 전') {
+        div2.style.display = 'none';
+        div1.innerHTML = initialDiv1Content;
+        div2.style.visibility = 'hidden';
+    } else if (selectedOption === '실시간') {
+        div2.style.display = 'none';
+        div1.innerHTML = initialDiv1Content;
+        div2.style.visibility = 'hidden';
+    } else if (selectedOption === '아침 식후') {
+        // 옵션 4 선택 시 div2의 내용을 div1로 이동
+        const div2Content = div2.innerHTML;
+        div1.innerHTML = div2Content;
+        div1.style.display = ''; // div1를 보이게 설정
+
+        // div1의 내용 초기화 (선택 시 필요에 따라)
+        // div1.innerHTML = '';
+    } else if (selectedOption === '점심 식후') {
+        const div2Content = div2.innerHTML;
+        div1.innerHTML = div2Content;
+        div1.style.display = '';
+    } else if (selectedOption === '저녁 식후') {
+        const div2Content = div2.innerHTML;
+        div1.innerHTML = div2Content;
+        div1.style.display = '';
     }
 });
 
 
-// // 현재 시간 표시 함수
-// function displayCurrentTime() {
-//     const now = new Date();
-//     const hours = String(now.getHours()).padStart(2, '0');
-//     const minutes = String(now.getMinutes()).padStart(2, '0');
-//     // const seconds = String(now.getSeconds()).padStart(2, '0');
-//     const currentTimeString = `${hours}:${minutes}`;
-//     document.getElementById('current-time').textContent = currentTimeString;
-// }
+function checkLevelBsBefore() {
+    let inputValue = parseFloat(document.getElementById('record-bs-before').value);
+    let resultBox1 = document.getElementById('resultBox1');
 
-// // 현재 시간 표시 초기 호출
-// displayCurrentTime();
-
-
-// // HTML 요소들을 가져오기
-// const mySelect = document.getElementById('my-select');
-// const div2 = document.getElementById('div2');
-// const div3 = document.getElementById('div3');
+    if (isNaN(inputValue)) {
+        resultBox1.style.backgroundColor = '#FFFFFF';  // 입력 값이 숫자가 아닌 경우 흰색
+    } else if (inputValue < 100) {
+        resultBox1.style.backgroundColor = '#66CC66';  // 초록색 (정상)
+    } else if (inputValue >= 100 && inputValue <= 126) {
+        resultBox1.style.backgroundColor = '#FFFF99';  // 노란색 (경고)
+    } else {
+        resultBox1.style.backgroundColor = '#FF9999';  // 빨간색 (위험)
+    }
+}
 
 
-// // 초기화할 때 div2의 초기 내용 저장
-// const initialDiv2Content = div2.innerHTML;
+function checkLevelBsAfter() {
+    let inputValue2 = parseFloat(document.getElementById('record-bs-after').value);
+    let resultBox2 = document.getElementById('resultBox2');
 
-// // select 요소의 onchange 이벤트 핸들러 설정
-// mySelect.addEventListener('change', function () {
-//     const selectedOption = mySelect.value;
-
-
-//     if (selectedOption === 'option1') {
-//         // 다른 옵션이 선택된 경우 div2를 숨기고 초기 내용으로 복원
-//         div3.style.display = 'none';
-//         div2.innerHTML = initialDiv2Content;
-//         // div3의 내용을 숨기고 초기화
-//         div3.style.visibility = 'hidden';
-//     } else if (selectedOption === 'option2') {
-//         div3.style.display = 'none';
-//         div2.innerHTML = initialDiv2Content;
-//         div3.style.visibility = 'hidden';
-//     } else if (selectedOption === 'option3') {
-//         div3.style.display = 'none';
-//         div2.innerHTML = initialDiv2Content;
-//     } else if (selectedOption === 'option4') {
-//         // 옵션 4 선택 시 div3의 내용을 div2로 이동
-//         const div3Content = div3.innerHTML;
-//         div2.innerHTML = div3Content;
-//         div2.style.display = ''; // div2를 보이게 설정
-
-//         // div3의 내용 초기화 (선택 시 필요에 따라)
-//         // div3.innerHTML = '';
-//     } else if (selectedOption === 'option5') {
-//         const div3Content = div3.innerHTML;
-//         div2.innerHTML = div3Content;
-//         div2.style.display = '';
-//     } else if (selectedOption === 'option6') {
-//         const div3Content = div3.innerHTML;
-//         div2.innerHTML = div3Content;
-//         div2.style.display = '';
-//     }
-
-// });
-
-
-// function setTime() {
-//     const timeInput = document.getElementById('time-input').value;
-
-//     // 입력된 시간이 4자리인지 확인
-//     if (timeInput.length !== 4) {
-//         document.getElementById('setTime').textContent = ''; // 잘못된 경우 시간 표시 지우기
-//         return; // 길이가 4가 아니면 함수 종료
-//     }
-
-//     const hour = timeInput.substring(0, 2);  // 첫 두 자리 - 시간
-//     const minute = timeInput.substring(2, 4); // 마지막 두 자리 - 분
-
-//     // 유효성 검사 - 각 입력 필드가 숫자이고 범위 내에 있는지 확인
-//     if (isNaN(hour) || isNaN(minute) ||
-//         hour < 0 || hour > 23 ||
-//         minute < 0 || minute > 59) {
-//         alert('올바른 시간을 입력하세요 (hhmm 형식).');
-//         document.getElementById('setTime').textContent = ''; // 잘못된 경우 시간 표시 지우기
-//         return; // 잘못된 형식이면 함수 종료
-//     }
-
-//     // 입력된 시간으로 시간 설정
-//     const newTime = new Date();
-//     newTime.setHours(parseInt(hour, 10));
-//     newTime.setMinutes(parseInt(minute, 10));
-
-//     // 설정된 시간을 표시
-//     const hours = String(newTime.getHours()).padStart(2, '0');
-//     const minutes = String(newTime.getMinutes()).padStart(2, '0');
-//     const setTimeString = `${hours}:${minutes}`;
-//     document.getElementById('setTime').textContent = setTimeString;
-// }
-
-
-
-
-
-// // //  공복, 자기전, 실시간 선택시 사용자가 입력한 시간 설정 함수
-// // function setTime() {
-// //     const hour = document.getElementById('hour').value;
-// //     const minute = document.getElementById('minute').value;
-// //     const second = document.getElementById('second').value;
-
-// //     // 유효성 검사 - 각 입력 필드가 숫자이고 범위 내에 있는지 확인
-// //     if (isNaN(hour) || isNaN(minute) || isNaN(second) ||
-// //         hour < 0 || hour > 23 ||
-// //         minute < 0 || minute > 59 ||
-// //         second < 0 || second > 59) {
-// //         alert('올바른 시간을 입력하세요.');
-// //         return;
-// //     }
-
-// //     // 입력된 시간으로 시간 설정
-// //     const newTime = new Date();
-// //     newTime.setHours(parseInt(hour, 10));
-// //     newTime.setMinutes(parseInt(minute, 10));
-// //     newTime.setSeconds(parseInt(second, 10));
-
-// //     // 설정된 시간을 표시
-// //     const hours = String(newTime.getHours()).padStart(2, '0');
-// //     const minutes = String(newTime.getMinutes()).padStart(2, '0');
-// //     const seconds = String(newTime.getSeconds()).padStart(2, '0');
-// //     const setTimeString = `${hours}:${minutes}:${seconds}`;
-// //     document.getElementById('setTime').textContent = setTimeString;
-
-
-// //     // 시간 입력 폼 숨기기
-// //     document.getElementById('time-input').style.display = 'none';
-// // }
-
-
-// // 식전 혈당 정상 범위 설정
-// function checkLevelBsBefore() {
-//     let inputValue = parseFloat(document.getElementById('record-bs-before').value);
-//     let resultBox1 = document.getElementById('resultBox1');
-
-//     if (isNaN(inputValue)) {
-//         resultBox1.style.backgroundColor = '#FFFFFF';  // 입력 값이 숫자가 아닌 경우 흰색
-//     } else if (inputValue < 100) {
-//         resultBox1.style.backgroundColor = '#66CC66';  // 초록색 (정상)
-//     } else if (inputValue >= 100 && inputValue <= 126) {
-//         resultBox1.style.backgroundColor = '#FFFF99';  // 노란색 (경고)
-//     } else {
-//         resultBox1.style.backgroundColor = '#FF9999';  // 빨간색 (위험)
-//     }
-// }
-
-// // 식후 혈당 정상 범위 설정
-// function checkLevelBsAfter() {
-//     let inputValue2 = parseFloat(document.getElementById('record-bs-after').value);
-//     let resultBox2 = document.getElementById('resultBox2');
-
-//     if (isNaN(inputValue2)) {
-//         resultBox2.style.backgroundColor = '#FFFFFF';  // 입력 값이 숫자가 아닌 경우 흰색
-//     } else if (inputValue2 < 140) {
-//         resultBox2.style.backgroundColor = '#66CC66';  // 초록색 (정상)
-//     } else if (inputValue2 >= 140 && inputValue2 < 200) {
-//         resultBox2.style.backgroundColor = '#FFFF99';  // 노란색 (경고)
-//     } else {
-//         resultBox2.style.backgroundColor = '#FF9999';  // 빨간색 (위험)
-//     }
-// }
-
-
+    if (isNaN(inputValue2)) {
+        resultBox2.style.backgroundColor = '#FFFFFF';  // 입력 값이 숫자가 아닌 경우 흰색
+    } else if (inputValue2 < 140) {
+        resultBox2.style.backgroundColor = '#66CC66';  // 초록색 (정상)
+    } else if (inputValue2 >= 140 && inputValue2 < 200) {
+        resultBox2.style.backgroundColor = '#FFFF99';  // 노란색 (경고)
+    } else {
+        resultBox2.style.backgroundColor = '#FF9999';  // 빨간색 (위험)
+    }
+};

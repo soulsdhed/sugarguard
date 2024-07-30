@@ -279,6 +279,7 @@ router.delete("/", authenticateToken, (req, res, next) => {
     const { userId } = req.user;
     // const { password } = req.body;
 
+    // 비밀번호 확인 후 삭제
     // // 비밀번호 확인
     // const query = `SELECT member_id, nickname, email, gender, birth_date, diabetes_type, deleted_at
     //     FROM MEMBER_TB

@@ -13,6 +13,7 @@ const mealRouter = require("./api/meallog");
 const giRouter = require("./api/gi.js");
 const foodNutritionRouter = require("./api/foodnutrition.js");
 const chartRouter = require("./api/chart");
+const recordsRouter = require("./api/records.js");
 
 router.use("/auth", authRouter);
 router.use("/users", userRouter);
@@ -25,5 +26,6 @@ router.use("/meal-logs", mealRouter);
 router.use("/gi", giRouter);
 router.use("/food-nutrition", foodNutritionRouter);
 router.use("/chart", chartRouter);
+router.use("/records", recordsRouter);
 
 module.exports = router;

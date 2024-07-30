@@ -1,3 +1,39 @@
+hr {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+#sugardiary-title {
+    margin-top: 17px;
+    margin-bottom: 17px;
+    text-align: center;
+    position: relative;
+    width: 100%;
+}
+
+#sugardiary-title-text {
+    height: 100%;
+    width: 100%;
+    font-size: 18px;
+    font-family: Pretendard;
+    font-weight: 700;
+}
+
+/* 뒤로 가기 버튼 */
+#sugardiary-goback {
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    left: 2px;
+    top: 50%;
+    transform: translate(0%, -50%);
+    z-index: 100;
+    font-size: 20px;
+    text-align: center;
+    line-height: 24px;
+    z-index: 10;
+}
+
 .mypage-login-div {
     display: flex;
     align-items: center;
@@ -22,14 +58,11 @@
     color: rgb(31, 31, 31);
     margin-left: 5px;
 }
-#sugardiary_main {
-    width: 100%;
-    /* height: 90%; */
-}
 .mypage_profile {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
     height: calc(100vh - 60px);
     /* border-radius: 15px; */
     /* background-color: white; */
@@ -41,29 +74,38 @@
     /* box-sizing: border-box; */
 }
 
+#sugardiary-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#sugardiary_main {
+    width: 100%;
+    height: 100%;
+}
+
 /* Calendar Container */
 #calendar-container {
-    width: 100%;
-    max-width: 100%;
+    /* width: 100%; */
     /* 화면 너비에 맞게 조정 */
     /* margin: auto; */
     padding-bottom: 18px;
     /* 네비게이션 바와의 간격을 위해 추가 */
 }
 
-#calendar-header {
+#sugar-calendar-header {
     display: flex;
     align-items: center;
     margin-top: 10px;
     margin-bottom: 5px;
-    margin-left: 30px;
+    margin-left: 15px;
+
     font-size: 1.2em;
-    /* 더 큰 폰트 크기 */
     font-weight: bold;
-    width: 100%;
-    /* 전체 너비 사용 */
     background-color: transparent;
-    /* 배경색 투명 */
+    box-sizing: content-box;
 }
 
 #calendar-header span {
@@ -76,7 +118,7 @@
     /* 날짜들을 한 줄로 나열 */
     align-items: center;
     padding: 2px;
-    margin-left: 25px;
+    margin-left: 10px;
     box-sizing: border-box;
     gap: 10px;
     /* 날짜 사이 간격 */
@@ -105,7 +147,7 @@
     align-items: center;
     justify-content: center;
     /* 내용 중앙 정렬 */
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     /* 날짜 셀 배경색 투명 */
     border-radius: 60px;
 }
@@ -120,25 +162,29 @@
 }
 
 #records-container {
+    /* overflow-y: auto; */
     /* 콘텐츠가 넘칠 때 스크롤바 표시 */
-    transition: max-height 0.3s ease;
+    /* transition: max-height 0.3s ease; */
     /* 스크롤 높이 변경 시 부드러운 애니메이션 */
     /* 초기 최대 높이 설정 */
-    max-height: calc(100vh - 100px);
+    /* max-height: calc(100vh - 100px); */
     /* 여백을 고려한 초기 최대 높이 */
+    display: flex;
+    flex-direction: column;
+    /* margin-bottom: 25px; */
 }
 
-#records-container.shrink {
+/* #records-container.shrink {
     padding-bottom: 0;
-}
+} */
 
 .record-entry {
     position: relative;
     background-color: white;
     padding: 15px;
-    margin: 15px;
+    margin: 0 15px 20px 15px;
     height: 100px;
-    left: 10px;
+
     border-radius: 20px;
 }
 
@@ -167,7 +213,6 @@
     position: absolute;
     top: 10px;
     right: 10px;
-
 }
 
 .record-entry .record-value {
@@ -185,6 +230,7 @@
     flex-direction: column-reverse;
     align-items: flex-end;
     transition: all 0.3s ease;
+    pointer-events: none;
 }
 
 #main-toggle-button {
@@ -202,6 +248,7 @@
     align-items: center;
     transition: all 0.3s ease;
     transition: transform 0.3s ease;
+    pointer-events: auto !important;
 }
 
 #main-toggle-button.rotate {
@@ -257,6 +304,7 @@
 .floating-button-container.show {
     opacity: 1;
     transform: translateY(0);
+    pointer-events: auto !important;
 }
 
 .floating-button:disabled {

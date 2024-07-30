@@ -1,4 +1,4 @@
-const { client: redisClient } = require('../conf/redisClient');
+const { client: redisClient } = require("../conf/redisClient");
 
 // 임시 저장하기
 const setTemporaryValue = async (key, value, seconds) => {
@@ -6,7 +6,7 @@ const setTemporaryValue = async (key, value, seconds) => {
         await redisClient.setEx(key, seconds, value);
         console.log(`Set ${key} with value ${value} for ${seconds} seconds`);
     } catch (err) {
-        console.error('Error setting temporary value:', err);
+        console.error("Error setting temporary value:", err);
         throw err;
     }
 };
@@ -17,7 +17,7 @@ const setPermanentValue = async (key, value) => {
         await redisClient.set(key, value);
         console.log(`Set ${key} with value ${value}`);
     } catch (err) {
-        console.error('Error setting permanent value:', err);
+        console.error("Error setting permanent value:", err);
         throw err;
     }
 };
@@ -33,7 +33,7 @@ const getValue = async (key) => {
         }
         return value;
     } catch (err) {
-        console.error('Error getting value:', err);
+        console.error("Error getting value:", err);
         throw err;
     }
 };
@@ -48,7 +48,7 @@ const deleteValue = async (key) => {
             console.log(`${key} not found`);
         }
     } catch (err) {
-        console.error('Error deleting value:', err);
+        console.error("Error deleting value:", err);
         throw err;
     }
 };
@@ -57,5 +57,5 @@ module.exports = {
     setTemporaryValue,
     setPermanentValue,
     getValue,
-    deleteValue
+    deleteValue,
 };

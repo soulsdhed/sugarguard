@@ -88,5 +88,9 @@ router.get("/reset-password/:token", async (req, res) => {
         res.render("reset_password_error");
     }
 });
+// 체중기록 페이지
+router.get("/bloodpressurelog", (req, res) => {
+    res.render("bloodpressurelog");
+});
 
 module.exports = router;

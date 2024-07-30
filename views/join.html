@@ -1,6 +1,70 @@
-{% extends "index.html" %}{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SugarGuard</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="join.css">
+</head>
+
+<body>
+    <div id="join-wrapper">
+        <div id="join-controller">
+            <div id="join-prev-button">
+                <i class="fa-solid fa-angle-left"></i><span>이전</span>
+            </div>
+            <div id="join-next-button">
+                <span>다음</span><i class="fa-solid fa-angle-right"></i>
+            </div>
+        </div>
+        <div id="join-title">건강관리 이제부터 시작입니다!</div>
+        <div id="join-content">
+            <div id="diabetes-type-content" class="hidden-div">
+                <input type="text" id="diabetes-type-input" placeholder="당뇨유형">
+            </div>
+            <div id="birthdate-content" class="hidden-div">
+                <input type="text" id="birthdate-input" placeholder="생년월일 (19990101)" maxlength="8">
+            </div>
+            <div id="gender-content" class="hidden-div">
+                <div id="gender-male" class="gender-button gender-selected">남성</div>
+                <div id="gender-female" class="gender-button">여성</div>
+            </div>
+            <div id="nickname-content" class="hidden-div">
+                <input type="text" id="nickname-input" placeholder="닉네임" maxlength="12">
+            </div>
+            <div id='password-content' class="hidden-div">
+                <input type="password" id="password-input" placeholder="비밀번호" maxlength="16">
+            </div>
+            <div id="email-content" class="hidden-div">
+                <input type="text" id="email-input" placeholder="이메일">
+                <button id="email-exist-button">중복검사</button>
+            </div>
+            <div id="id-content" class="hidden-div">
+                <input type="text" id="id-input" placeholder="아이디" maxlength="12">
+                <button id="id-exist-button">중복검사</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="join.js"></script>
+</body>
+
+</html>
+
+
+
+<!-- % extends "index.html" %
+% block content %
 
 <link rel="stylesheet" href="join.css">
+
+<div id="join-wrapper">
+
+</div>
 
 <div id="join_main">
     <div id="join_title">
@@ -11,11 +75,11 @@
         <br>
         <h2 id="join_change">건강관리 이제 시작입니다!</h2>
         <table id="join_new_input">
-            
+
         </table>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="join.js"></script>
-{% endblock %}
+% endblock % -->

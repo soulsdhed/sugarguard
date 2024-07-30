@@ -1,5 +1,208 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-1Thin.woff2")
+        format("woff2");
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-2ExtraLight.woff2")
+        format("woff2");
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-3Light.woff2")
+        format("woff2");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-4Regular.woff2")
+        format("woff2");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-5Medium.woff2")
+        format("woff2");
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-6SemiBold.woff2")
+        format("woff2");
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-7Bold.woff2")
+        format("woff2");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-8ExtraBold.woff2")
+        format("woff2");
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-9Black.woff2")
+        format("woff2");
+    font-weight: 900;
+    font-style: normal;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#join-wrapper {
+    width: 100hw;
+    height: 100hv;
+    display: flex;
+    flex-direction: column;
+}
+
+#join-controller {
+    margin-top: 5px;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* height: 50px; */
+}
+#join-contoller div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#join-controller span,
+i {
+    font-family: "Freesentation";
+    font-size: 18px;
+    font-weight: 800;
+    margin: 0 2px;
+}
+
+#join-title {
+    margin-left: 30px;
+    font-family: "Pretendard";
+    font-size: 23px;
+    font-weight: 800;
+}
+
+#join-content {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding-top: 30px;
+    padding-left: 30px;
+}
+
+#join-content input {
+    border: 0;
+    border-bottom: solid 1px black;
+    margin-right: 10px;
+    height: 30px;
+    font-family: Pretendard;
+    font-size: 14px;
+}
+#join-content button {
+    background-color: rgb(255, 92, 92);
+    border: none;
+
+    width: 95px;
+    height: 30px;
+
+    font-family: Pretendard;
+    font-size: 14px;
+    color: white;
+}
+
+#join-content input:focus,
+button:focus {
+    outline: none;
+}
+
+#gender-content {
+    display: flex;
+    flex-direction: row;
+}
+
+.gender-button {
+    width: 95px;
+    height: 30px;
+    background-color: white;
+    color: black;
+    text-align: center;
+    line-height: 24px;
+    border: 2px solid rgb(146, 146, 146);
+    box-sizing: border-box;
+    font-family: "pretendatd";
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.gender-selected {
+    border: 2px solid rgb(255, 92, 92) !important;
+}
+
+.hidden-div {
+    display: none !important;
+}
+
+.slide-down {
+    animation: slide-down 0.5s ease-out forwards;
+}
+
+@keyframes slide-down {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-up {
+    animation: slide-up 0.5s ease-out forwards;
+}
+
+@keyframes slide-up {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
 h2 {
     font-family: Pretendard;
     font-weight: 900;
@@ -37,7 +240,7 @@ h2 {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    height: 5%;
+    height: 50px;
 }
 
 .join_new {
@@ -54,7 +257,6 @@ h2 {
     margin-left: 4%;
 }
 
-
 .pass_button {
     width: 50px;
     height: 60px;
@@ -66,7 +268,4 @@ h2 {
 
 .pass_button input {
     font-size: 50px;
-}
-input:focus {
-    outline: none;
 }

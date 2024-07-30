@@ -47,6 +47,7 @@ h1 {
 
 .mypage-login-div {
     display: flex;
+    flex-direction: column;
     align-items: center;
 }
 
@@ -60,6 +61,7 @@ h1 {
     height: 80px;
     box-sizing: border-box;
     border-radius: 50px;
+    margin-bottom: 5px;
 }
 
 .mypage-login-div span {
@@ -230,51 +232,52 @@ hr {
     stroke-dasharray: 187;
     stroke-dashoffset: 0;
     transform-origin: center;
-    -webkit-animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+    -webkit-animation: dash 1.4s ease-in-out infinite,
+        colors 5.6s ease-in-out infinite;
     animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
 }
 
 @-webkit-keyframes colors {
     0% {
-        stroke: #4285F4;
+        stroke: #4285f4;
     }
 
     25% {
-        stroke: #DE3E35;
+        stroke: #de3e35;
     }
 
     50% {
-        stroke: #F7C223;
+        stroke: #f7c223;
     }
 
     75% {
-        stroke: #1B9A59;
+        stroke: #1b9a59;
     }
 
     100% {
-        stroke: #4285F4;
+        stroke: #4285f4;
     }
 }
 
 @keyframes colors {
     0% {
-        stroke: #4285F4;
+        stroke: #4285f4;
     }
 
     25% {
-        stroke: #DE3E35;
+        stroke: #de3e35;
     }
 
     50% {
-        stroke: #F7C223;
+        stroke: #f7c223;
     }
 
     75% {
-        stroke: #1B9A59;
+        stroke: #1b9a59;
     }
 
     100% {
-        stroke: #4285F4;
+        stroke: #4285f4;
     }
 }
 

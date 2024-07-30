@@ -1,4 +1,4 @@
-h4{
+h4 {
     font-weight: 400;
 }
 
@@ -13,7 +13,7 @@ h4{
     margin-bottom: 50px;
 }
 
-#header{
+#header {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -30,14 +30,14 @@ h4{
     width: 100%;
 }
 
-#header-title{
+#header-title {
     display: flex;
     align-items: center;
     justify-content: space-between;
     justify-content: center;
 }
 
-#header img{
+#header img {
     width: 20px;
     height: 20px;
     margin-right: 5px;
@@ -48,12 +48,12 @@ h4{
     padding-left: 5px;
 }
 
-#bs-submit{
+#bs-submit {
     justify-content: right;
     padding-left: 5px;
 }
 
-.header-btn{
+.header-btn {
     width: 60px;
     background-color: #f6f6f6;
     color: black;
@@ -65,7 +65,6 @@ h4{
     height: 100%;
     grid-template-columns: 1fr;
 }
-
 
 /* Calendar Container */
 #calendar-container {
@@ -117,14 +116,13 @@ h4{
     text-align: center; /* 텍스트 중앙 정렬 */
     width: 30px; /* 날짜 셀의 너비 */
     height: 70px; /* 날짜 셀의 높이 */
-    text-align: center; /* 텍스트 중앙 정렬 */
     font-size: 13px;
     padding: 5px;
     cursor: pointer; /* 클릭 가능한 요소로 설정 */
     display: flex;
     align-items: center;
     justify-content: center; /* 내용 중앙 정렬 */
-    background-color: #FFFFFF; /* 날짜 셀 배경색 투명 */
+    background-color: #ffffff; /* 날짜 셀 배경색 투명 */
     border-radius: 60px;
 }
 
@@ -137,8 +135,7 @@ h4{
 #current-time {
     /* display: flex; */
     align-items: right;
-} 
-
+}
 
 /* 공복, 자기전, 실시간 선택시 식후 혈당 창 대신 시간 입력 창이 뜨도록 설정 */
 #div3 {
@@ -148,9 +145,8 @@ h4{
 #setTime {
     margin-bottom: 0px;
     font-weight: bold;
-    color: #4CAF50;
+    color: #4caf50;
 }
-
 
 /* #save-time-btn {
     color: #ffffff;
@@ -171,7 +167,7 @@ select {
     width: 30%;
     height: 30px;
     border: hidden;
-    background:#ffffff;
+    background: #ffffff;
     border-radius: 10px;
     text-align: center;
     /* -webkit-appearance: none; /* 네이티브 외형 감추기 */
@@ -189,13 +185,13 @@ select option {
     border: hidden;
     color: hidden;
     text-align: center;
-  }
+}
 
 .color-box {
     width: 20px;
     height: 20px;
     text-align: center;
-    background-color: #66CC66;
+    background-color: #66cc66;
 }
 
 .box1 {
@@ -217,9 +213,8 @@ select option {
     width: 100%;
     height: 100px;
     border-radius: 10px;
-    padding : 2%
+    padding: 2%;
 }
-
 
 #time-input {
     font-size: 12px;
@@ -230,9 +225,10 @@ select option {
     width: 100px;
     max-width: 100px;
     text-align: center;
-  }
+}
 
-#record-bs-before, #record-bs-after {
+#record-bs-before,
+#record-bs-after {
     border: solid 2px #f0f0f0;
     border-radius: 5px;
     height: 25px;
@@ -240,13 +236,9 @@ select option {
     text-align: center;
 }
 
-
 #eat-memo {
     height: 50px;
     width: 90%;
     border: solid 2px #f0f0f0;
     border-radius: 10px;
 }
-
-
-

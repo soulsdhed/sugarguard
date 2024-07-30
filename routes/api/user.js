@@ -29,6 +29,8 @@ const {
     isValidDate,
     isValidEmail,
     isValidPassword,
+    isValidUserId,
+    isValidNickname,
 } = require("../../utils/validation");
 // 회원 가입
 router.post("/", async (req, res, next) => {
@@ -42,9 +44,16 @@ router.post("/", async (req, res, next) => {
         diabetesType,
     } = req.body;
 
+    console.log(req.body);
+
     // TODO : 유효성 검사 전체적으로 다시 확인 (id, 영어만 가능하게)
     // ID 유효성 검사 (영어와 숫자로만, 4~12글자)
-    if (userId.length < 4 || userId.length > 12) {
+    // if (userId.length < 4 || userId.length > 12) {
+    //     return next({
+    //         code: "VALIDATION_ERROR",
+    //     });
+    // }
+    if (!isValidUserId(userId)) {
         return next({
             code: "VALIDATION_ERROR",
         });
@@ -63,7 +72,7 @@ router.post("/", async (req, res, next) => {
     // }
 
     // 닉네임 유효성 검사 (4~20글자)
-    if (nickname.length < 3 || nickname.length > 10) {
+    if (!isValidNickname(nickname)) {
         return next({
             code: "VALIDATION_ERROR",
         });
@@ -125,7 +134,7 @@ router.post("/", async (req, res, next) => {
             (err, results) => {
                 // sql error 또는 등록되지 않은 경우
                 if (err || results.affectedRows < 1) {
-                    console.log(err)
+                    console.log(err);
                     return next({
                         code: "SERVER_INTERNAL_ERROR",
                     });

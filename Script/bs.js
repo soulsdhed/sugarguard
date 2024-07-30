@@ -1,6 +1,12 @@
-// 아침, 점심, 저녁 식전, 식후로 구별해서 저장 안 됨
-// 취침 전도 저장 안 됨
-// 공복, 실시간은 제대로 입력
+// API 연동 문제
+
+// 아침 식전 ~ 저녁 식후, 취침 전 등 중간에 공백 들어간 옵션들만 오류 남.
+// 공복, 실시간은 제대로 연동
+// 공복, 실시간도 '아침 식전 ~ 저녁 식후, 취침 전 등 공백 들어간 옵션' 선택 후 다시 선택하면 오류난 횟수만큼 공복, 실시간 값이 입력됨
+// ex3) 2번 오류난 후 공복 입력시 3번 등록
+
+// 식전, 식후 혈당 범위 제대로 됨
+// css 맞추기
 
 const selectElement = document.getElementById('bs');
 // const selectedValue = selectElement.value;
@@ -8,66 +14,86 @@ let record_date = "";
 let record_time = "";
 
 document.getElementById('bs-submit').addEventListener('click', async () => {
-    const selectedValue = document.getElementById('my-select').value; // 선택된 값을 가져옵니다.
-    
-    // 혈당 값을 저장할 변수
-    let bloodSugarValue;
 
-    // 선택된 식사 유형에 따라 혈당 값 가져오기
-    if (selectedValue === "아침" || selectedValue === "점심" || selectedValue === "저녁") {
-        bloodSugarValue = document.getElementById("record-bs-after").value; // 식후 혈당
-    } else {
-        bloodSugarValue = document.getElementById("record-bs-before").value; // 식전 혈당
+
+    // 혈당 값이 유효한지 확인하는 함수
+    function validateBloodSugar(value) {
+        if (value === "" || isNaN(value)) {
+            alert("혈당 값을 올바르게 입력하세요."); // 유효하지 않은 입력에 대한 경고
+            return false;
+        }
+        return true;
     }
 
-    // 혈당 값이 유효한지 확인
-    if (bloodSugarValue === "" || isNaN(bloodSugarValue)) {
-        alert("혈당 값을 올바르게 입력하세요."); // 유효하지 않은 입력에 대한 경고
-        return;
+    // 혈당 값을 저장하는 함수
+    async function saveBloodSugar(selectedValue) {
+        let bloodSugarValue;
+
+        // 선택된 식사 유형에 따라 혈당 값 가져오기
+        if (selectedValue === "아침 식전" || selectedValue === "점심 식전" || selectedValue === "저녁 식전" ||
+            selectedValue === "공복" || selectedValue === "취침 전" || selectedValue === "실시간") {
+            bloodSugarValue = document.getElementById("record-bs-before").value; // 식전 혈당
+        } else {
+            bloodSugarValue = document.getElementById("record-bs-after").value; // 식후 혈당
+        }
+
+        // 혈당 값 유효성 확인
+        if (!validateBloodSugar(bloodSugarValue)) {
+            return;
+        }
+
+        try {
+            const response = await axios.post('/api/blood-sugar-logs', {
+                blood_sugar: bloodSugarValue, // 선택된 혈당 값
+                record_type: selectedValue, // 선택된 식사 유형
+                record_time: `${record_date} ${record_time}`, // 기록 시간
+                comments: document.getElementById("eat-memo").value, // 추가 메모
+            });
+
+            const exercise = response.data.data; // API 응답에서 운동 데이터를 가져옴
+            console.log('exercise success:', exercise); // 성공 로그
+            Swal.fire({
+                icon: "success",
+                title: "혈당 기록이 성공적으로 저장되었습니다."
+            }); // 성공적으로 저장되었음을 알림
+        } catch (error) {
+            console.error('exercise error:', error); // 에러 로그를 콘솔에 출력
+            Swal.fire({
+                icon: "error",
+                title: "혈당 기록 저장 중 오류가 발생했습니다. 다시 시도해주세요."
+            }); // 오류 알림
+        }
     }
 
-    // 기록 시간을 위한 변수
-    // const record_time = new Date().toLocaleTimeString(); // 현재 시간을 가져오는 방법
-    // const record_date = new Date().toISOString().split('T')[0]; // 현재 날짜를 가져오는 방법
+    // submit 버튼 클릭 이벤트 리스너
+    document.getElementById('bs-submit').addEventListener('click', async () => {
+        const selectedValue = document.getElementById('my-select').value; // 선택된 값을 가져옵니다.
+        await saveBloodSugar(selectedValue); // 혈당 값을 저장
+    });
 
-    try {
-        const response = await axios.post('/api/blood-sugar-logs', {
-            blood_sugar: bloodSugarValue, // 선택된 혈당 값
-            record_type: selectedValue, // 선택된 식사 유형
-            record_time: `${record_date} ${record_time}`, // 기록 시간
-            comments: document.getElementById("eat-memo").value, // 추가 메모
-        });
+    // 선택된 옵션에 따라 div2와 div1의 내용을 업데이트하는 코드
+    const mySelect = document.getElementById('my-select');
+    const div1 = document.getElementById('div1');
+    const div2 = document.getElementById('div2');
 
-        const exercise = response.data.data; // API 응답에서 운동 데이터를 가져옴
-        console.log('exercise success:', exercise); // 수정된 부분
-        alert("혈당 기록이 저장되었습니다."); // 성공적으로 저장되었음을 알림
-    } catch (error) {
-        console.error('exercise error:', error); // 에러 로그를 콘솔에 출력
-        alert("혈당 기록 저장 중 오류가 발생했습니다."); // 오류 알림
-    }
+    // 초기화할 때 div2의 초기 내용 저장
+    const initialDiv1Content = div1.innerHTML;
+
+    // select 요소의 onchange 이벤트 핸들러 설정
+    mySelect.addEventListener('change', function () {
+        const selectedOption = mySelect.value;
+
+        if (["아침 식전", "점심 식전", "저녁 식전", "공복", "취침 전", "실시간"].includes(selectedOption)) {
+            div2.style.display = 'none';
+            div1.innerHTML = initialDiv1Content; // div1를 초기 내용으로 복원
+        } else {
+            div2.style.display = ''; // div2를 보이게 설정
+            div1.innerHTML = ''; // div1 초기화
+        }
+    })
 });
 
-
-
-
-
-// document.getElementById('bs-submit').addEventListener('click', async () => {
-//     // document.getElementById('my-select');
-//     // const selectedValue = selectElement.value; // 여기서 선택된 값을 가져옵니다.
-//     try {
-//         const response = await axios.post('/api/blood-sugar-logs', {
-//             blood_sugar: document.getElementById("record-bs-before").value,
-//             record_type: document.getElementById("my-select").value,
-//             record_time: `${record_date} ${record_time}`,
-//             comments: document.getElementById("eat-memo").value,
-//         });
-//         const exercise = response.data.data; // API 응답에서 운동 데이터를 가져옴
-//         console.log('exercise success:', exercise); // 수정된 부분
-//     } catch (error) {
-//         console.error('exercise error:', error); // 에러 로그를 콘솔에 출력
-//         // 2024-07-24 09:00:00
-//     }
-// });
+// 날짜와 시간을 표시하는 함수
 
 function formatDate(date) {
     const year = date.getFullYear();
@@ -89,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (dateParam) {
         currentDate = new Date(dateParam);
     }
-    
+
     const calendar = document.getElementById("calendar");
     const calendarHeader = document.getElementById("calendar-header");
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -180,96 +206,63 @@ displayCurrentTime();
 
 // HTML 요소들을 가져오기
 const mySelect = document.getElementById('my-select');
+const div1 = document.getElementById('div1');
 const div2 = document.getElementById('div2');
-const div3 = document.getElementById('div3');
 
 
 // 초기화할 때 div2의 초기 내용 저장
-const initialDiv2Content = div2.innerHTML;
+const initialDiv1Content = div1.innerHTML;
 
 // select 요소의 onchange 이벤트 핸들러 설정
 mySelect.addEventListener('change', function () {
     const selectedOption = mySelect.value;
 
 
-    if (selectedOption === '아침') {
+    if (selectedOption === '아침 식전') {
         // 다른 옵션이 선택된 경우 div2를 숨기고 초기 내용으로 복원
-        div3.style.display = 'none';
-        div2.innerHTML = initialDiv2Content;
-        // div3의 내용을 숨기고 초기화
-        div3.style.visibility = 'hidden';
-    } else if (selectedOption === '점심') {
-        div3.style.display = 'none';
-        div2.innerHTML = initialDiv2Content;
-        div3.style.visibility = 'hidden';
-    } else if (selectedOption === '저녁') {
-        div3.style.display = 'none';
-        div2.innerHTML = initialDiv2Content;
+        div2.style.display = 'none';
+        div1.innerHTML = initialDiv1Content;
+        // div2의 내용을 숨기고 초기화
+        div2.style.visibility = 'hidden';
+    } else if (selectedOption === '점심 식전') {
+        div2.style.display = 'none';
+        div1.innerHTML = initialDiv1Content;
+        div2.style.visibility = 'hidden';
+    } else if (selectedOption === '저녁 식전') {
+        div2.style.display = 'none';
+        div1.innerHTML = initialDiv1Content;
+        div2.style.visibility = 'hidden';
     } else if (selectedOption === '공복') {
-        // 옵션 4 선택 시 div3의 내용을 div2로 이동
-        const div3Content = div3.innerHTML;
-        div2.innerHTML = div3Content;
-        div2.style.display = ''; // div2를 보이게 설정
-
-        // div3의 내용 초기화 (선택 시 필요에 따라)
-        // div3.innerHTML = '';
+        div2.style.display = 'none';
+        div1.innerHTML = initialDiv1Content;
+        div2.style.visibility = 'hidden';
     } else if (selectedOption === '취침 전') {
-        const div3Content = div3.innerHTML;
-        div2.innerHTML = div3Content;
-        div2.style.display = '';
+        div2.style.display = 'none';
+        div1.innerHTML = initialDiv1Content;
+        div2.style.visibility = 'hidden';
     } else if (selectedOption === '실시간') {
-        const div3Content = div3.innerHTML;
-        div2.innerHTML = div3Content;
-        div2.style.display = '';
-    }
+        div2.style.display = 'none';
+        div1.innerHTML = initialDiv1Content;
+        div2.style.visibility = 'hidden';
+    } else if (selectedOption === '아침 식후') {
+        // 옵션 4 선택 시 div2의 내용을 div1로 이동
+        const div2Content = div2.innerHTML;
+        div1.innerHTML = div2Content;
+        div1.style.display = ''; // div1를 보이게 설정
 
+        // div1의 내용 초기화 (선택 시 필요에 따라)
+        // div1.innerHTML = '';
+    } else if (selectedOption === '점심 식후') {
+        const div2Content = div2.innerHTML;
+        div1.innerHTML = div2Content;
+        div1.style.display = '';
+    } else if (selectedOption === '저녁 식후') {
+        const div2Content = div2.innerHTML;
+        div1.innerHTML = div2Content;
+        div1.style.display = '';
+    }
 });
 
-// 사용자가 입력한 시간 설정 함수(초는 미인식)
-function setTime() {
-    const timeInput = document.getElementById('time-input').value;
-
-    // 입력값의 길이 확인
-    if (timeInput.length > 4) {
-        document.getElementById('time-input').value = ''; // 입력 초기화
-        document.getElementById('setTime').textContent = ''; // 시간 표시 초기화
-        return; // 5자 이상일 경우 함수 종료
-    }
-
-    // 입력값이 4자 미만인 경우 시간 표시 초기화
-    if (timeInput.length !== 4) {
-        document.getElementById('setTime').textContent = '';
-        return; // 4자리 입력이 아닐 경우 함수 종료
-    }
-
-    // 시간과 분을 분리
-    const hour = parseInt(timeInput.substring(0, 2), 10);
-    const minute = parseInt(timeInput.substring(2, 4), 10);
-    const second = 0; // 초는 0으로 설정
-
-    // 유효성 검사 - 입력 필드가 숫자이고 범위 내에 있는지 확인
-    if (isNaN(hour) || isNaN(minute) ||
-        hour < 0 || hour > 23 ||
-        minute < 0 || minute > 59) {
-        alert('올바른 시간을 입력하세요.');
-        document.getElementById('setTime').textContent = '';
-        return;
-    }
-
-    // 입력된 시간으로 시간 설정
-    const newTime = new Date();
-    newTime.setHours(hour);
-    newTime.setMinutes(minute);
- 
-    // 설정된 시간을 표시
-    const hours = String(newTime.getHours()).padStart(2, '0');
-    const minutes = String(newTime.getMinutes()).padStart(2, '0');
-    const setTimeString = `${hours}:${minutes}`;
-    document.getElementById('setTime').textContent = setTimeString;
-
-    // 시간 입력 폼 숨기기
-    // document.getElementById('time-input').style.display = 'none';
-}
 
 function checkLevelBsBefore() {
     let inputValue = parseFloat(document.getElementById('record-bs-before').value);
@@ -300,6 +293,4 @@ function checkLevelBsAfter() {
     } else {
         resultBox2.style.backgroundColor = '#FF9999';  // 빨간색 (위험)
     }
-}
-
-
+};

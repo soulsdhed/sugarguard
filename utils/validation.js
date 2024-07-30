@@ -152,6 +152,7 @@ module.exports = {
     isValidMonth,
     isValidURL,
     isValidEmail,
+    isValidNickname,
     isValidPassword,
     isValidUserId,
     isValidNickname,

@@ -1,104 +1,114 @@
-let currentDate = new Date();
-
-function getParameterByName(name) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(name);
-}
-
-function updateDateTime() {
-    const dateElement = document.getElementById("date");
-    const timeElement = document.getElementById("time");
-    const now = new Date();
-    currentDate.setHours(now.getHours());
-    currentDate.setMinutes(now.getMinutes());
-    const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-    const date = String(currentDate.getDate()).padStart(2, "0");
-    const hours = currentDate.getHours();
-    const minutes = String(currentDate.getMinutes()).padStart(2, "0");
-    const period = hours >= 12 ? "오후" : "오전";
-    const formattedDate = `${year}년 ${month}월 ${date}일`;
-    const formattedTime = `${period} ${hours % 12 || 12}:${minutes}`;
-    dateElement.textContent = formattedDate;
-    timeElement.textContent = formattedTime;
-}
-
-function editDateTime(type) {
-    const dateElement = document.getElementById("date");
-    const timeElement = document.getElementById("time");
-    const dateInput = document.getElementById("dateInput");
-    const timeInput = document.getElementById("timeInput");
-    if (type === "date") {
-        dateElement.style.display = "none";
-        dateInput.style.display = "inline-block";
-        const year = currentDate.getFullYear();
-        const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-        const date = String(currentDate.getDate()).padStart(2, "0");
-        dateInput.value = `${year}-${month}-${date}`;
-        dateInput.focus();
-    } else if (type === "time") {
-        console.log("?");
-        timeElement.style.display = "none";
-        timeInput.style.display = "inline-block";
-        console.log(currentDate);
-        const hours = String(currentDate.getHours()).padStart(2, "0");
-        const minutes = String(currentDate.getMinutes()).padStart(2, "0");
-        console.log(hours);
-        console.log(minutes);
-
-        timeInput.value = `${hours}:${minutes}`;
-        timeInput.focus();
-    }
-}
-
-function updateFromInput(type) {
-    const dateElement = document.getElementById("date");
-    const timeElement = document.getElementById("time");
-    const dateInput = document.getElementById("dateInput");
-    const timeInput = document.getElementById("timeInput");
-    if (type === "date") {
-        const dateValue = dateInput.value;
-        const [year, month, day] = dateValue.split("-");
-        currentDate.setFullYear(year);
-        currentDate.setMonth(month - 1);
-        currentDate.setDate(day);
-        dateElement.textContent = `${year}년 ${month}월 ${day}일`;
-        dateElement.style.display = "inline-block";
-        dateInput.style.display = "none";
-    } else if (type === "time") {
-        const timeValue = timeInput.value;
-        const [hours, minutes] = timeValue.split(":");
-        currentDate.setHours(hours);
-        currentDate.setMinutes(minutes);
-        const period = hours >= 12 ? "오후" : "오전";
-        const formattedTime = `${period} ${hours % 12 || 12}:${minutes}`;
-        console.log(formattedTime);
-        timeElement.textContent = formattedTime;
-        timeElement.style.display = "inline-block";
-        timeInput.style.display = "none";
-    }
-    // updateDateTime(); // 변경된 날짜와 시간을 반영하여 업데이트
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // 0부터 시작하므로 +1
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    let dateParam = getParameterByName("date");
-
-    if (dateParam) {
-        const [year, month, day] = dateParam.split("-");
-        currentDate.setFullYear(year);
-        currentDate.setMonth(month - 1);
-        currentDate.setDate(day);
+    // URL 파라미터에서 날짜를 가져오는 함수
+    function getParameterByName(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
     }
 
-    updateDateTime();
-    // setInterval(updateDateTime, 60000); // 1분마다 업데이트
+    // URL 파라미터로 전달된 날짜를 받아옵니다.
+    const dateParam = getParameterByName("date");
+    let currentDate = new Date(); // 현재 날짜로 초기화
+    if (dateParam) {
+        currentDate = new Date(dateParam);
+    }
+
+    const calendar = document.getElementById("calendar");
+    const calendarHeader = document.getElementById("calendar-header");
+    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    function updateHeader(date) {
+        const options = { year: "numeric", month: "long" };
+        calendarHeader.textContent = date.toLocaleDateString("ko-KR", options);
+    }
+
+    function generateCalendar(selectedDate) {
+        calendar.innerHTML = ""; // 기존 캘린더 내용 제거
+
+        const startDate = new Date(selectedDate);
+        startDate.setDate(startDate.getDate() - Math.floor(7 / 2)); // 선택된 날짜를 중앙에 배치
+
+        for (let i = 0; i < 7; i++) {
+            const date = new Date(startDate);
+            date.setDate(startDate.getDate() + i);
+
+            const dayDiv = document.createElement("div");
+            dayDiv.classList.add("day");
+            if (date.toDateString() === selectedDate.toDateString()) {
+                dayDiv.classList.add("selected");
+            }
+            dayDiv.innerHTML = `${date.getDate()}<br>${
+                daysOfWeek[date.getDay()]
+            }`;
+            dayDiv.addEventListener("click", () => {
+                generateCalendar(date); // 새로운 날짜 생성
+                updateHeader(date); // 헤더 업데이트
+            });
+            calendar.appendChild(dayDiv);
+        }
+        updateHeader(selectedDate); // 선택된 날짜로 헤더 업데이트
+        record_date = formatDate(selectedDate);
+
+        // console.log(record_date);
+        // console.log(record_time);
+    }
+
+    // Infinite scroll logic
+    let isLoading = false;
+
+    function handleScroll() {
+        if (isLoading) return;
+
+        const container = document.getElementById("calendar-container");
+        const { scrollLeft, scrollWidth, clientWidth } = container;
+
+        if (scrollLeft + clientWidth >= scrollWidth - 10) {
+            // 스크롤이 오른쪽 끝에 가까워지면 다음 날짜 로드
+            isLoading = true;
+            loadNextDays();
+            setTimeout(() => (isLoading = false), 1000); // Prevent rapid calls
+        } else if (scrollLeft <= 10) {
+            // 스크롤이 왼쪽 끝에 가까워지면 이전 날짜 로드
+            isLoading = true;
+            loadPreviousDays();
+            setTimeout(() => (isLoading = false), 1000); // Prevent rapid calls
+        }
+    }
+
+    document
+        .getElementById("calendar-container")
+        .addEventListener("scroll", handleScroll);
+
+    // 초기화
+    generateCalendar(currentDate);
+
+    // 현재 시간 표시 함수
+    function displayCurrentTime() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, "0");
+        const minutes = String(now.getMinutes()).padStart(2, "0");
+        const currentTimeString = `${hours}:${minutes}`;
+        document.getElementById("current-time").textContent = currentTimeString;
+
+        record_time = `${hours}:${minutes}:00`;
+    }
+
+    // 현재 시간 표시 초기 호출
+    displayCurrentTime();
 
     // 선택하고 저장 버튼을 누를 때 기록목록에 기록이 남기는 곳
     document
         .getElementById("mealrecord-button")
-        .addEventListener("click", function () {
+        .addEventListener("click", async function () {
             const dateElement = document.getElementById("date").textContent;
             const timeElement = document.getElementById("time").textContent;
+            const recordDateTime = `${dateElement} ${timeElement}`;
             const mealType =
                 document.querySelector("#time-meal a.active")?.textContent ||
                 "선택되지 않음";
@@ -117,11 +127,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // 콘솔에 기록 남기기
             console.log(
-                `기록:${dateElement} ${timeElement} ${mealType}:${mealInfo} 약정보:${medicineInfo} 특이사항:${specialInfo}`
+                `기록:${formatDateTime(
+                    recordDateTime
+                )} ${mealType.trim()} 식사 정보:${mealInfo}
+                약정보:${medicineInfo} 특이사항:${specialInfo}`
             );
 
             const recordItem = document.createElement("li");
-            recordItem.textContent = `${dateElement} ${timeElement} ${mealType}:${mealInfo} 약정보:${medicineInfo} 특이사항:${specialInfo}`;
+            recordItem.textContent = `${dateElement} ${timeElement} ${mealType}식사 정보:${mealInfo} 약정보:${medicineInfo} 특이사항:${specialInfo}`;
 
             // 입력 필드 초기화
             document.getElementById("meal-information").value = "";
@@ -129,39 +142,76 @@ document.addEventListener("DOMContentLoaded", () => {
             document
                 .querySelectorAll("#time-meal a")
                 .forEach((a) => a.classList.remove("active"));
+
+            // API POST
+            async function postData() {
+                const recordDateTime = currentDate
+                    .toISOString()
+                    .slice(0, 19)
+                    .replace("T", " ");
+                console.log(recordDateTime);
+                try {
+                    const response = await axios.post("/api/meal-logs", {
+                        record_date: recordDateTime,
+                        meal_time: mealType.trim(),
+                        medication: medicineInfo,
+                        meal_info: mealInfo,
+                        comments: specialInfo,
+                        //     // ml_id: "",
+                        //     // member_id: "",
+                        //     // calories: "",
+                    });
+                    console.log(response.data);
+                } catch (err) {
+                    console.error(`ErrorMessage :${err}`);
+                }
+            }
+
+            await postData();
         });
-
-    // 식사버튼을 누를때 표시되는 곳
-    document.querySelectorAll("#time-meal a").forEach((a) => {
-        a.addEventListener("click", function () {
-            document
-                .querySelectorAll("#time-meal a")
-                .forEach((btn) => btn.classList.remove("active"));
-            this.classList.add("active");
-        });
-    });
-
-    // 식사버튼을 누를때 색깔 변하는거
-    document.querySelectorAll("#time-meal a").forEach((anchor) => {
-        anchor.addEventListener("click", (e) => {
-            e.preventDefault(); // 링크 클릭 기본 동작 방지
-            anchor.classList.toggle("clicked"); // 'active' 클래스 토글
-        });
-    });
-
-    // Edit date and time buttons
-    // document
-    //     .getElementById("edit-date-button")
-    //     .addEventListener("click", () => editDateTime("date"));
-    // document
-    //     .getElementById("edit-time-button")
-    //     .addEventListener("click", () => editDateTime("time"));
-
-    // Update from input fields
-    document
-        .getElementById("dateInput")
-        .addEventListener("change", () => updateFromInput("date"));
-    document
-        .getElementById("timeInput")
-        .addEventListener("change", () => updateFromInput("time"));
 });
+
+// 식사버튼을 누를때 표시되는 곳
+document.querySelectorAll("#time-meal a").forEach((a) => {
+    a.addEventListener("click", function () {
+        document
+            .querySelectorAll("#time-meal a")
+            .forEach((btn) => btn.classList.remove("active"));
+        this.classList.add("active");
+    });
+});
+
+// 식사버튼을 누를때 색깔 변하는거
+document.querySelectorAll("#time-meal a").forEach((anchor) => {
+    anchor.addEventListener("click", (e) => {
+        e.preventDefault(); // 링크 클릭 기본 동작 방지
+        anchor.classList.toggle("clicked"); // 'active' 클래스 토글
+    });
+});
+
+// Edit date and time buttons
+// document
+//     .getElementById("edit-date-button")
+//     .addEventListener("click", () => editDateTime("date"));
+// document
+//     .getElementById("edit-time-button")
+//     .addEventListener("click", () => editDateTime("time"));
+
+// Update from input fields
+document
+    .getElementById("dateInput")
+    .addEventListener("change", () => updateFromInput("date"));
+document
+    .getElementById("timeInput")
+    .addEventListener("change", () => updateFromInput("time"));
+
+function formatDateTime(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}

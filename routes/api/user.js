@@ -61,6 +61,7 @@ router.post("/", async (req, res, next) => {
 
     // 비밀번호 유효성 검사 (8이상, 16자 이하)
     if (!isValidPassword(password)) {
+        console.log("그놈의 페쓰워드오류 씨발@");
         return next({
             code: "VALIDATION_ERROR",
         });
@@ -80,13 +81,15 @@ router.post("/", async (req, res, next) => {
 
     // 이메일 유효성 검사 (이메일 형식)
     if (!isValidEmail(email)) {
+        console.log("그놈의 이메일오류 씨발@");
         return next({
             code: "VALIDATION_ERROR",
         });
     }
 
     // 성별 유효성 검사 (남성, 여성)
-    if (!["남성", "여성"].includes(gender)) {
+    if (!["남성", "여성"].includes(gender.toLowerCase())) {
+        console.log("그놈의 젠더오류 씨발@");
         return next({
             code: "VALIDATION_ERROR",
         });
@@ -100,6 +103,7 @@ router.post("/", async (req, res, next) => {
     //     });
     // }
     if (!isValidDate(birthDate)) {
+        console.log("그놈의 생일오류 씨발@");
         return next({
             code: "VALIDATION_ERROR",
         });

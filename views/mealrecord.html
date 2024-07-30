@@ -14,28 +14,18 @@
             /></a>
             <input type="submit" id="mealrecord-button" value="저장" />
         </div>
-        <br />
-        <hr color="#e3e3e3" />
-        <br />
-        <div class="date-time">
-            <div class="date" id="date" onclick="editDateTime('date')"></div>
-            <input
-                type="date"
-                class="date-input"
-                id="dateInput"
-                onblur="updateFromInput('date')"
-            />
-            <div class="time" id="time" onclick="editDateTime('time')"></div>
-            <input
-                type="time"
-                class="time-input"
-                id="timeInput"
-                onblur="updateFromInput('time')"
-            />
+        <br>
+    <hr color="#e3e3e3"><br>
+    <div id="calendar-header1">
+        <div id="calendar-header"></div>
+        <div>
+            <h4 id="current-time"></h4>
         </div>
-        <br />
-        <hr color="#e3e3e3" />
-        <br />
+    </div>
+    <br><hr color="#e3e3e3"><br>
+    <div id="calendar-container">
+        <div id="calendar"></div>
+    </div>
         <div id="time-meal">
             <a href="#" id="breakfast"
                 ><img src="morning.png" /><span>

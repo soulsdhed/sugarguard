@@ -198,12 +198,12 @@ document.querySelectorAll("#time-meal a").forEach((anchor) => {
 //     .addEventListener("click", () => editDateTime("time"));
 
 // Update from input fields
-document
-    .getElementById("dateInput")
-    .addEventListener("change", () => updateFromInput("date"));
-document
-    .getElementById("timeInput")
-    .addEventListener("change", () => updateFromInput("time"));
+// document
+//     .getElementById("dateInput")
+//     .addEventListener("change", () => updateFromInput("date"));
+// document
+//     .getElementById("timeInput")
+//     .addEventListener("change", () => updateFromInput("time"));
 
 function formatDateTime(dateString) {
     const date = new Date(dateString);

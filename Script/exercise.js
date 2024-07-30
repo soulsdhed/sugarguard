@@ -178,10 +178,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const duration = parseFloat(document.getElementById("duration").value);
 
         if (!exercise || isNaN(duration) || duration <= 0) {
-            Swal.fire({
-                icon: "error",
-                title: "운동 기록 저장 중 오류가 발생했습니다. 다시 시도해주세요."
-              }) // 오류 알림
+                  Swal.fire({
+            icon: "error",
+            title: "운동 종류와 시간을 정확히 선택해주세요."
+          });; // 오류 알림
             return;
         }
 

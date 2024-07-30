@@ -1,29 +1,47 @@
 {% extends "index.html" %}{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 <link rel="stylesheet" href="sugardiary.css" />
-<link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-/>
 
 {% if not userId %}
 <div class="mypage_profile">
     <a href="/login">
         <div class="mypage-login-div">
-            <img
-                src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721891574/%EC%A0%9C%EB%AA%A9%EC%9D%84-%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94_-008_hvrrzh.png"
-                alt=""
-            />
+            <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721891574/%EC%A0%9C%EB%AA%A9%EC%9D%84-%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94_-008_hvrrzh.png"
+                alt="" />
             <span>로그인 해주세요</span>
         </div>
     </a>
 </div>
-{% endif %} {% if userId %}
-<div id="sugardiary_main">
-    <div id="calendar-header"></div>
+{% endif %}
+{% if userId %}
+<!-- 로딩 화면 -->
+<div id="loading-screen" class="loading-screen">
+    <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+        <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+    </svg>
+</div>
+
+<div id="sugardiary-content">
+    <div id="sugardiary-title">
+        <div id="sugardiary-title-text">건강 관리 기록</div>
+        <div id="sugardiary-goback">
+            <i class="fa-solid fa-angle-left"></i>
+        </div>
+    </div>
+    <hr />
+
+    <div id="sugar-calendar-header">2024년 7월 24일</div>
     <div id="calendar-container">
         <div id="calendar"></div>
     </div>
-    <div id="records-container"></div>
+    <div id="records-container">
+        <div id="inner-loading-screen" class="loading-screen">
+            <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30">
+                </circle>
+            </svg>
+        </div>
+    </div>
 
     <div class="floating-buttons">
         <button id="main-toggle-button" class="floating-button">+</button>
@@ -57,9 +75,12 @@
         </div>
     </div>
 </div>
+
 {% endif %}
 <script>
     window.userIdFromTemplate = "{{ userId | safe }}";
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="sugardiary.js"></script>
 {% endblock %}

@@ -236,6 +236,37 @@ router.patch("/", authenticateToken, (req, res, next) => {
     });
 });
 
+// 운동 기록 삭제
+router.delete("/", authenticateToken, (req, res, next) => {
+    const { userId } = req.user;
+    const { el_id } = req.body;
+
+    if (el_id == null) {
+        return next({
+            code: "VALIDATION_MISSING_FIELD",
+        });
+    }
+
+    const query = `
+        DELETE
+        FROM EXERCISE_LOG_TB
+        WHERE member_id = ? AND el_id = ?
+    `;
+    db.execute(query, [userId, el_id], (err, result) => {
+        if (err || result.affectedRows < 1) {
+            return next({
+                code: "SERVER_INTERNAL_ERROR",
+            });
+        }
+
+        // 삭제 성공
+        return res.success({
+            userId: userId,
+            bsl_id: el_id,
+        });
+    });
+});
+
 // 가장 최근 기록 가져오기
 router.get("/recent", authenticateToken, (req, res, next) => {
     const { userId } = req.user;

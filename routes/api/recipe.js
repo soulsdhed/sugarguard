@@ -70,9 +70,8 @@ router.get("/", authenticateToken, async (req, res, next) => {
             if (!have) {
                 have = response.data.ingredients_names;
             } else {
-                have += `, ${response.data.ingredients_names}`
+                have += `, ${response.data.ingredients_names}`;
             }
-
         } catch (e) {
             console.log(e);
 
@@ -135,7 +134,7 @@ router.get("/", authenticateToken, async (req, res, next) => {
             ${ingredientsQueryString}
             ) AS score`;
     } else {
-        orderByQueryString = "ORDER BY RAND()"
+        orderByQueryString = "ORDER BY RAND()";
     }
     // console.log("ingredientsQueryString", ingredientsQueryString);
 
@@ -147,16 +146,20 @@ router.get("/", authenticateToken, async (req, res, next) => {
     // 요라양
     if (amount) {
         // 요라양을 ,를 기준으로 분리
-        amount = amount.replace('4인분이상', '4인분, 5인분, 6인분이상');
+        amount = amount.replace("4인분이상", "4인분, 5인분, 6인분이상");
         console.log("amount", amount);
-        const amountList = amount ? amount.split(",").map((item) => item.trim()) : [];
+        const amountList = amount
+            ? amount.split(",").map((item) => item.trim())
+            : [];
 
         // 요라양이 1개인 경우와 여러개인 경우 쿼리가 달라져야 한다.
         if (amountList.length == 1) {
             updates.push("recipe_amount = ?");
             params.push(amountList[0]);
         } else if (amountList.length > 1) {
-            updates.push(`recipe_amount IN (${amountList.map(() => '?').join(', ')})`);
+            updates.push(
+                `recipe_amount IN (${amountList.map(() => "?").join(", ")})`
+            );
             params.push(...amountList);
         }
     }
@@ -165,7 +168,7 @@ router.get("/", authenticateToken, async (req, res, next) => {
     // 시간
     if (time) {
         // 시간을 ,를 기준으로 분리
-        time = time.replace('15분이내', '5분이내, 10분이내, 15분이내');
+        time = time.replace("15분이내", "5분이내, 10분이내, 15분이내");
         time = time.replace("30분이내", "20분이내, 30분이내");
         const timeList = time ? time.split(",").map((item) => item.trim()) : [];
 
@@ -174,7 +177,9 @@ router.get("/", authenticateToken, async (req, res, next) => {
             updates.push("recipe_time = ?");
             params.push(timeList[0]);
         } else if (timeList.length > 1) {
-            updates.push(`recipe_time IN (${timeList.map(() => '?').join(', ')})`);
+            updates.push(
+                `recipe_time IN (${timeList.map(() => "?").join(", ")})`
+            );
             params.push(...timeList);
         }
     }
@@ -183,25 +188,31 @@ router.get("/", authenticateToken, async (req, res, next) => {
     // 난이도
     if (difficult) {
         // 난이도를 ,를 기준으로 분리
-        difficult = difficult.replace('고급', '고급, 신의경지');
-        const difficultList = difficult ? difficult.split(",").map((item) => item.trim()) : [];
+        difficult = difficult.replace("고급", "고급, 신의경지");
+        const difficultList = difficult
+            ? difficult.split(",").map((item) => item.trim())
+            : [];
 
         // 시간이 1개인 경우와 여러개인 경우 쿼리가 달라져야 한다.
         if (difficultList.length == 1) {
             updates.push("recipe_difficult = ?");
             params.push(difficultList[0]);
         } else if (difficultList.length > 1) {
-            updates.push(`recipe_difficult IN (${difficultList.map(() => '?').join(', ')})`);
+            updates.push(
+                `recipe_difficult IN (${difficultList
+                    .map(() => "?")
+                    .join(", ")})`
+            );
             params.push(...difficultList);
         }
     }
     // console.log(params);
 
     // 기본 WHERE 절
-    let whereClause = 'approved = TRUE';
+    let whereClause = "approved = TRUE";
     // 조건이 있는 경우 추가
     if (updates.length > 0) {
-        whereClause += ' AND ' + updates.join(' AND ');
+        whereClause += " AND " + updates.join(" AND ");
     }
 
     console.log(params);

@@ -1,4 +1,77 @@
-
+// 재시도가 필요한 fetch의 경우 아래 함수들을 반드시 가져가야한다
+// refresh함수를 통한 accessToken 재발행 받기
+const refreshAccessToken = async () => {
+    try {
+        const response = await axios.post(
+            "/api/auth/token",
+            {},
+            {
+                withCredentials: true,
+            }
+        );
+        // const { accessToken } = response.data;
+        // axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+    } catch (e) {
+        console.error("Failed to refresh access token:", e);
+        throw e;
+    }
+};
+// 재시도를 포함한 get fetch
+// const fetchGetWithRetry = async (url, options = {}, retries = 1) => {
+//     try {
+//         const response = await axios.get(url, options);
+//         return response;
+//     } catch (e) {
+//         if (
+//             e.response.data.error.code === "AUTH_EXPIRED_TOKEN" &&
+//             retries > 0
+//         ) {
+//             console.log("Access token expired. Fetching new token...");
+//             await refreshAccessToken();
+//             return fetchGetWithRetry(url, options, retries - 1);
+//         } else {
+//             throw e;
+//         }
+//     }
+// };
+// // 재시도를 포함한 post fetch
+const fetchPostWithRetry = async (
+    url,
+    data = {},
+    options = {},
+    retries = 1
+) => {
+    try {
+        const response = await axios.post(url, data, options);
+        return response;
+    } catch (e) {
+        if (
+            e.response.data.error.code === "AUTH_EXPIRED_TOKEN" &&
+            retries > 0
+        ) {
+            console.log("Access token expired. Fetching new token...");
+            await refreshAccessToken();
+            return fetchPostWithRetry(url, data, options, retries - 1);
+        } else {
+            throw e;
+        }
+    }
+};
+// // 재시도를 포함한 patch fetch
+// const fetchPatchWithRetry = async (url, data = {}, options = {}, retries = 1) => {
+//     try {
+//         const response = await axios.patch(url, data, options);
+//         return response;
+//     } catch (e) {
+//         if (e.response.data.error.code === "AUTH_EXPIRED_TOKEN" && retries > 0) {
+//             console.log("Access token expired. Fetching new token...");
+//             await refreshAccessToken();
+//             return fetchPatchWithRetry(url, data, options, retries - 1);
+//         } else {
+//             throw e;
+//         }
+//     }
+// }
 
 document.addEventListener("DOMContentLoaded", () => {
     // 넌적스 템플릿으로부터 userId 가져오기 (로그인 여부 확인)
@@ -8,8 +81,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("recipe-goback").addEventListener("click", (e) => {
         // history.back();
         // 여기선 메인으로
-        window.location.href = "/"
-    })
+        window.location.href = "/";
+    });
 
     // a 태그를 여러개 눌렸을때 색깔 유지
     document.querySelectorAll("#recipe-name a").forEach((anchor) => {
@@ -19,8 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-
-    // 추천 버튼 
+    // 추천 버튼
     document
         .getElementById("recipe-search-button")
         .addEventListener("click", async (e) => {
@@ -40,11 +112,19 @@ document.addEventListener("DOMContentLoaded", () => {
             activeLinks.forEach((link) => {
                 const content = link.querySelector("span").textContent;
 
-                if (["1인분", "2인분", "3인분", "4인분이상"].includes(content)) {
+                if (
+                    ["1인분", "2인분", "3인분", "4인분이상"].includes(content)
+                ) {
                     amountList.push(content);
-                } else if (["15분이내", "30분이내", "60분이내", "2시간이상"].includes(content)) {
+                } else if (
+                    ["15분이내", "30분이내", "60분이내", "2시간이상"].includes(
+                        content
+                    )
+                ) {
                     timeList.push(content);
-                } else if (["아무나", "초급", "중급", "고급"].includes(content)) {
+                } else if (
+                    ["아무나", "초급", "중급", "고급"].includes(content)
+                ) {
                     difficultList.push(content);
                 } else {
                     haveList.push(content);
@@ -53,14 +133,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // 정보 확인
             let have = haveList.join(", ");
-            const amount = amountList.join(', ');
+            const amount = amountList.join(", ");
             const time = timeList.join(", ");
             const difficult = difficultList.join(", ");
 
             // have 합치기 (추가 정보 작성 부분과)
-            have = `${have}, ${document.getElementById("recipe-search-input").value}`
+            have = `${have}, ${
+                document.getElementById("recipe-search-input").value
+            }`;
             // 뒤에 불필요한 문자열 삭제하기
-            have = have.trim().replace(/,\s*$/, '');
+            have = have.trim().replace(/,\s*$/, "");
 
             // 회원 비회원 구분하기
             if (userId == "" || userId === null || userId === undefined) {
@@ -113,10 +195,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // 로그인 되어 있어야만 실행되는 부분
     if (userId != "" && userId != null) {
         // 카메라 앱 작동 (버튼)
-        document.getElementById("recipe-camera-button").addEventListener("click", (e) => {
-            e.preventDefault();
-            document.getElementById("recipe-camera-input").click();
-        });
+        document
+            .getElementById("recipe-camera-button")
+            .addEventListener("click", (e) => {
+                e.preventDefault();
+                document.getElementById("recipe-camera-input").click();
+            });
         // 카메라 앱 작동 (실제 작동)
         document
             .getElementById("recipe-camera-input")
@@ -134,11 +218,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 activeLinks.forEach((link) => {
                     const content = link.querySelector("span").textContent;
 
-                    if (["1인분", "2인분", "3인분", "4인분이상"].includes(content)) {
+                    if (
+                        ["1인분", "2인분", "3인분", "4인분이상"].includes(
+                            content
+                        )
+                    ) {
                         amountList.push(content);
-                    } else if (["15분이내", "30분이내", "60분이내", "2시간이상"].includes(content)) {
+                    } else if (
+                        [
+                            "15분이내",
+                            "30분이내",
+                            "60분이내",
+                            "2시간이상",
+                        ].includes(content)
+                    ) {
                         timeList.push(content);
-                    } else if (["아무나", "초급", "중급", "고급"].includes(content)) {
+                    } else if (
+                        ["아무나", "초급", "중급", "고급"].includes(content)
+                    ) {
                         difficultList.push(content);
                     } else {
                         haveList.push(content);
@@ -147,14 +244,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // 정보 확인
                 let have = haveList.join(", ");
-                const amount = amountList.join(', ');
+                const amount = amountList.join(", ");
                 const time = timeList.join(", ");
                 const difficult = difficultList.join(", ");
 
                 // have 합치기 (추가 정보 작성 부분과)
-                have = `${have}, ${document.getElementById("recipe-search-input").value}`
+                have = `${have}, ${
+                    document.getElementById("recipe-search-input").value
+                }`;
                 // 뒤에 불필요한 문자열 삭제하기
-                have = have.trim().replace(/,\s*$/, '');
+                have = have.trim().replace(/,\s*$/, "");
 
                 const file = event.target.files[0];
                 console.log(file);
@@ -164,7 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     // 업로드 요청
                     try {
                         // presigned URL 요청
-                        const res = await axios.post(
+                        const res = await fetchPostWithRetry(
                             "/api/auth/upload-image/recipe-recommend",
                             {
                                 fileName: file.name,
@@ -201,5 +300,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // 로딩화면 제거
-    document.getElementById('loading-screen').style.display = 'none';
+    document.getElementById("loading-screen").style.display = "none";
 });

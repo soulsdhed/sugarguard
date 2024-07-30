@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 // function sendResetEmail(email, link) {
@@ -40,17 +40,17 @@ require("dotenv").config();
 const sendResetEmail = (email, link) => {
     return new Promise((resolve, reject) => {
         const transporter = nodemailer.createTransport({
-            service: 'gmail',
+            service: "gmail",
             auth: {
                 user: process.env.GMAIL_USER,
-                pass: process.env.GMAIL_APP_PASSWORD
-            }
+                pass: process.env.GMAIL_APP_PASSWORD,
+            },
         });
 
         const mailOptions = {
             from: `"SugarGuard" <${process.env.GMAIL_USER}>`,
             to: email,
-            subject: '비밀번호 변경 요청',
+            subject: "비밀번호 변경 요청",
             html: `
             <html lang="kr">
                 <body>
@@ -63,7 +63,7 @@ const sendResetEmail = (email, link) => {
                         <h3>SugarGuard</h3>
                     </div>
                 </body>
-            </html>`
+            </html>`,
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
@@ -71,10 +71,10 @@ const sendResetEmail = (email, link) => {
                 console.log(error);
                 return reject(error);
             }
-            console.log('메일 전송: %s', info.response);
+            console.log("메일 전송: %s", info.response);
             resolve(info.response);
         });
     });
-}
+};
 
 module.exports = { sendResetEmail };

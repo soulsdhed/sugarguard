@@ -48,12 +48,12 @@ const isValidMonth = (dateString) => {
 const isValidURL = (url) => {
     const urlPattern = new RegExp(
         "^(https?:\\/\\/)" + // protocol
-        "((([a-zA-Z\\d]([a-zA-Z\\d-]*[a-zA-Z\\d])*)\\.?)+[a-zA-Z]{2,}|" + // domain name
-        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-        "(\\:\\d+)?" + // port
-        "(\\/[-a-zA-Z\\d%@_.~+&:]*)*" + // path
-        "(\\?[;&a-zA-Z\\d%@_.,~+&:=-]*)?" + // query string
-        "(\\#[-a-zA-Z\\d_]*)?$", // fragment locator
+            "((([a-zA-Z\\d]([a-zA-Z\\d-]*[a-zA-Z\\d])*)\\.?)+[a-zA-Z]{2,}|" + // domain name
+            "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+            "(\\:\\d+)?" + // port
+            "(\\/[-a-zA-Z\\d%@_.~+&:]*)*" + // path
+            "(\\?[;&a-zA-Z\\d%@_.,~+&:=-]*)?" + // query string
+            "(\\#[-a-zA-Z\\d_]*)?$", // fragment locator
         "i" // case insensitive
     );
 
@@ -67,7 +67,14 @@ const isValidEmail = (email) => {
 
 const isValidPassword = (password) => {
     const allowedSpecialCharacters = '!@#$%^&*(),.?":{}|<>'; // 사용할 수 있는 특수 문자 정의
-    const specialCharPattern = new RegExp('^[a-zA-Z0-9' + allowedSpecialCharacters.split('').map(char => '\\' + char).join('') + ']*$');
+    const specialCharPattern = new RegExp(
+        "^[a-zA-Z0-9" +
+            allowedSpecialCharacters
+                .split("")
+                .map((char) => "\\" + char)
+                .join("") +
+            "]*$"
+    );
 
     // 비밀 번호 글자수 부족 혹은 과다
     if (password.length < 8 || password.length > 16) {
@@ -82,7 +89,7 @@ const isValidPassword = (password) => {
         return false;
     }
     return true;
-}
+};
 
 module.exports = {
     isValidDate,
@@ -90,5 +97,5 @@ module.exports = {
     isValidMonth,
     isValidURL,
     isValidEmail,
-    isValidPassword
+    isValidPassword,
 };

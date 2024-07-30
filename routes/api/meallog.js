@@ -253,6 +253,37 @@ router.patch("/", authenticateToken, (req, res, next) => {
     });
 });
 
+// 식사 기록 삭제
+router.delete("/", authenticateToken, (req, res, next) => {
+    const { userId } = req.user;
+    const { ml_id } = req.body;
+
+    if (ml_id == null) {
+        return next({
+            code: "VALIDATION_MISSING_FIELD",
+        });
+    }
+
+    const query = `
+        DELETE
+        FROM MEAL_LOG_TB
+        WHERE member_id = ? AND ml_id = ?
+    `;
+    db.execute(query, [userId, ml_id], (err, result) => {
+        if (err || result.affectedRows < 1) {
+            return next({
+                code: "SERVER_INTERNAL_ERROR",
+            });
+        }
+
+        // 삭제 성공
+        return res.success({
+            userId: userId,
+            bsl_id: ml_id,
+        });
+    });
+});
+
 // 가장 최근 기록 가져오기
 router.get("/recent", authenticateToken, (req, res, next) => {
     const { userId } = req.user;

@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', (e) => {
+document.addEventListener("DOMContentLoaded", (e) => {
     document.getElementById("login_button").addEventListener("click", (e) => {
         const email = document.getElementById("login_input_write").value;
 
@@ -28,14 +28,14 @@ document.addEventListener('DOMContentLoaded', (e) => {
 
         // 비밀번호 변경 메일 전송 완료
         return Swal.fire({
-            title: '이메일 전송 완료',
-            text: '비밀번호 변경을 위한 이메일이 전송되었습니다.',
-            icon: 'success',
-            confirmButtonText: '로그인'
+            title: "이메일 전송 완료",
+            text: "비밀번호 변경을 위한 이메일이 전송되었습니다.",
+            icon: "success",
+            confirmButtonText: "로그인",
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = '/';
+                window.location.href = "/";
             }
         });
-    })
+    });
 });

@@ -80,9 +80,14 @@ document.addEventListener("DOMContentLoaded", async (e) => {
                     withCredentials: true,
                 }
             );
-            // console.log(response.data.data.blood_sugar_logs[0].blood_sugar);
-            document.querySelector("#mypage-blood-sugar-div h1").textContent =
-                response.data.data.blood_sugar_logs[0].blood_sugar || 0;
+            if (response.data.data.count > 0) {
+                // console.log(response.data.data.blood_sugar_logs[0].blood_sugar);
+                document.querySelector(
+                    "#mypage-blood-sugar-div h1"
+                ).textContent =
+                    response.data.data.blood_sugar_logs[0].blood_sugar || 0;
+            }
+            // console.log(response.data.data);
         } catch (e) {
             console.log("error", e);
             location.reload();
@@ -95,9 +100,11 @@ document.addEventListener("DOMContentLoaded", async (e) => {
                     withCredentials: true,
                 }
             );
-            // console.log(response.data.data.exercise_logs[0].calories_burned);
-            document.querySelector("#mypage-exercise-div h1").textContent =
-                response.data.data.exercise_logs[0].calories_burned || 0;
+            if (response.data.data.count > 0) {
+                // console.log(response.data.data.exercise_logs[0].calories_burned);
+                document.querySelector("#mypage-exercise-div h1").textContent =
+                    response.data.data.exercise_logs[0].calories_burned || 0;
+            }
         } catch (e) {
             console.log("error", e);
             location.reload();
@@ -107,9 +114,11 @@ document.addEventListener("DOMContentLoaded", async (e) => {
             const response = await fetchGetWithRetry("/api/meal-logs/recent", {
                 withCredentials: true,
             });
-            // console.log(response.data.data.meal_logs[0].calories);
-            document.querySelector("#mypage-meal-div h1").textContent =
-                response.data.data.meal_logs[0].calories || 0;
+            if (response.data.data.count > 0) {
+                // console.log(response.data.data.meal_logs[0].calories);
+                document.querySelector("#mypage-meal-div h1").textContent =
+                    response.data.data.meal_logs[0].calories || 0;
+            }
         } catch (e) {
             console.log("error", e);
             location.reload();
@@ -122,11 +131,15 @@ document.addEventListener("DOMContentLoaded", async (e) => {
                     withCredentials: true,
                 }
             );
-            // console.log(response.data.data.weight_logs[0].weight);
-            document.querySelector("#mypage-weight-div h1").textContent =
-                parseFloat(
-                    Number(response.data.data.weight_logs[0].weight).toFixed(2)
-                ) || 0;
+            if (response.data.data.count > 0) {
+                // console.log(response.data.data.weight_logs[0].weight);
+                document.querySelector("#mypage-weight-div h1").textContent =
+                    parseFloat(
+                        Number(
+                            response.data.data.weight_logs[0].weight
+                        ).toFixed(2)
+                    ) || 0;
+            }
         } catch (e) {
             console.log("error", e);
             location.reload();
@@ -139,21 +152,23 @@ document.addEventListener("DOMContentLoaded", async (e) => {
                     withCredentials: true,
                 }
             );
-            // console.log(
-            //     response.data.data.blood_pressure_logs[0].blood_pressure_min
-            // );
-            // console.log(
-            //     response.data.data.blood_pressure_logs[0].blood_pressure_max
-            // );
-            document.querySelector(
-                "#mypage-blood-pressure-div h1"
-            ).textContent = `${
-                response.data.data.blood_pressure_logs[0].blood_pressure_min ||
-                0
-            }~${
-                response.data.data.blood_pressure_logs[0].blood_pressure_max ||
-                0
-            }`;
+            if (response.data.data.count > 0) {
+                // console.log(
+                //     response.data.data.blood_pressure_logs[0].blood_pressure_min
+                // );
+                // console.log(
+                //     response.data.data.blood_pressure_logs[0].blood_pressure_max
+                // );
+                document.querySelector(
+                    "#mypage-blood-pressure-div h1"
+                ).textContent = `${
+                    response.data.data.blood_pressure_logs[0]
+                        .blood_pressure_min || 0
+                }~${
+                    response.data.data.blood_pressure_logs[0]
+                        .blood_pressure_max || 0
+                }`;
+            }
         } catch (e) {
             console.log("error", e);
             location.reload();

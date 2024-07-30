@@ -1,33 +1,3 @@
-const selectElement = document.getElementById('exercise');
-const selectedValue = selectElement.value;
-let record_date = "";
-let record_time = "";
-
-document.getElementById('bs-submit').addEventListener('click', async () => {
-    // document.getElementById('my-select');
-    // const selectedValue = selectElement.value; // 여기서 선택된 값을 가져옵니다.
-    try {
-        const response = await axios.post('/api/exercise-logs', {
-            exercise_type: document.getElementById("exercise").value,
-            exercise_time: document.getElementById("duration").value,
-            calories_burned: document.getElementById("result").textContent.split(" ")[3] || 0, // 소모 칼로리 값 가져오기
-            record_time: `${record_date} ${record_time}`,
-            // 2024-07-24 09:00:00
-        });
-        const exercise = response.data.data; // API 응답에서 운동 데이터를 가져옴
-        console.log('exercise success:', exercise); // 수정된 부분
-        Swal.fire({
-            icon: "success",
-            title: "운동 기록이 성공적으로 저장되었습니다."
-          });; // 성공적으로 저장되었음을 알림
-    } catch (error) {
-        console.error('exercise error:', error); // 에러 로그를 콘솔에 출력
-        Swal.fire({
-            icon: "error",
-            title: "운동 기록 저장 중 오류가 발생했습니다. 다시 시도해주세요."
-          });; // 오류 알림
-    }
-});
 
 
 
@@ -86,10 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
             calendar.appendChild(dayDiv);
         }
         updateHeader(selectedDate); // 선택된 날짜로 헤더 업데이트
-        record_date = formatDate(selectedDate);
-
-        // console.log(record_date);
-        // console.log(record_time);
     }
 
     // Infinite scroll logic
@@ -128,70 +94,23 @@ document.addEventListener("DOMContentLoaded", () => {
         const minutes = String(now.getMinutes()).padStart(2, "0");
         const currentTimeString = `${hours}:${minutes}`;
         document.getElementById("current-time").textContent = currentTimeString;
-
-        record_time = `${hours}:${minutes}:00`
     }
 
     // 현재 시간 표시 초기 호출
     displayCurrentTime();
+    });
 
-    // 운동 선택 창
-    const exerciseCalories = {
-        걷기: 3.5,
-        달리기: 9.8,
-        자전거: 7.0,
-        수영: 8.0,
-        줄넘기: 12.0,
-        계단오르기: 8.5,
-        에어로빅: 6.0,
-        근력운동: 4.5,
-        요가: 4.0,
-        필라테스: 5.0,
-        테니스: 7.5,
-        축구: 7.0,
-        농구: 8.0,
-        배드민턴: 6.0,
-        볼링: 2.5,
-        댄스: 7.0,
-        탁구: 4.5,
-        하이킹: 6.5,
-        크로스핏: 9.5,
-        체조: 5.5,
-        스쿼시: 9.0,
-        복싱: 10.0,
-        자유웨이트: 6.0,
-        사이클링: 8.0,
-        롤러블레이딩: 7.0,
-        킥복싱: 9.0,
-        하키: 8.0,
-        스키: 7.5,
-        스노우보드: 6.5,
-        서핑: 7.0,
-        스쿼트: 5.0,
-        유산소운동: 6.5,
-        전신운동: 8.5,
-    };
+// 날짜 시간 무게 콘솔에 기록 남기기
+document
+    .getElementById("weight-button")
+    .addEventListener("click", function () {
+        const weightInfo = document.getElementById("weight-information").value;
 
-    // 시간 입력시 자동으로 소모 칼로리 계산
-    function calculateCalories() {
-        const exercise = document.getElementById("exercise").value;
-        const duration = parseFloat(document.getElementById("duration").value);
+        // 콘솔에 기록 남기기
+        console.log(
+            `체중기록:${weightInfo}kg`
+        );
 
-        if (!exercise || isNaN(duration) || duration <= 0) {
-                  Swal.fire({
-            icon: "error",
-            title: "운동 종류와 시간을 정확히 선택해주세요."
-          });; // 오류 알림
-            return;
-        }
-
-        const caloriesPerMinute = exerciseCalories[exercise];
-        const totalCalories = caloriesPerMinute * duration;
-
-        document.getElementById(
-            "result"
-        ).innerText = `소모 칼로리 : ${totalCalories.toFixed(2)} kcal`;
-    }
-
-    window.calculateCalories = calculateCalories;
-});
+        const recordItem = document.createElement("li");
+        recordItem.textContent = `체중기록:${weightInfo}kg`;
+    });

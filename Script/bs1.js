@@ -50,10 +50,16 @@ async function saveBloodSugar(selectedValue) {
 
         const exercise = response.data.data; // API 응답에서 운동 데이터를 가져옴
         console.log('exercise success:', exercise); // 수정된 부분
-        alert("혈당 기록이 저장되었습니다."); // 성공적으로 저장되었음을 알림
+        Swal.fire({
+            icon: "success",
+            title: "혈당 기록이 성공적으로 저장되었습니다."
+          });; // 성공적으로 저장되었음을 알림
     } catch (error) {
         console.error('exercise error:', error); // 에러 로그를 콘솔에 출력
-        alert("혈당 기록 저장 중 오류가 발생했습니다."); // 오류 알림
+        Swal.fire({
+            icon: "error",
+            title: "혈당 기록 저장 중 오류가 발생했습니다. 다시 시도해주세요."
+          });; // 오류 알림
     }
 }
 
@@ -78,25 +84,6 @@ mySelect.addEventListener('change', function () {
 
 
 
-
-
-// document.getElementById('bs-submit').addEventListener('click', async () => {
-//     // document.getElementById('my-select');
-//     // const selectedValue = selectElement.value; // 여기서 선택된 값을 가져옵니다.
-//     try {
-//         const response = await axios.post('/api/blood-sugar-logs', {
-//             blood_sugar: document.getElementById("record-bs-before").value,
-//             record_type: document.getElementById("my-select").value,
-//             record_time: `${record_date} ${record_time}`,
-//             comments: document.getElementById("eat-memo").value,
-//         });
-//         const exercise = response.data.data; // API 응답에서 운동 데이터를 가져옴
-//         console.log('exercise success:', exercise); // 수정된 부분
-//     } catch (error) {
-//         console.error('exercise error:', error); // 에러 로그를 콘솔에 출력
-//         // 2024-07-24 09:00:00
-//     }
-// });
 
 function formatDate(date) {
     const year = date.getFullYear();
@@ -209,96 +196,60 @@ displayCurrentTime();
 
 // HTML 요소들을 가져오기
 const mySelect = document.getElementById('my-select');
+const div1 = document.getElementById('div1');
 const div2 = document.getElementById('div2');
-const div3 = document.getElementById('div3');
 
 
 // 초기화할 때 div2의 초기 내용 저장
-const initialDiv2Content = div2.innerHTML;
+const initialDiv1Content = div1.innerHTML;
 
 // select 요소의 onchange 이벤트 핸들러 설정
 mySelect.addEventListener('change', function () {
     const selectedOption = mySelect.value;
 
 
-    if (selectedOption === '아침') {
-        // 다른 옵션이 선택된 경우 div2를 숨기고 초기 내용으로 복원
-        div3.style.display = 'none';
-        div2.innerHTML = initialDiv2Content;
-        // div3의 내용을 숨기고 초기화
-        div3.style.visibility = 'hidden';
-    } else if (selectedOption === '점심') {
-        div3.style.display = 'none';
-        div2.innerHTML = initialDiv2Content;
-        div3.style.visibility = 'hidden';
-    } else if (selectedOption === '저녁') {
-        div3.style.display = 'none';
-        div2.innerHTML = initialDiv2Content;
-    } else if (selectedOption === '공복') {
-        // 옵션 4 선택 시 div3의 내용을 div2로 이동
-        const div3Content = div3.innerHTML;
-        div2.innerHTML = div3Content;
-        div2.style.display = ''; // div2를 보이게 설정
+    if (selectedOption === '아침 식후') {
+        // 다른 옵션이 선택된 경우 div1를 숨기고 초기 내용으로 복원
+        div2.style.display = 'none';
+        div1.innerHTML = initialDiv2Content;
+        // div2의 내용을 숨기고 초기화
+        div2.style.visibility = 'hidden';
+    } else if (selectedOption === '점심 식후') {
+        div2.style.display = 'none';
+        div1.innerHTML = initialDiv2Content;
+        div2.style.visibility = 'hidden';
+    } else if (selectedOption === '저녁 식후') {
+        div2.style.display = 'none';
+        div1.innerHTML = initialDiv2Content;
+        div2.style.visibility = 'hidden';
+    } else if (selectedOption === '아침 식전') {
+        // 옵션 4 선택 시 div2의 내용을 div1로 이동
+        const div2Content = div2.innerHTML;
+        div1.innerHTML = div2Content;
+        div1.style.display = ''; // div1를 보이게 설정
 
-        // div3의 내용 초기화 (선택 시 필요에 따라)
-        // div3.innerHTML = '';
+        // div1의 내용 초기화 (선택 시 필요에 따라)
+        // div1.innerHTML = '';
+    } else if (selectedOption === '점심 식전') {
+        const div2Content = div2.innerHTML;
+        div1.innerHTML = div2Content;
+        div1.style.display = '';
+    } else if (selectedOption === '저녁 식전') {
+        const div2Content = div2.innerHTML;
+        div1.innerHTML = div2Content;
+        div1.style.display = '';
     } else if (selectedOption === '취침 전') {
-        const div3Content = div3.innerHTML;
-        div2.innerHTML = div3Content;
-        div2.style.display = '';
+        const div2Content = div2.innerHTML;
+        div1.innerHTML = div2Content;
+        div1.style.display = '';
     } else if (selectedOption === '실시간') {
-        const div3Content = div3.innerHTML;
-        div2.innerHTML = div3Content;
-        div2.style.display = '';
+        const div2Content = div2.innerHTML;
+        div1.innerHTML = div2Content;
+        div1.style.display = '';
     }
 
 });
 
-// 사용자가 입력한 시간 설정 함수(초는 미인식)
-function setTime() {
-    const timeInput = document.getElementById('time-input').value;
-
-    // 입력값의 길이 확인
-    if (timeInput.length > 4) {
-        document.getElementById('time-input').value = ''; // 입력 초기화
-        document.getElementById('setTime').textContent = ''; // 시간 표시 초기화
-        return; // 5자 이상일 경우 함수 종료
-    }
-
-    // 입력값이 4자 미만인 경우 시간 표시 초기화
-    if (timeInput.length !== 4) {
-        document.getElementById('setTime').textContent = '';
-        return; // 4자리 입력이 아닐 경우 함수 종료
-    }
-
-    // 시간과 분을 분리
-    const hour = parseInt(timeInput.substring(0, 2), 10);
-    const minute = parseInt(timeInput.substring(2, 4), 10);
-    const second = 0; // 초는 0으로 설정
-
-    // 유효성 검사 - 입력 필드가 숫자이고 범위 내에 있는지 확인
-    if (isNaN(hour) || isNaN(minute) ||
-        hour < 0 || hour > 23 ||
-        minute < 0 || minute > 59) {
-        alert('올바른 시간을 입력하세요.');
-        document.getElementById('setTime').textContent = '';
-        return;
-    }
-
-    // 입력된 시간으로 시간 설정
-    const newTime = new Date();
-    newTime.setHours(hour);
-    newTime.setMinutes(minute);
- 
-    // 설정된 시간을 표시
-    const hours = String(newTime.getHours()).padStart(2, '0');
-    const minutes = String(newTime.getMinutes()).padStart(2, '0');
-    const setTimeString = `${hours}:${minutes}`;
-    document.getElementById('setTime').textContent = setTimeString;
-
-    // 시간 입력 폼 숨기기
-    // document.getElementById('time-input').style.display = 'none';
-}
 
 function checkLevelBsBefore() {
     let inputValue = parseFloat(document.getElementById('record-bs-before').value);
@@ -330,5 +281,3 @@ function checkLevelBsAfter() {
         resultBox2.style.backgroundColor = '#FF9999';  // 빨간색 (위험)
     }
 };
-
-

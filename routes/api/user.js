@@ -29,6 +29,7 @@ const {
     isValidDate,
     isValidEmail,
     isValidPassword,
+    isValidNickname,
 } = require("../../utils/validation");
 // 회원 가입
 router.post("/", async (req, res, next) => {
@@ -45,6 +46,7 @@ router.post("/", async (req, res, next) => {
     // TODO : 유효성 검사 전체적으로 다시 확인 (id, 영어만 가능하게)
     // ID 유효성 검사 (영어와 숫자로만, 4~12글자)
     if (userId.length < 4 || userId.length > 12) {
+        console.log("그놈의 아이띠끼ㅃㅆ뿌어ㅃ 씨발@");
         return next({
             code: "VALIDATION_ERROR",
         });
@@ -52,6 +54,7 @@ router.post("/", async (req, res, next) => {
 
     // 비밀번호 유효성 검사 (8이상, 16자 이하)
     if (!isValidPassword(password)) {
+        console.log("그놈의 페쓰워드오류 씨발@");
         return next({
             code: "VALIDATION_ERROR",
         });
@@ -63,7 +66,15 @@ router.post("/", async (req, res, next) => {
     // }
 
     // 닉네임 유효성 검사 (4~20글자)
-    if (nickname.length < 4 || nickname.length > 20) {
+    // if (nickname.length < 3 || nickname.length > 10) {
+    //     return next({
+    //         code: "VALIDATION_ERROR",
+    //     });
+    // }
+
+    // 닉네임 유효성 검사
+    if (!isValidNickname(nickname)) {
+        console.log("그놈의 닉오류 씨발@");
         return next({
             code: "VALIDATION_ERROR",
         });
@@ -71,13 +82,15 @@ router.post("/", async (req, res, next) => {
 
     // 이메일 유효성 검사 (이메일 형식)
     if (!isValidEmail(email)) {
+        console.log("그놈의 이메일오류 씨발@");
         return next({
             code: "VALIDATION_ERROR",
         });
     }
 
     // 성별 유효성 검사 (남성, 여성)
-    if (!["남성", "여성"].includes(gender)) {
+    if (!["남성", "여성"].includes(gender.toLowerCase())) {
+        console.log("그놈의 젠더오류 씨발@");
         return next({
             code: "VALIDATION_ERROR",
         });
@@ -91,6 +104,7 @@ router.post("/", async (req, res, next) => {
     //     });
     // }
     if (!isValidDate(birthDate)) {
+        console.log("그놈의 생일오류 씨발@");
         return next({
             code: "VALIDATION_ERROR",
         });
@@ -125,7 +139,7 @@ router.post("/", async (req, res, next) => {
             (err, results) => {
                 // sql error 또는 등록되지 않은 경우
                 if (err || results.affectedRows < 1) {
-                    console.log(err)
+                    console.log(err);
                     return next({
                         code: "SERVER_INTERNAL_ERROR",
                     });

@@ -70,3 +70,30 @@ h2 {
 input:focus {
     outline: none;
 }
+
+/* wntkd */
+#modify-birthday-year {
+    width: 50px !important;
+}
+
+#modify-birthday-month {
+    width: 30px !important;
+}
+
+#modify-birthday-day {
+    width: 30px !important;
+}
+
+#modify-birthday input {
+    /* width: 40px; */
+    margin-right: 3px;
+    text-align: center;
+}
+
+#modify-birthday div {
+    /* width: 50px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+}

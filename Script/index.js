@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
         navIcon4.classList.remove("selected");
         navIcon5.classList.remove("selected");
     }
-    if (currentUrl == "/sugardiary") {
+    if (['/sugardiary', "/blood-sugar", "/mealrecord", "/bloodpressurelog", "/weight", "/exercise"].includes(currentUrl)) {
         navIcon1.classList.remove("selected");
         navIcon2.classList.remove("selected");
         navIcon3.classList.remove("selected");

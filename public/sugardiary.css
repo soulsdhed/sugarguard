@@ -60,6 +60,7 @@ hr {
     color: rgb(31, 31, 31);
     margin-left: 5px;
 }
+
 .mypage_profile {
     display: flex;
     align-items: center;
@@ -195,6 +196,7 @@ hr {
     font-weight: bold;
     font-size: 16px;
 }
+
 #record-title-text {
     position: relative;
     /* left: 50px; */
@@ -210,10 +212,14 @@ hr {
 }
 
 .close-icon {
+    /* width: 22px;
+    height: 22px; */
+    /* background-color: white; */
     color: red;
-    font-size: 16px;
+    font-size: 18px;
     padding: 2px 6px;
     position: absolute;
+    border-radius: 5px;
     top: 10px;
     right: 10px;
 }
@@ -325,6 +331,7 @@ hr {
         font-size: auto;
         /* transform: translateY(0); */
     }
+
     100% {
         opacity: 0;
         height: 0;
@@ -340,6 +347,7 @@ hr {
         width: 24px;
         height: 24px;
     }
+
     100% {
         width: 0;
         height: 0;
@@ -370,6 +378,7 @@ hr {
     font-size: 24px;
     z-index: 9999;
 }
+
 #inner-loading-screen {
     position: fixed;
     top: 190px;

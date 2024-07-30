@@ -10,16 +10,17 @@
 <!-- 기본 로그인 입력 -->
 <div id="login_main">
     <div id="login_input">
-        <br>
-        <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721706226/001_y4eee9.png" alt="Logo">
-        <h1>Login</h1><br>
-        <input type="text" id="login_input_write" class="login_input_write" placeholder="아이디 또는 이메일"><br>
-        <input type="password" id="password_input_write" class="login_input_write" placeholder="비밀번호"
-            maxlength="16"><br>
+        <div class="login-logo">
+            <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721706226/001_y4eee9.png" alt="Logo">
+            <h1>Login</h1>
+        </div>
+
+        <input type="text" id="login_input_write" class="login_input_write" placeholder="아이디 또는 이메일">
+        <input type="password" id="password_input_write" class="login_input_write" placeholder="비밀번호" maxlength="16">
         <input type="submit" id="login_button" value="로그인">
         <div id="register-link">
             <b><a href="/reset-password-form">비밀번호 재설정</a></b>
-            <b><a href="/join">회원가입</a><br></b>
+            <b><a href="/join">회원가입</a></b>
         </div>
     </div>
 

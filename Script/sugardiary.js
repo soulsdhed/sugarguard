@@ -227,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     apiLink = "/api/meal-logs";
                 }
             } else if (recordClass == "sugar-record") {
-                link = "/bs";
+                link = "/blood-sugar";
                 valueString = "0 mg/dl";
                 if (item != null) {
                     link = `${link}?bsl_id=${item.bsl_id}`;
@@ -238,9 +238,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (
                         ["공복", "취침 전", "실시간"].includes(item.record_type)
                     ) {
-                        timeString = `${
-                            item.record_type
-                        } ${convertToKSTAndFormat(item.record_time)}`;
+                        timeString = `${item.record_type
+                            } ${convertToKSTAndFormat(item.record_time)}`;
                     } else {
                         timeString = `${item.record_type}`;
                     }
@@ -492,9 +491,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (date.toDateString() === selectedDate.toDateString()) {
                     dayDiv.classList.add("selected");
                 }
-                dayDiv.innerHTML = `${date.getDate()}<br>${
-                    daysOfWeek[date.getDay()]
-                }`;
+                dayDiv.innerHTML = `${date.getDate()}<br>${daysOfWeek[date.getDay()]
+                    }`;
                 dayDiv.addEventListener("click", () => {
                     generateCalendar(date); // 새로운 날짜 생성
                     updateHeader(date); // 헤더 업데이트

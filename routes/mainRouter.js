@@ -48,7 +48,7 @@ router.get("/recipe-list", async (req, res) => {
     });
 });
 
-router.get("/bs", (req, res) => {
+router.get("/blood-sugar", (req, res) => {
     res.render("bs");
 }); // 김희은
 

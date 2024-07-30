@@ -49,30 +49,24 @@ html {
 
 #navBar {
     display: flex;
-    /* 플렉스 박스로 설정 */
     color: #ffffff;
-    /* 글자 색을 흰색으로 설정 */
     position: fixed;
-    /* 고정 위치로 설정 */
-    left: 0;
-    /* 왼쪽 0 위치 */
-    right: 0;
-    /* 오른쪽 0 위치 */
+    left: 50%;
     bottom: 0;
-    /* 아래쪽 0 위치 */
+    transform: translateX(-50%);
     justify-content: space-around;
-    /* 아이템들을 균등하게 배치 */
     background-color: rgb(37, 37, 37);
-    /* 배경색을 검정색으로 설정 */
     font-size: 14px;
-    /* 글자 크기를 14px로 설정 */
     padding: 10px 0;
-    /* 상하 여백을 10px로 설정 */
     height: 55px;
-    /* 높이를 60px로 설정 */
     z-index: 1000;
-    /* z-index를 1000으로 설정하여 다른 요소보다 위에 표시 */
+    /* max-width: 480px; */
+    /* max-width: 600px; */
+    width: 100%;
+    box-sizing: border-box;
+    /* padding을 포함한 크기를 맞추기 위해 추가 */
 }
+
 
 #navBar a {
     text-decoration: none;

@@ -1,18 +1,4 @@
-// async api 연결 추가수정?
-document.getElementById('be-submit').addEventListener('click', async () => {
-    try{
-        const response = await axios.post('/api/weight-logs', {
-            weight : document.getElementById("weight-information").value,
-        });
-        const weight = response.date.date;
-        console.log('weight success', weight);
-        } catch (error) {
-            console.log('weight error:', error );
-        }
-});
-
-
-// 날짜 시간 달력 아래부터
+//달력,시간 함수
 function formatDate(date) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // 0부터 시작하므로 +1
@@ -68,6 +54,10 @@ document.addEventListener("DOMContentLoaded", () => {
             calendar.appendChild(dayDiv);
         }
         updateHeader(selectedDate); // 선택된 날짜로 헤더 업데이트
+        record_date = formatDate(selectedDate);
+
+        // console.log(record_date);
+        // console.log(record_time);
     }
 
     // Infinite scroll logic
@@ -98,31 +88,67 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 초기화
     generateCalendar(currentDate);
-
+    
     // 현재 시간 표시 함수
     function displayCurrentTime() {
         const now = new Date();
         const hours = String(now.getHours()).padStart(2, "0");
         const minutes = String(now.getMinutes()).padStart(2, "0");
         const currentTimeString = `${hours}:${minutes}`;
-        document.getElementById("current-time").textContent = currentTimeString;
+        document.getElementById("bp-current-time").textContent = currentTimeString;
+
+        record_time = `${hours}:${minutes}:00`
     }
 
     // 현재 시간 표시 초기 호출
     displayCurrentTime();
-    });
 
-// 날짜 시간 무게 콘솔에 기록 남기기
-document
-    .getElementById("weight-button")
-    .addEventListener("click", function () {
-        const weightInfo = document.getElementById("weight-information").value;
+ 
+});
 
-        // 콘솔에 기록 남기기
-        console.log(
-            `체중기록:${weightInfo}kg`
-        );
 
-        const recordItem = document.createElement("li");
-        recordItem.textContent = `체중기록:${weightInfo}kg`;
-    });
+//post 설정
+const url ='/api/blood-pressure-logs';
+let blood_pressure_min_value=document.getElementById("bloodpressurelog_detail_input_min").value
+let blood_pressure_max_value=document.getElementById("bloodpressurelog_detail_input_max").value
+let bpUserData={
+    blood_pressure_max:blood_pressure_max_value,
+    blood_pressure_min:blood_pressure_min_value
+}
+function bpClick(event) {
+    event.preventDefault();
+    if (blood_pressure_min_value === null || blood_pressure_min_value === undefined) {
+        Swal.fire({
+            icon: "error",
+            title: "이완기 혈압을 입력해주세요"
+          });
+        return next({
+            code: "VALIDATION_MISSING_FIELD",
+        });
+    }
+    else if (blood_pressure_max_value === null || blood_pressure_max_value === undefined) {
+        Swal.fire({
+            icon: "error",
+            title: "수축기 혈압을 입력해주세요"
+          });
+        return next({
+            code: "VALIDATION_MISSING_FIELD",
+        });
+    }
+    bpPostData(url,bpUserData);
+}
+
+//post 함수
+
+async function bpPostData(url,bpUserData) {
+    try {
+        const response = await axios.post(url, bpUserData,
+        {
+            withCredentials: true,
+        });
+        console.log('Success:', response.bpUserData);
+    } catch (error) {
+        console.log('Error:', error);
+
+    }
+}

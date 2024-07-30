@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     apiLink = "/api/weight-logs";
                 }
             } else if (recordClass == "blood-pressure-record") {
-                link = "";
+                link = "bloodpressurelog";
                 valueString = "0~0 mmHg";
                 if (item != null) {
                     link = `${link}?bpl_id=${item.bpl_id}`;

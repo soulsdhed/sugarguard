@@ -1,40 +1,40 @@
-const selectElement = document.getElementById('exercise');
+const selectElement = document.getElementById("exercise");
 const selectedValue = selectElement.value;
 let record_date = "";
 let record_time = "";
 
-document.getElementById('bs-submit').addEventListener('click', async () => {
+document.getElementById("exercise-save").addEventListener("click", async () => {
     // document.getElementById('my-select');
     // const selectedValue = selectElement.value; // 여기서 선택된 값을 가져옵니다.
     try {
-        const response = await axios.post('/api/exercise-logs', {
+        const response = await axios.post("/api/exercise-logs", {
             exercise_type: document.getElementById("exercise").value,
             exercise_time: document.getElementById("duration").value,
-            calories_burned: document.getElementById("result").textContent.split(" ")[3] || 0, // 소모 칼로리 값 가져오기
+            calories_burned:
+                document.getElementById("result").textContent.split(" ")[3] ||
+                0, // 소모 칼로리 값 가져오기
             record_time: `${record_date} ${record_time}`,
             // 2024-07-24 09:00:00
         });
         const exercise = response.data.data; // API 응답에서 운동 데이터를 가져옴
-        console.log('exercise success:', exercise); // 수정된 부분
+        console.log("exercise success:", exercise); // 수정된 부분
         Swal.fire({
             icon: "success",
-            title: "운동 기록이 성공적으로 저장되었습니다."
-          });; // 성공적으로 저장되었음을 알림
+            title: "운동 기록이 성공적으로 저장되었습니다.",
+        }); // 성공적으로 저장되었음을 알림
     } catch (error) {
-        console.error('exercise error:', error); // 에러 로그를 콘솔에 출력
+        console.error("exercise error:", error); // 에러 로그를 콘솔에 출력
         Swal.fire({
             icon: "error",
-            title: "운동 기록 저장 중 오류가 발생했습니다. 다시 시도해주세요."
-          });; // 오류 알림
+            title: "운동 기록 저장 중 오류가 발생했습니다. 다시 시도해주세요.",
+        }); // 오류 알림
     }
 });
 
-
-
 function formatDate(date) {
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // 0부터 시작하므로 +1
-    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // 0부터 시작하므로 +1
+    const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
 }
 
@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const currentTimeString = `${hours}:${minutes}`;
         document.getElementById("current-time").textContent = currentTimeString;
 
-        record_time = `${hours}:${minutes}:00`
+        record_time = `${hours}:${minutes}:00`;
     }
 
     // 현재 시간 표시 초기 호출
@@ -178,10 +178,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const duration = parseFloat(document.getElementById("duration").value);
 
         if (!exercise || isNaN(duration) || duration <= 0) {
-                  Swal.fire({
-            icon: "error",
-            title: "운동 종류와 시간을 정확히 선택해주세요."
-          });; // 오류 알림
+            Swal.fire({
+                icon: "error",
+                title: "운동 종류와 시간을 정확히 선택해주세요.",
+            }); // 오류 알림
             return;
         }
 

@@ -1,16 +1,156 @@
-h4 {
-    font-weight: 400;
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-1Thin.woff2")
+        format("woff2");
+    font-weight: 100;
+    font-style: normal;
 }
 
-#content-main {
-    display: flex;
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-2ExtraLight.woff2")
+        format("woff2");
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-3Light.woff2")
+        format("woff2");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-4Regular.woff2")
+        format("woff2");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-5Medium.woff2")
+        format("woff2");
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-6SemiBold.woff2")
+        format("woff2");
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-7Bold.woff2")
+        format("woff2");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-8ExtraBold.woff2")
+        format("woff2");
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-9Black.woff2")
+        format("woff2");
+    font-weight: 900;
+    font-style: normal;
+}
+
+/* h4 {
+    font-weight: 400;
+} */
+
+#blood-sugar-wrapper {
+    /* display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
     height: 100%;
-    padding: 2%; /* 내부 여백 설정 */
-    box-sizing: border-box; /* 테두리와 여백을 포함하여 크기 계산 */
-    margin-bottom: 50px;
+    box-sizing: border-box;
+    margin-bottom: 50px; */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+hr {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+#blood-sugar-title {
+    margin-top: 17px;
+    margin-bottom: 17px;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#blood-sugar-title img {
+    width: 24px;
+    height: 24px;
+    margin-right: 3px;
+}
+#blood-sugar-title-text {
+    height: 100%;
+    /* width: 100%; */
+    font-size: 18px;
+    font-family: Pretendard;
+    font-weight: 700;
+}
+
+#blood-sugar-title > :first-child {
+    display: flex;
+    flex-direction: row;
+}
+
+/* 뒤로 가기 버튼 */
+#blood-sugar-goback {
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    left: 2px;
+    top: 50%;
+    transform: translate(0%, -50%);
+    z-index: 100;
+    font-size: 20px;
+    text-align: center;
+    line-height: 24px;
+    z-index: 10;
+}
+/* 저장하기 버튼 */
+#blood-sugar-save {
+    position: absolute;
+    height: 24px;
+    right: 2px;
+    top: 50%;
+    transform: translate(0, -50%);
+    z-index: 100;
+    font-size: 13px;
+    text-align: center;
+    line-height: 24px; /* line-height 추가하여 텍스트를 세로로 중앙 정렬 */
+    z-index: 10;
 }
 
 #header {
@@ -64,6 +204,7 @@ h4 {
     width: 100%;
     height: 100%;
     grid-template-columns: 1fr;
+    gap: 10px;
 }
 
 /* Calendar Container */
@@ -77,10 +218,17 @@ h4 {
 #calendar-header1 {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
     flex-wrap: nowrap;
     max-width: 100%;
-    width: 100%; /* 전체 너비 사용 */
+    width: 100%;
     background-color: transparent; /* 배경색 투명 */
+}
+#current-time {
+    /* display: flex; */
+    align-items: right;
+    width: 50px;
 }
 
 #calendar-header {
@@ -132,11 +280,6 @@ h4 {
     font-weight: bold; /* 선택된 날짜의 텍스트 굵게 */
 }
 
-#current-time {
-    /* display: flex; */
-    align-items: right;
-}
-
 /* 공복, 자기전, 실시간 선택시 식후 혈당 창 대신 시간 입력 창이 뜨도록 설정 */
 #div2 {
     display: none; /* Hide the form initially */
@@ -161,6 +304,9 @@ h4 {
 .select-box {
     width: 100%;
     height: 20%;
+    margin-bottom: 10px;
+    font-family: "Pretendard";
+    font-weight: 600;
 }
 
 select {
@@ -174,6 +320,8 @@ select {
     -moz-appearance: none;
     appearance: none;
     outline: none;
+    font-family: "Pretendard";
+    font-weight: 600;
 }
 
 select::-ms-expand {
@@ -207,19 +355,20 @@ select option {
 .box2 {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
     justify-content: space-around;
     background-color: #ffffff;
     width: 100%;
-    height: 100px;
+    height: 150px;
     border-radius: 10px;
-    padding: 2%;
+    padding: 25px;
+    /* margin-top: 10px; */
 }
 
 #time-input {
     font-size: 12px;
     padding: 3px;
-    border: 1px solid #f6f6f6;
+    border: 1px solid #bdbdbd;
     border-radius: 20px;
     height: 25px;
     width: 100px;
@@ -229,16 +378,33 @@ select option {
 
 #record-bs-before,
 #record-bs-after {
-    border: solid 2px #f0f0f0;
-    border-radius: 5px;
+    border: 0;
+    border-bottom: solid 1px #bdbdbd;
     height: 25px;
     width: 80px;
     text-align: center;
+    font-family: "Pretendard" !important;
 }
 
 #eat-memo {
-    height: 50px;
-    width: 90%;
-    border: solid 2px #f0f0f0;
-    border-radius: 10px;
+    height: 80px;
+    width: 100%;
+    border: solid 1px #bdbdbd;
+    font-family: "Fresentation" !important;
+    /* font-size: 18px; */
+    resize: none;
+    margin-top: 5px;
+    padding: 3px;
+    text-decoration: none;
+}
+#box-inner {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+textarea:focus,
+input:focus {
+    outline: none;
 }

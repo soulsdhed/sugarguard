@@ -1,31 +1,31 @@
 {% extends 'index.html' %} {% block content %}
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 <link rel="stylesheet" href="bs.css">
 
-<div id="content-main">
-    <div id="header">
-        <!-- Header -->
-        <button class="header-btn" id="back" onclick="history.back()">
-            <h3><</h3>
-        </button>
-        <div id="header-title">
+<div id="blood-sugar-wrapper">
+    <div id="blood-sugar-title">
+        <!-- 타이틀 문자열이 적히는 곳 -->
+        <div>
             <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721719247/blood_h0b2io.png" alt="">
-            <h3>혈당 기록하기</h3>
+            <div id="blood-sugar-title-text">혈당 기록하기</div>
         </div>
-        <button type="submit" class="header-btn" id="bs-submit">
-            <h4>저장하기</h4>
-        </button>
+        <!-- 뒤로 가기 버튼 -->
+        <div id="blood-sugar-goback">
+            <i class="fa-solid fa-angle-left"></i>
+        </div>
+        <div id="blood-sugar-save">
+            <span>저장하기</span>
+        </div>
     </div>
-    <br>
-    <hr color="#e3e3e3"><br>
+    <hr />
 
     <!-- 중앙 달력 -->
     <div id="calendar-header1">
         <div id="calendar-header"></div>
-        <div id="current-time"></div>
+        <div>
+            <h4 id="current-time"></h4>
+        </div>
     </div>
-    <br>
-    <hr color="#e3e3e3"><br>
     <div id="calendar-container">
         <div id="calendar"></div>
     </div>
@@ -52,25 +52,27 @@
             <div>
                 <h5>혈당</h5>
             </div>
-            <div><input type="number" id="record-bs-before" min="0" max="999" onkeyup="checkLevelBsBefore()" />mg/dL
+            <div id="box-inner" clsss="box1-inner">
+                <input type="number" id="record-bs-before" min="0" max="999" onkeyup="checkLevelBsBefore()" />
+                <h5>mg/dL</h5>
             </div>
         </div>
 
-        <form id="div2" style="visibility: hidden;">
+        <!-- <form id="div2" style="visibility: hidden;">
             <div class="color-box" id="resultBox2" onchange="checkLevelBsAfter()"></div>
             <div>
                 <h5>혈당</h5>
             </div>
             <div><input type="number" id="record-bs-after" min="0" max="999" onkeyup="checkLevelBsAfter()" />mg/dL
             </div>
-
-        </form>
+        </form> -->
+        <div class="box2">
+            <h5>특이사항</h5>
+            <textarea id="eat-memo" rows="4" cols="50"></textarea>
+        </div>
     </div>
 
-    <div class="box2">
-        <h5>특이사항</h5>
-        <input type="text" id="eat-memo">
-    </div>
+
 
 </div>
 </div>

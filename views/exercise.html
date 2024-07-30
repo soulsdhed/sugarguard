@@ -3,20 +3,24 @@
 <link rel="stylesheet" href="exercise.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-<div id="content-main">
-    <div id="header">
-        <!-- Header -->
-        <button class="header-btn" id="back" onclick="history.back()"><h3><</h3>
-        </button>
-        <div id="header-title">
+<div id="exercise-wrapper">
+    <div id="exercise-title">
+        <!-- 타이틀 문자열이 적히는 곳 -->
+        <div>
             <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721719663/002_cuhgi9.png" alt="">
-            <h3>운동 기록하기</h3>
+            <div id="exercise-title-text">운동 기록하기</div>
         </div>
-        <button type="submit" class="header-btn" id="bs-submit">
-            <h4>저장하기</h4>
-        </button>
+        <!-- 뒤로 가기 버튼 -->
+        <div id="exercise-goback">
+            <i class="fa-solid fa-angle-left"></i>
+        </div>
+        <div id="exercise-save">
+            <span>저장하기</span>
+        </div>
     </div>
-    <br><hr color="#e3e3e3"><br>
+    <hr />
+
+
     <!-- 중앙 달력 -->
     <div id="calendar-header1">
         <div id="calendar-header"></div>
@@ -24,12 +28,11 @@
             <h4 id="current-time"></h4>
         </div>
     </div>
-    <br><hr color="#e3e3e3"><br>
     <div id="calendar-container">
         <div id="calendar"></div>
     </div>
 
-    <div class="select-box">
+    <!-- <div class="select-box">
         <select id="my-select">
             <option value="아침">아침</option>
             <option value="점심">점심</option>
@@ -38,7 +41,7 @@
             <option value="자기전">자기전</option>
             <option value="실시간">실시간</option>
         </select>
-    </div>
+    </div> -->
 
     <!-- 중앙 -->
     <div class="block-container">
@@ -89,10 +92,13 @@
             <label for="duration">
                 <h5>운동 시간 (분) :</h5>
             </label>
-            <input type="number" id="duration" min="1" step="1" onkeyup="calculateCalories()" />
+            <div class="box1-inner">
+                <input type="number" id="duration" min="1" step="1" onkeyup="calculateCalories()" />
+                <h5>분</h5>
+            </div>
         </div>
 
-        <div class="box3" onchange="calculateCalories()">
+        <div class="box1" onchange="calculateCalories()">
             <h4 id="result">소모 칼로리 : </h4>
         </div>
     </div>

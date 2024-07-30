@@ -1,44 +1,62 @@
 {% extends 'index.html' %} {% block content %}
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="bloodpressurelog.css">
 
-<div id="bloodpressurelog">
-    <div id="title">
-        <a href="/sugardiary" id="bloodpressurelog_background"><img src="recipe-background.png" alt=""></a>
-        <h2>혈압기록</h2>
-        <input type="submit" id="bloodpressurelog-button" value="저장" onclick="bpClick(event)">
-    </div><br>
-    <hr color="#e3e3e3"><br>
+<div id="bp-wrapper">
+    <div id="bp-title">
+        <!-- 타이틀 문자열이 적히는 곳 -->
+        <div>
+            <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721983336/%EC%A0%9C%EB%AA%A9%EC%9D%84-%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94_-009_basbm8.png"
+                alt="">
+            <div id="bp-title-text">혈압 기록하기</div>
+        </div>
+        <!-- 뒤로 가기 버튼 -->
+        <div id="bp-goback">
+            <i class="fa-solid fa-angle-left"></i>
+        </div>
+        <div id="bp-save">
+            <span>저장하기</span>
+        </div>
+    </div>
+    <hr />
+
     <div id="calendar-header1">
         <div id="calendar-header"></div>
         <div>
             <h4 id="bp-current-time"></h4>
         </div>
     </div>
-    <br><hr color="#e3e3e3"><br>
     <div id="calendar-container">
         <div id="calendar"></div>
-    </div><br>
-    <hr color="#e3e3e3"><br>
-    <div id="bloodpressurelog_main_max">
-            <div id="bloodpressurelog_main_content_title">
-                <h2>수축기혈압</h2>
-            </div>
-            <div id="bloodpressurelog_main_content">
-                <input type="text" id="bloodpressurelog_detail_input_max">
-                <h3>mmHg</h3>
-            </div>
     </div>
-    <div id="bloodpressurelog_main_min">
-        <div id="bloodpressurelog_main_content_title">
-            <h2>이완기혈압</h2>
+
+    <div class="block-container">
+        <div class="box1">
+            <label>
+                <h5>수축기 혈압</h5>
+            </label>
+            <div class="bloodpressurelog_main_content">
+                <input type="text" id="bloodpressurelog_detail_input_max">
+                <h5>mmHg</h5>
+            </div>
         </div>
-        <div id="bloodpressurelog_main_content">
-            <input type="text" id="bloodpressurelog_detail_input_min">
-            <h3>mmHg</h3>
+        <div class="box1">
+            <label>
+                <h5>이완기 혈압</h5>
+            </label>
+            <div class="bloodpressurelog_main_content">
+                <input type="text" id="bloodpressurelog_detail_input_min">
+                <h5>mmHg</h5>
+            </div>
         </div>
+        <div class="box2">
+            <h5>특이사항</h5>
+            <textarea id="bp-memo" rows="4" cols="50"></textarea>
+        </div>
+    </div>
 </div>
-</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="bp-bloodpressurelog.js"></script>
 {% endblock %}

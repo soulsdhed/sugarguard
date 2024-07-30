@@ -89,18 +89,28 @@ document.addEventListener("DOMContentLoaded", () => {
     generateCalendar(currentDate);
 
     // 현재 시간 표시 함수
-    function displayCurrentTime() {
-        const now = new Date();
-        const hours = String(now.getHours()).padStart(2, "0");
-        const minutes = String(now.getMinutes()).padStart(2, "0");
-        const currentTimeString = `${hours}:${minutes}`;
-        document.getElementById("current-time").textContent = currentTimeString;
+    // function displayCurrentTime() {
+    //     const now = new Date();
+    //     const hours = String(now.getHours()).padStart(2, "0");
+    //     const minutes = String(now.getMinutes()).padStart(2, "0");
+    //     const currentTimeString = `${hours}:${minutes}`;
+    //     document.getElementById("current-time").textContent = currentTimeString;
 
-        record_time = `${hours}:${minutes}:00`;
-    }
+    //     record_time = `${hours}:${minutes}:00`;
+    // }
+    // displayCurrentTime();
 
-    // 현재 시간 표시 초기 호출
-    displayCurrentTime();
+    // // 현재 시간 표시 초기 호출
+    const now = new Date();
+    // 왼쪽 시간나타내는거
+    window.addEventListener('DOMContentLoaded', (event) => {
+    // 날짜와 시간을 포맷에 맞게 설정
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    // 날짜와 시간 입력 필드에 설정
+    document.getElementById('time').value = `${hours}:${minutes}`;
+    
+
 
     // 선택하고 저장 버튼을 누를 때 기록목록에 기록이 남기는 곳
     document
@@ -215,3 +225,4 @@ function formatDateTime(dateString) {
     const seconds = String(date.getSeconds()).padStart(2, "0");
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
+});

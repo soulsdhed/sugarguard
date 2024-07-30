@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateHeader(date); // 선택된 날짜로 헤더 업데이트
         console.log("Month:", date.getMonth() + 1); // 0부터 시작하므로 +1
         console.log("Day:", date.getDate());
+        updateChart(); // 차트 업데이트 함수 호출
     }
 
     function getParameterByName(name) {
@@ -72,4 +73,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 )}?date=${formattedDate}`;
             });
         });
+});
+
+// .day 요소에 클릭 이벤트 추가
+document.querySelectorAll(".day").forEach((element) => {
+    element.addEventListener("click", () => {
+        updateChart(); // 차트 업데이트 함수 호출
+    });
 });

@@ -1,3 +1,13 @@
+// API 연동 문제
+
+// 아침 식전 ~ 저녁 식후, 취침 전 등 중간에 공백 들어간 옵션들만 오류 남.
+// 공복, 실시간은 제대로 연동
+// 공복, 실시간도 '아침 식전 ~ 저녁 식후, 취침 전 등 공백 들어간 옵션' 선택 후 다시 선택하면 오류난 횟수만큼 공복, 실시간 값이 입력됨
+// ex3) 2번 오류난 후 공복 입력시 3번 등록
+
+// 식전, 식후 혈당 범위 제대로 됨
+// css 맞추기
+
 const selectElement = document.getElementById('bs');
 // const selectedValue = selectElement.value;
 let record_date = "";
@@ -84,9 +94,6 @@ document.getElementById('bs-submit').addEventListener('click', async () => {
 });
 
 // 날짜와 시간을 표시하는 함수
-
-
-
 
 function formatDate(date) {
     const year = date.getFullYear();

@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (recordClass == "exercise-record") {
             link = "/exercise";
         } else if (recordClass == "weight-record") {
-            link = "";
+            link = "/weight";
         } else if (recordClass == "blood-pressure-record") {
             link = "";
         } else if (recordClass == "mealrecord-record") {

@@ -1,7 +1,12 @@
-document.addEventListener("DOMContentLoaded", () => {
-    let chart;
+let chart;
 
-    const ctx = document.getElementById("mainChart2").getContext("2d");
+document.addEventListener("DOMContentLoaded", () => {
+    const ctx = document.getElementById("mainChart2")?.getContext("2d");
+
+    if (!ctx) {
+        console.error("Canvas element with id 'mainChart2' not found.");
+        return;
+    }
 
     const timeLabels = [
         "06:00",
@@ -22,18 +27,13 @@ document.addEventListener("DOMContentLoaded", () => {
         return values;
     }
 
-    // const caloriesBurned1 = getRandomValues(7, 200, 2000);
-    // const caloriesBurned2 = getRandomValues(7, 200, 2000);
-    // const caloriesBurned3 = getRandomValues(7, 200, 2000);
-    // const caloriesBurned4 = getRandomValues(7, 200, 2000);
-
     const generateData = () => {
         return {
             labels: timeLabels,
             datasets: [
                 {
                     label: "Data 1",
-                    data: getRandomValues(10, 200, 2000),
+                    data: getRandomValues(7, 200, 2000),
                     borderColor: "rgba(255, 99, 132, 1)", // 빨간색
                     backgroundColor: "rgba(255, 99, 132, 0.1)",
                     pointBackgroundColor: "rgba(255, 99, 132, 1)",
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 },
                 {
                     label: "Data 3",
-                    data: getRandomValues(10, 50, 1500),
+                    data: getRandomValues(7, 50, 1500),
                     borderColor: "rgba(54, 102, 220, 1)", // 파란색
                     backgroundColor: "rgba(54, 102, 220, 0.1)",
                     pointBackgroundColor: "rgba(54, 162, 235, 1)",
@@ -118,4 +118,14 @@ document.addEventListener("DOMContentLoaded", () => {
         },
     };
     chart = new Chart(ctx, config);
+    // 차트를 업데이트하는 함수
+    // 차트를 업데이트하는 함수
+    function updateChart() {
+        if (chart) {
+            chart.data = generateData();
+            chart.update();
+            console.log("Chart updated"); // 업데이트 시 콘솔에 로그 출력
+        }
+    }
+    window.updateChart = updateChart;
 });

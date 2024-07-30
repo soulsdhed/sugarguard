@@ -1,5 +1,149 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-1Thin.woff2")
+        format("woff2");
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-2ExtraLight.woff2")
+        format("woff2");
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-3Light.woff2")
+        format("woff2");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-4Regular.woff2")
+        format("woff2");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-5Medium.woff2")
+        format("woff2");
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-6SemiBold.woff2")
+        format("woff2");
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-7Bold.woff2")
+        format("woff2");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-8ExtraBold.woff2")
+        format("woff2");
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Freesentation";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-9Black.woff2")
+        format("woff2");
+    font-weight: 900;
+    font-style: normal;
+}
+
+hr {
+    width: 100%;
+    margin-bottom: 15px;
+}
 
 #weight-title {
+    margin-top: 17px;
+    margin-bottom: 17px;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#weight-title img {
+    width: 24px;
+    height: 24px;
+    margin-right: 3px;
+}
+#weight-title-text {
+    height: 100%;
+    /* width: 100%; */
+    font-size: 18px;
+    font-family: Pretendard;
+    font-weight: 700;
+}
+
+#weight-title > :first-child {
+    display: flex;
+    flex-direction: row;
+}
+
+/* 뒤로 가기 버튼 */
+#weight-goback {
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    left: 2px;
+    top: 50%;
+    transform: translate(0%, -50%);
+    z-index: 100;
+    font-size: 20px;
+    text-align: center;
+    line-height: 24px;
+    z-index: 10;
+}
+
+/* 저장하기 버튼 */
+#weight-save {
+    position: absolute;
+    height: 24px;
+    right: 2px;
+    top: 50%;
+    transform: translate(0, -50%);
+    z-index: 100;
+    font-size: 13px;
+    text-align: center;
+    line-height: 24px; /* line-height 추가하여 텍스트를 세로로 중앙 정렬 */
+    z-index: 10;
+}
+
+#weight-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* #weight-title {
     text-align: center;
     color: rgba(0, 0, 0, 0.474);
 }
@@ -7,7 +151,7 @@
 #weight-title h2 {
     position: relative;
     top: 20px;
-}
+} */
 
 #weight-button {
     position: absolute;
@@ -28,33 +172,33 @@
 #weight-page-background img {
     max-width: 20px;
 }
-
-/* #calendar-header1 hr {
-    position: relative;
-    
-} */
-
+/* Calendar Container */
 #calendar-container {
     width: 100%;
-    max-width: 100%;
-    /* 화면 너비에 맞게 조정 */
+    max-width: 100%; /* 화면 너비에 맞게 조정 */
     margin: auto;
-    padding-bottom: 18px;
-    /* 네비게이션 바와의 간격을 위해 추가 */
+    padding-bottom: 18px; /* 네비게이션 바와의 간격을 위해 추가 */
 }
 
 #calendar-header1 {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
     flex-wrap: nowrap;
     max-width: 100%;
     width: 100%;
-    /* 전체 너비 사용 */
-    background-color: transparent;
-    /* 배경색 투명 */
+    background-color: transparent; /* 배경색 투명 */
+}
+#current-time {
+    /* display: flex; */
+    align-items: right;
+    width: 50px;
 }
 
 #calendar-header {
+    position: relative;
+    bottom: 2px;
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
@@ -62,67 +206,49 @@
     margin-bottom: 5px;
     margin-left: 5px;
     margin-right: 5px;
-    font-size: 1.2em;
-    /* 더 큰 폰트 크기 */
+    font-size: 1.2em; /* 더 큰 폰트 크기 */
     font-weight: bold;
-    width: 85%;
-    /* 전체 너비 사용 */
-    background-color: transparent;
-    /* 배경색 투명 */
+    width: 85%; /* 전체 너비 사용 */
+    background-color: transparent; /* 배경색 투명 */
 }
 
 #calendar {
     display: flex;
-    flex-wrap: nowrap;
-    /* 날짜들을 한 줄로 나열 */
+    flex-wrap: nowrap; /* 날짜들을 한 줄로 나열 */
     align-items: center;
     justify-content: space-between;
     padding: 2px;
     box-sizing: border-box;
-    gap: 10px;
-    /* 날짜 사이 간격 */
-    background-color: transparent;
-    /* 배경색 투명 */
+    gap: 10px; /* 날짜 사이 간격 */
+    background-color: transparent; /* 배경색 투명 */
 }
 
 #calendar .day {
-    flex: 0 0 11.6%;
-    /* 7일이 한 줄에 들어가게 설정 */
-    height: 70px;
-    /* 날짜 셀의 높이 */
-    text-align: center;
-    /* 텍스트 중앙 정렬 */
-    width: 30px;
-    /* 날짜 셀의 너비 */
-    height: 70px;
-    /* 날짜 셀의 높이 */
-    text-align: center;
-    /* 텍스트 중앙 정렬 */
+    flex: 0 0 11.6%; /* 7일이 한 줄에 들어가게 설정 */
+    height: 70px; /* 날짜 셀의 높이 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    width: 30px; /* 날짜 셀의 너비 */
+    height: 70px; /* 날짜 셀의 높이 */
     font-size: 13px;
     padding: 5px;
-    cursor: pointer;
-    /* 클릭 가능한 요소로 설정 */
+    cursor: pointer; /* 클릭 가능한 요소로 설정 */
     display: flex;
     align-items: center;
-    justify-content: center;
-    /* 내용 중앙 정렬 */
-    background-color: #FFFFFF;
-    /* 날짜 셀 배경색 투명 */
+    justify-content: center; /* 내용 중앙 정렬 */
+    background-color: #ffffff; /* 날짜 셀 배경색 투명 */
     border-radius: 60px;
 }
 
 #calendar .day.selected {
-    background-color: rgb(65, 61, 61);
-    /* 선택된 날짜의 배경색 */
-    color: white;
-    /* 선택된 날짜의 텍스트 색상 */
-    font-weight: bold;
-    /* 선택된 날짜의 텍스트 굵게 */
+    background-color: rgb(65, 61, 61); /* 선택된 날짜의 배경색 */
+    color: white; /* 선택된 날짜의 텍스트 색상 */
+    font-weight: bold; /* 선택된 날짜의 텍스트 굵게 */
 }
 
 #current-time {
     /* display: flex; */
     align-items: right;
+    width: 50px;
 }
 
 #weigth-record {
@@ -152,4 +278,73 @@
     border-radius: 15px;
     align-items: center;
     justify-content: center;
+}
+
+.box1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #ffffff;
+    width: 100%;
+    height: 50px;
+    border-radius: 10px;
+}
+
+.box2 {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: space-around;
+    background-color: #ffffff;
+    width: 100%;
+    height: 150px;
+    border-radius: 10px;
+    padding: 25px;
+    /* margin-top: 10px; */
+}
+
+textarea {
+    font-family: "Pretendard";
+}
+
+#eat-memo {
+    height: 80px;
+    width: 100%;
+    border: solid 1px #bdbdbd;
+    font-family: "Pretendard" !important;
+    /* font-size: 18px; */
+    resize: none;
+    margin-top: 5px;
+    padding: 3px;
+    text-decoration: none;
+}
+
+textarea:focus,
+input:focus,
+button:focus {
+    outline: none;
+}
+
+#box-inner {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+#weight-content {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+#weight-input {
+    border: 0;
+    border-bottom: solid 1px #bdbdbd;
+    height: 25px;
+    width: 80px;
+    text-align: center;
+    font-family: "Pretendard" !important;
 }

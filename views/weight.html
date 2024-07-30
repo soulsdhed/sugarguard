@@ -2,27 +2,55 @@
 <link rel="stylesheet" href="weight.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-<div id="weight">
+<div id="weight-wrapper">
     <div id="weight-title">
+        <!-- 타이틀 문자열이 적히는 곳 -->
+        <div>
+            <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721888337/image-removebg-preview_3_t28f17.png"
+                alt="">
+            <div id="weight-title-text">체중 기록하기</div>
+        </div>
+        <!-- 뒤로 가기 버튼 -->
+        <div id="weight-goback">
+            <i class="fa-solid fa-angle-left"></i>
+        </div>
+        <div id="weight-save">
+            <span>저장하기</span>
+        </div>
+    </div>
+    <hr />
+
+    <!-- <div id="weight-title">
         <h2>체중 기록하기</h2>
         <a href="/sugardiary" id="weight-page-background"><img src="recipe-background.png" alt=""></a>
         <input type="submit" id="weight-button" value="저장">
     </div>
-    <br><hr color="#e3e3e3"><br>
+    <br>
+    <hr color="#e3e3e3"><br> -->
     <div id="calendar-header1">
         <div id="calendar-header"></div>
         <div>
             <h4 id="current-time"></h4>
         </div>
     </div>
-    <br><hr color="#e3e3e3"><br>
     <div id="calendar-container">
         <div id="calendar"></div>
     </div>
-    <h2>체중 기록</h2>
-    <div id="weight-record-box">
-        <input type="text" name="weight-information" id="weight-information" value="">
-        <h2>kg</h2>
+
+    <div id="weight-content">
+        <div class="box1" id="div1">
+            <h5>체중</h5>
+            <div id="box-inner">
+                <input type="number" id="weight-input" min="0" max="999" onkeyup="checkLevelBsBefore()" />
+                <h5>mg/dL</h5>
+            </div>
+        </div>
+        <div class="box2">
+            <h5>특이사항</h5>
+            <textarea id="eat-memo" rows="4" cols="50"></textarea>
+        </div>
+
+
     </div>
 </div>
 

@@ -1,28 +1,31 @@
 // async api 연결 추가수정?
-const selectElement = document.getElementById('weight');
+const selectElement = document.getElementById("weight-wrapper");
 const selectedValue = selectElement.value;
-const informationValue = document.getElementById("weight-information").value;
+const informationValue = document.getElementById("weight-input").value;
 
-document.getElementById('weight-button').addEventListener('click', async () => {
-    try{
-        const response = await axios.post('/api/weight-logs', {
-            weight : informationValue,
-        },{
-            withCredentials: true,
-        });
-        
-        console.log('weight success', weight);
-        } catch (error) {
-        console.log('weight error:', error );
-        }
-});
+// document.getElementById("weight-button").addEventListener("click", async () => {
+//     try {
+//         const response = await axios.post(
+//             "/api/weight-logs",
+//             {
+//                 weight: informationValue,
+//             },
+//             {
+//                 withCredentials: true,
+//             }
+//         );
 
+//         console.log("weight success", weight);
+//     } catch (error) {
+//         console.log("weight error:", error);
+//     }
+// });
 
 // 날짜 시간 달력 아래부터
 function formatDate(date) {
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // 0부터 시작하므로 +1
-    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // 0부터 시작하므로 +1
+    const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
 }
 
@@ -116,19 +119,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 현재 시간 표시 초기 호출
     displayCurrentTime();
-    });
+});
 
 // 날짜 시간 무게 콘솔에 기록 남기기
-document
-    .getElementById("weight-button")
-    .addEventListener("click", function () {
-        const weightInfo = document.getElementById("weight-information").value;
+// document.getElementById("weight-button").addEventListener("click", function () {
+//     const weightInfo = document.getElementById("weight-information").value;
 
-        // 콘솔에 기록 남기기
-        console.log(
-            `체중기록:${weightInfo}kg`
-        );
+//     // 콘솔에 기록 남기기
+//     console.log(`체중기록:${weightInfo}kg`);
 
-        const recordItem = document.createElement("li");
-        recordItem.textContent = `체중기록:${weightInfo}kg`;
-    });
+//     const recordItem = document.createElement("li");
+//     recordItem.textContent = `체중기록:${weightInfo}kg`;
+// });

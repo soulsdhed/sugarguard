@@ -7,6 +7,29 @@ function formatDate(date) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("photoDiv").addEventListener("click", function () {
+        document.getElementById("fileInput").click();
+    });
+
+    document
+        .getElementById("fileInput")
+        .addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.getElementById("photo");
+                    const icon = document.querySelector("#photoDiv i");
+                    img.src = e.target.result;
+                    img.style.display = "block";
+                    document.getElementById("photoDiv").style.backgroundColor =
+                        "white";
+                    icon.style.display = "none";
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
     // URL 파라미터에서 날짜를 가져오는 함수
     function getParameterByName(name) {
         const urlParams = new URLSearchParams(window.location.search);
@@ -102,82 +125,82 @@ document.addEventListener("DOMContentLoaded", () => {
     // }
     // displayCurrentTime();
 
-    // // 현재 시간 표시 초기 호출
-    const now = new Date();
-    // 왼쪽 시간나타내는거
-    window.addEventListener("DOMContentLoaded", (event) => {
-        // 날짜와 시간을 포맷에 맞게 설정
-        const hours = String(now.getHours()).padStart(2, "0");
-        const minutes = String(now.getMinutes()).padStart(2, "0");
-        const seconds = String(now.getSeconds()).padStart(2, "0");
-        // 날짜와 시간 입력 필드에 설정
-        document.getElementById("time").value = `${hours}:${minutes}`;
-        formattedTime = `${hours}:${minutes}:${seconds}`;
+    // // // 현재 시간 표시 초기 호출
+    // const now = new Date();
+    // // 왼쪽 시간나타내는거
+    // window.addEventListener("DOMContentLoaded", (event) => {
+    //     // 날짜와 시간을 포맷에 맞게 설정
+    //     const hours = String(now.getHours()).padStart(2, "0");
+    //     const minutes = String(now.getMinutes()).padStart(2, "0");
+    //     const seconds = String(now.getSeconds()).padStart(2, "0");
+    //     // 날짜와 시간 입력 필드에 설정
+    //     document.getElementById("time").value = `${hours}:${minutes}`;
+    //     formattedTime = `${hours}:${minutes}:${seconds}`;
 
-        // 선택하고 저장 버튼을 누를 때 기록목록에 기록이 남기는 곳
-        document
-            .getElementById("mealrecord-button")
-            .addEventListener("click", async function () {
-                const mealType =
-                    document.querySelector("#time-meal a.active")
-                        ?.textContent || "선택되지 않음";
-                const mealInfo =
-                    document.getElementById("meal-information").value;
-                const medicineInfo = document.querySelector(
-                    "#medicine-information input"
-                ).value;
-                const specialInfo = document.getElementById(
-                    "special-information"
-                ).value;
+    //     // 선택하고 저장 버튼을 누를 때 기록목록에 기록이 남기는 곳
+    //     document
+    //         .getElementById("mealrecord-button")
+    //         .addEventListener("click", async function () {
+    //             const mealType =
+    //                 document.querySelector("#time-meal a.active")
+    //                     ?.textContent || "선택되지 않음";
+    //             const mealInfo =
+    //                 document.getElementById("meal-information").value;
+    //             const medicineInfo = document.querySelector(
+    //                 "#medicine-information input"
+    //             ).value;
+    //             const specialInfo = document.getElementById(
+    //                 "special-information"
+    //             ).value;
 
-                if (!mealInfo) {
-                    alert("식사 정보를 입력해 주세요.");
-                    return;
-                }
+    //             if (!mealInfo) {
+    //                 alert("식사 정보를 입력해 주세요.");
+    //                 return;
+    //             }
 
-                // 콘솔에 기록 남기기
-                console.log(
-                    `기록:${recordDateTime1} ${mealType.trim()} 식사 정보:${mealInfo}
-                약정보:${medicineInfo} 특이사항:${specialInfo}`
-                );
+    //             // 콘솔에 기록 남기기
+    //             console.log(
+    //                 `기록:${recordDateTime1} ${mealType.trim()} 식사 정보:${mealInfo}
+    //             약정보:${medicineInfo} 특이사항:${specialInfo}`
+    //             );
 
-                const recordItem = document.createElement("li");
-                recordItem.textContent = `${recordDateTime1} ${mealType}식사 정보:${mealInfo} 약정보:${medicineInfo} 특이사항:${specialInfo}`;
+    //             const recordItem = document.createElement("li");
+    //             recordItem.textContent = `${recordDateTime1} ${mealType}식사 정보:${mealInfo} 약정보:${medicineInfo} 특이사항:${specialInfo}`;
 
-                // 입력 필드 초기화
-                document.getElementById("meal-information").value = "";
-                document.querySelector("#medicine-information input").value =
-                    "";
-                document
-                    .querySelectorAll("#time-meal a")
-                    .forEach((a) => a.classList.remove("active"));
-                var recordDateTime1 = formattedDate +" "+ formattedTime;
-                console.log(recordDateTime1);
+    //             // 입력 필드 초기화
+    //             document.getElementById("meal-information").value = "";
+    //             document.querySelector("#medicine-information input").value =
+    //                 "";
+    //             document
+    //                 .querySelectorAll("#time-meal a")
+    //                 .forEach((a) => a.classList.remove("active"));
+    //             var recordDateTime1 = formattedDate +" "+ formattedTime;
+    //             console.log(recordDateTime1);
 
-                // API POST
-                async function postData() {
-                    // toISOString().slice(0, 19).replace("T", " ");
-                    console.log(recordDateTime1);
-                    try {
-                        const response = await axios.post("/api/meal-logs", {
-                            record_date: recordDateTime1,
-                            meal_time: mealType.trim(),
-                            medication: medicineInfo,
-                            meal_info: mealInfo,
-                            comments: specialInfo,
-                            //     // ml_id: "",
-                            //     // member_id: "",
-                            //     // calories: "",
-                        });
-                        console.log(response.data);
-                    } catch (err) {
-                        console.error(`ErrorMessage :${err}`);
-                    }
-                }
+    //             // API POST
+    //             async function postData() {
+    //                 // toISOString().slice(0, 19).replace("T", " ");
+    //                 console.log(recordDateTime1);
+    //                 try {
+    //                     const response = await axios.post("/api/meal-logs", {
+    //                         record_date: recordDateTime1,
+    //                         meal_time: mealType.trim(),
+    //                         medication: medicineInfo,
+    //                         meal_info: mealInfo,
+    //                         comments: specialInfo,
+    //                         //     // ml_id: "",
+    //                         //     // member_id: "",
+    //                         //     // calories: "",
+    //                     });
+    //                     console.log(response.data);
+    //                 } catch (err) {
+    //                     console.error(`ErrorMessage :${err}`);
+    //                 }
+    //             }
 
-                await postData();
-            });
-    });
+    //             await postData();
+    //         });
+    // });
 
     // 식사버튼을 누를때 표시되는 곳
     document.querySelectorAll("#time-meal a").forEach((a) => {

@@ -12,14 +12,24 @@ document.getElementById('bs-submit').addEventListener('click', async () => {
             exercise_time: document.getElementById("duration").value,
             calories_burned: document.getElementById("result").textContent.split(" ")[3] || 0, // 소모 칼로리 값 가져오기
             record_time: `${record_date} ${record_time}`,
+            // 2024-07-24 09:00:00
         });
         const exercise = response.data.data; // API 응답에서 운동 데이터를 가져옴
         console.log('exercise success:', exercise); // 수정된 부분
+        Swal.fire({
+            icon: "success",
+            title: "운동 기록이 성공적으로 저장되었습니다."
+          });; // 성공적으로 저장되었음을 알림
     } catch (error) {
         console.error('exercise error:', error); // 에러 로그를 콘솔에 출력
-        // 2024-07-24 09:00:00
+        Swal.fire({
+            icon: "error",
+            title: "운동 기록 저장 중 오류가 발생했습니다. 다시 시도해주세요."
+          });; // 오류 알림
     }
 });
+
+
 
 function formatDate(date) {
     const year = date.getFullYear();
@@ -168,7 +178,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const duration = parseFloat(document.getElementById("duration").value);
 
         if (!exercise || isNaN(duration) || duration <= 0) {
-            alert("운동 종류와 시간을 정확히 입력해 주세요.");
+                  Swal.fire({
+            icon: "error",
+            title: "운동 종류와 시간을 정확히 선택해주세요."
+          });; // 오류 알림
             return;
         }
 

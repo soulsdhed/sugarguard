@@ -88,7 +88,7 @@ button:focus {
     justify-content: center;
     align-items: center;
     width: 90%;
-    height: 55%;
+    height: 390px;
     margin-top: 20px;
     font-family: "pretendard";
     font-weight: 500;
@@ -100,7 +100,7 @@ button:focus {
 
 .login_input_write {
     width: 70%;
-    height: 8%;
+    height: 38px;
     border: 0;
     border-bottom: solid 1px rgb(16, 15, 15);
     font-family: "pretendard";
@@ -108,13 +108,13 @@ button:focus {
 
 #login_input img {
     width: 40%;
-    height: 30%;
+    height: 117px;
 }
 
 #login_button {
     background-color: rgb(255, 0, 0);
     width: 70%;
-    height: 8%;
+    height: 31px;
     border: 0;
     color: white;
     font-family: "Pretendard";

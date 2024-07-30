@@ -140,81 +140,6 @@ document.addEventListener("DOMContentLoaded", function () {
             toggleState = !toggleState;
             this.classList.toggle("rotate");
 
-<<<<<<< HEAD
-        // Convert the date to KST (UTC+9)
-        const options = {
-            hour: "2-digit",
-            minute: "2-digit",
-            timeZone: "Asia/Seoul",
-            hourCycle: "h23", // 24시간 형식으로 표시
-        };
-        const formatter = new Intl.DateTimeFormat("ko-KR", options);
-        const formattedTime = formatter.format(date);
-
-        return formattedTime;
-    }
-
-    // TODO : 삭제버튼 floation button에 가려서 안먹히는 것 수정
-    // TODO : 이미 있는 기록의 경우에는 삭제 경고 알림창 띄우기
-
-    function addRecord(recordType, imgUrl, recordClass, item = null) {
-        const now = new Date();
-        const hours = String(now.getHours()).padStart(2, "0");
-        const minutes = String(now.getMinutes()).padStart(2, "0");
-        let timeString = `${hours}:${minutes}`;
-        let valueString = "";
-        let link = "";
-
-        // TODO : 나머지 4개도 해야함
-        if (recordClass == "exercise-record") {
-            link = "/exercise";
-            valueString = "0 kcal";
-            if (item != null) {
-                link = `${link}?el_id=${item.el_id}`;
-                valueString = `${item.calories_burned} kcal`;
-                timeString = convertToKSTAndFormat(item.record_time);
-            }
-        } else if (recordClass == "weight-record") {
-            link = "";
-            valueString = "0 kg";
-            if (item != null) link = `${link}?wl_id=${item.wl_id}`;
-        } else if (recordClass == "blood-pressure-record") {
-            link = "";
-            valueString = "0~0 mmHg";
-            if (item != null) link = `${link}?bpl_id=${item.bpl_id}`;
-        } else if (recordClass == "mealrecord-record") {
-            link = "/mealrecord";
-            valueString = "0 kcal";
-            if (item != null) link = `${link}?ml_id=${item.ml_id}`;
-        } else if (recordClass == "sugar-record") {
-            link = "/bs";
-            valueString = "0 mg/dl";
-            if (item != null) link = `${link}?bsl_id=${item.bsl_id}`;
-        }
-        console.log(item);
-        console.log(link);
-
-        const recordHtml = `
-            <div class="record-title">
-                <img src="${imgUrl}" alt="" style="width: 24px; height: 24px; margin-right: 8px;">
-                <div id="record-title-text">${recordType}</div>
-            </div>
-            <div class="record-time">${timeString}</div>
-            <i class="fas fa-times close-icon" onclick="removeRecord(event, this)" style="cursor: pointer;"></i>
-            <div class="record-value">${valueString}</div>
-        `;
-
-        const divContainer = document.createElement("div");
-        divContainer.classList.add("record-entry");
-        divContainer.classList.add(recordClass);
-        divContainer.innerHTML = recordHtml;
-        recordsContainer.insertAdjacentElement("beforeend", divContainer);
-
-        divContainer.addEventListener("click", () => {
-            console.log(currentYear, currentMonth, currentDay);
-            if (item != null) {
-                window.location.href = `${link}`;
-=======
             if (toggleState) {
                 menuButtons.classList.remove("hidden");
                 document
@@ -224,7 +149,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     .querySelectorAll(".floating-button-text")
                     .forEach((el) => (el.style.display = "block"));
                 recordButtons.forEach((button) => (button.disabled = false));
->>>>>>> 8af3552b698d90e92cce29d311efd827f88b4da3
             } else {
                 document
                     .querySelectorAll(".floating-button-container")

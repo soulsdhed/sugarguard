@@ -1,6 +1,18 @@
+// async api 연결 추가수정?
+document.getElementById('be-submit').addEventListener('click', async () => {
+    try{
+        const response = await axios.post('/api/weight-logs', {
+            weight : document.getElementById("weight-information").value,
+        });
+        const weight = response.date.date;
+        console.log('weight success', weight);
+        } catch (error) {
+            console.log('weight error:', error );
+        }
+});
 
 
-
+// 날짜 시간 달력 아래부터
 function formatDate(date) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // 0부터 시작하므로 +1

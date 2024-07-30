@@ -1,13 +1,19 @@
 // async api 연결 추가수정?
-document.getElementById('be-submit').addEventListener('click', async () => {
+const selectElement = document.getElementById('weight');
+const selectedValue = selectElement.value;
+const informationValue = document.getElementById("weight-information").value;
+
+document.getElementById('weight-button').addEventListener('click', async () => {
     try{
         const response = await axios.post('/api/weight-logs', {
-            weight : document.getElementById("weight-information").value,
+            weight : informationValue,
+        },{
+            withCredentials: true,
         });
-        const weight = response.date.date;
+        
         console.log('weight success', weight);
         } catch (error) {
-            console.log('weight error:', error );
+        console.log('weight error:', error );
         }
 });
 

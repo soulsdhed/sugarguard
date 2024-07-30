@@ -141,11 +141,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 #time-meal {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    text-align: center;
     gap: 10px;
     height: 70px;
-    margin-left: 7px;
-    margin-right: 7px;
 }
 
 #time-meal a {
@@ -153,9 +150,10 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     border-radius: 10px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
     text-decoration: none;
     color: rgba(0, 0, 0, 0.474);
+    padding-left: 10px;
 }
 
 #time-meal a.active {
@@ -163,7 +161,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 #time-meal h3 {
-    text-align: center;
     writing-mode: vertical-lr; /* 세로로 변환 */
     
 }
@@ -224,21 +221,3 @@ textarea {
     border: white;
     background-color: #e3e3e3;
 }
-
-
-
-/* #record-list {
-    margin-top: 20px;
-}
-
-#records {
-    list-style-type: none;
-    padding: 0;
-}
-
-#records li {
-    background-color: #f6f6f6;
-    margin: 5px 0;
-    padding: 10px;
-    border-radius: 5px;
-} */

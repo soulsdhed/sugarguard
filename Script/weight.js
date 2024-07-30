@@ -1,3 +1,13 @@
+
+
+
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 0부터 시작하므로 +1
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     // URL 파라미터에서 날짜를 가져오는 함수
     function getParameterByName(name) {
@@ -88,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 현재 시간 표시 초기 호출
     displayCurrentTime();
-});
+    });
 
 // 날짜 시간 무게 콘솔에 기록 남기기
 document

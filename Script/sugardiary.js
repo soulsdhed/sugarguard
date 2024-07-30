@@ -198,22 +198,6 @@ document.addEventListener("DOMContentLoaded", function () {
         divContainer.innerHTML = recordHtml;
         recordsContainer.insertAdjacentElement("beforeend", divContainer);
 
-<<<<<<< HEAD
-        let link = "";
-        if (recordClass == "exercise-record") {
-            link = "/exercise";
-        } else if (recordClass == "weight-record") {
-            link = "/weight";
-        } else if (recordClass == "blood-pressure-record") {
-            link = "";
-        } else if (recordClass == "mealrecord-record") {
-            link = "/mealrecord";
-        } else if (recordClass == "sugar-record") {
-            link = "/bs";
-        }
-
-=======
->>>>>>> c36fb95d4088b9a1f0c9fa2957d3b6af5e59ec1e
         divContainer.addEventListener("click", () => {
             console.log(currentYear, currentMonth, currentDay);
             if (item != null) {

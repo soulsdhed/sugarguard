@@ -1,7 +1,7 @@
 function formatDate(date) {
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // 0부터 시작하므로 +1
-    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // 0부터 시작하므로 +1
+    const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
 }
 
@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const currentTimeString = `${hours}:${minutes}`;
         document.getElementById("current-time").textContent = currentTimeString;
 
-        record_time = `${hours}:${minutes}:00`
+        record_time = `${hours}:${minutes}:00`;
     }
 
     // 현재 시간 표시 초기 호출
@@ -105,9 +105,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // 선택하고 저장 버튼을 누를 때 기록목록에 기록이 남기는 곳
     document
         .getElementById("mealrecord-button")
-        .addEventListener("click", function () {
-            // const dateElement = document.getElementById("date").textContent;
-            // const timeElement = document.getElementById("time").textContent;
+        .addEventListener("click", async function () {
+            const dateElement = document.getElementById("date").textContent;
+            const timeElement = document.getElementById("time").textContent;
+            const recordDateTime = `${dateElement} ${timeElement}`;
             const mealType =
                 document.querySelector("#time-meal a.active")?.textContent ||
                 "선택되지 않음";
@@ -126,11 +127,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // 콘솔에 기록 남기기
             console.log(
-                `기록:${mealType}:${mealInfo} 약정보:${medicineInfo} 특이사항:${specialInfo}`
+                `기록:${formatDateTime(
+                    recordDateTime
+                )} ${mealType.trim()} 식사 정보:${mealInfo}
+                약정보:${medicineInfo} 특이사항:${specialInfo}`
             );
 
             const recordItem = document.createElement("li");
-            recordItem.textContent = `${mealType}:${mealInfo} 약정보:${medicineInfo} 특이사항:${specialInfo}`;
+            recordItem.textContent = `${dateElement} ${timeElement} ${mealType}식사 정보:${mealInfo} 약정보:${medicineInfo} 특이사항:${specialInfo}`;
 
             // 입력 필드 초기화
             document.getElementById("meal-information").value = "";
@@ -138,39 +142,76 @@ document.addEventListener("DOMContentLoaded", () => {
             document
                 .querySelectorAll("#time-meal a")
                 .forEach((a) => a.classList.remove("active"));
-        });
 
-    // 식사버튼을 누를때 표시되는 곳
-    document.querySelectorAll("#time-meal a").forEach((a) => {
-        a.addEventListener("click", function () {
-            document
-                .querySelectorAll("#time-meal a")
-                .forEach((btn) => btn.classList.remove("active"));
-            this.classList.add("active");
-        });
-    });
+            // API POST
+            async function postData() {
+                const recordDateTime = currentDate
+                    .toISOString()
+                    .slice(0, 19)
+                    .replace("T", " ");
+                console.log(recordDateTime);
+                try {
+                    const response = await axios.post("/api/meal-logs", {
+                        record_date: recordDateTime,
+                        meal_time: mealType.trim(),
+                        medication: medicineInfo,
+                        meal_info: mealInfo,
+                        comments: specialInfo,
+                        //     // ml_id: "",
+                        //     // member_id: "",
+                        //     // calories: "",
+                    });
+                    console.log(response.data);
+                } catch (err) {
+                    console.error(`ErrorMessage :${err}`);
+                }
+            }
 
-    // 식사버튼을 누를때 색깔 변하는거
-    document.querySelectorAll("#time-meal a").forEach((anchor) => {
-        anchor.addEventListener("click", (e) => {
-            e.preventDefault(); // 링크 클릭 기본 동작 방지
-            anchor.classList.toggle("clicked"); // 'active' 클래스 토글
+            await postData();
         });
+});
+
+// 식사버튼을 누를때 표시되는 곳
+document.querySelectorAll("#time-meal a").forEach((a) => {
+    a.addEventListener("click", function () {
+        document
+            .querySelectorAll("#time-meal a")
+            .forEach((btn) => btn.classList.remove("active"));
+        this.classList.add("active");
     });
 });
-    
-    // document
-    //     .getElementById("dateInput")
-    //     .addEventListener("change", () => updateFromInput("date"));
-    // document
-    //     .getElementById("timeInput")
-    //     .addEventListener("change", () => updateFromInput("time"));
-    // Edit date and time buttons
-    // document
-    //     .getElementById("edit-date-button")
-    //     .addEventListener("click", () => editDateTime("date"));
-    // document
-    //     .getElementById("edit-time-button")
-    //     .addEventListener("click", () => editDateTime("time"));
 
-    // Update from input fields
+// 식사버튼을 누를때 색깔 변하는거
+document.querySelectorAll("#time-meal a").forEach((anchor) => {
+    anchor.addEventListener("click", (e) => {
+        e.preventDefault(); // 링크 클릭 기본 동작 방지
+        anchor.classList.toggle("clicked"); // 'active' 클래스 토글
+    });
+});
+
+// Edit date and time buttons
+// document
+//     .getElementById("edit-date-button")
+//     .addEventListener("click", () => editDateTime("date"));
+// document
+//     .getElementById("edit-time-button")
+//     .addEventListener("click", () => editDateTime("time"));
+
+// Update from input fields
+document
+    .getElementById("dateInput")
+    .addEventListener("change", () => updateFromInput("date"));
+document
+    .getElementById("timeInput")
+    .addEventListener("change", () => updateFromInput("time"));
+
+function formatDateTime(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}

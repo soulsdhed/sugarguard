@@ -188,6 +188,8 @@ document.addEventListener("DOMContentLoaded", function () {
             let link = "";
             let apiLink = "";
 
+            // console.log(timeString);
+
             if (recordClass == "exercise-record") {
                 link = "/exercise";
                 valueString = "0 kcal";

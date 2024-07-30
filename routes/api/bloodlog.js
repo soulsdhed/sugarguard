@@ -265,6 +265,38 @@ router.patch("/", authenticateToken, (req, res, next) => {
     });
 });
 
+// 혈당 기록 삭제
+router.delete("/", authenticateToken, (req, res, next) => {
+    const { userId } = req.user;
+    const { bsl_id } = req.body;
+
+    if (bsl_id == null) {
+        return next({
+            code: "VALIDATION_MISSING_FIELD",
+        });
+    }
+
+    const query = `
+        DELETE
+        FROM BLOOD_SUGAR_LOG_TB
+        WHERE member_id = ? AND bsl_id = ?
+    `;
+    db.execute(query, [userId, bsl_id], (err, result) => {
+        if (err || result.affectedRows < 1) {
+            console.log(err);
+            return next({
+                code: "SERVER_INTERNAL_ERROR",
+            });
+        }
+
+        // 삭제 성공
+        return res.success({
+            userId: userId,
+            bsl_id: bsl_id,
+        });
+    });
+});
+
 // 가장 최근 기록 가져오기
 router.get("/recent", authenticateToken, (req, res, next) => {
     const { userId } = req.user;

@@ -31,7 +31,7 @@ hr {
     font-size: 20px;
     text-align: center;
     line-height: 24px;
-    z-index: 10;
+    /* z-index: 10; */
 }
 
 .mypage-login-div {
@@ -171,6 +171,7 @@ hr {
     /* 여백을 고려한 초기 최대 높이 */
     display: flex;
     flex-direction: column;
+    position: relative;
     /* margin-bottom: 25px; */
 }
 
@@ -231,6 +232,7 @@ hr {
     align-items: flex-end;
     transition: all 0.3s ease;
     pointer-events: none;
+    z-index: 1000;
 }
 
 #main-toggle-button {
@@ -311,4 +313,196 @@ hr {
     background-color: #d3d3d3;
     /* Light gray for disabled */
     cursor: not-allowed;
+}
+
+/* 삭제 애니메이션 */
+@keyframes slideUpFadeOut {
+    0% {
+        opacity: 1;
+        height: auto;
+        font-size: auto;
+        /* transform: translateY(0); */
+    }
+    100% {
+        opacity: 0;
+        height: 0;
+        font-size: 0;
+        margin: 0;
+        padding: 0;
+        /* transform: translateY(-100%); */
+    }
+}
+
+@keyframes shrinkImage {
+    0% {
+        width: 24px;
+        height: 24px;
+    }
+    100% {
+        width: 0;
+        height: 0;
+    }
+}
+
+.record-entry.removing {
+    animation: slideUpFadeOut 0.5s forwards;
+    overflow: hidden;
+}
+
+.record-entry.removing img {
+    animation: shrinkImage 0.5s forwards;
+}
+
+/* 로딩 화면 */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-size: 24px;
+    z-index: 9999;
+}
+#inner-loading-screen {
+    position: fixed;
+    top: 190px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 190px - 55px);
+    background-color: #f6f6f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-size: 24px;
+    z-index: 999;
+    display: none;
+}
+
+.spinner {
+    -webkit-animation: rotator 1.4s linear infinite;
+    animation: rotator 1.4s linear infinite;
+}
+
+@-webkit-keyframes rotator {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(270deg);
+    }
+}
+
+@keyframes rotator {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(270deg);
+    }
+}
+
+.path {
+    stroke-dasharray: 187;
+    stroke-dashoffset: 0;
+    transform-origin: center;
+    -webkit-animation: dash 1.4s ease-in-out infinite,
+        colors 5.6s ease-in-out infinite;
+    animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+}
+
+@-webkit-keyframes colors {
+    0% {
+        stroke: #4285f4;
+    }
+
+    25% {
+        stroke: #de3e35;
+    }
+
+    50% {
+        stroke: #f7c223;
+    }
+
+    75% {
+        stroke: #1b9a59;
+    }
+
+    100% {
+        stroke: #4285f4;
+    }
+}
+
+@keyframes colors {
+    0% {
+        stroke: #4285f4;
+    }
+
+    25% {
+        stroke: #de3e35;
+    }
+
+    50% {
+        stroke: #f7c223;
+    }
+
+    75% {
+        stroke: #1b9a59;
+    }
+
+    100% {
+        stroke: #4285f4;
+    }
+}
+
+@-webkit-keyframes dash {
+    0% {
+        stroke-dashoffset: 187;
+    }
+
+    50% {
+        stroke-dashoffset: 46.75;
+        transform: rotate(135deg);
+    }
+
+    100% {
+        stroke-dashoffset: 187;
+        transform: rotate(450deg);
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dashoffset: 187;
+    }
+
+    50% {
+        stroke-dashoffset: 46.75;
+        transform: rotate(135deg);
+    }
+
+    100% {
+        stroke-dashoffset: 187;
+        transform: rotate(450deg);
+    }
+}
+
+/* 모달창 버튼 */
+.my-confirm-button {
+    background-color: #6c77db !important;
+    color: white !important;
+    font-family: "Pretendard" !important;
+}
+
+.my-cancel-button {
+    background-color: rgb(255, 92, 92) !important;
+    color: white !important;
+    font-family: "Pretendard" !important;
 }

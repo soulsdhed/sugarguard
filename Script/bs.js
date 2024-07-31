@@ -34,21 +34,29 @@ const fetchGetWithRetry = async (url, options = {}, retries = 1) => {
         }
     }
 };
-// // 재시도를 포함한 post fetch
-// const fetchPostWithRetry = async (url, data = {}, options = {}, retries = 1) => {
-//     try {
-//         const response = await axios.post(url, data, options);
-//         return response;
-//     } catch (e) {
-//         if (e.response.data.error.code === "AUTH_EXPIRED_TOKEN" && retries > 0) {
-//             console.log("Access token expired. Fetching new token...");
-//             await refreshAccessToken();
-//             return fetchPostWithRetry(url, data, options, retries - 1);
-//         } else {
-//             throw e;
-//         }
-//     }
-// }
+// 재시도를 포함한 post fetch
+const fetchPostWithRetry = async (
+    url,
+    data = {},
+    options = {},
+    retries = 1
+) => {
+    try {
+        const response = await axios.post(url, data, options);
+        return response;
+    } catch (e) {
+        if (
+            e.response.data.error.code === "AUTH_EXPIRED_TOKEN" &&
+            retries > 0
+        ) {
+            console.log("Access token expired. Fetching new token...");
+            await refreshAccessToken();
+            return fetchPostWithRetry(url, data, options, retries - 1);
+        } else {
+            throw e;
+        }
+    }
+};
 // 재시도를 포함한 patch fetch
 const fetchPatchWithRetry = async (
     url,
@@ -118,6 +126,10 @@ function getCurrentDateAndTime(dateTimeString = null) {
 const data = {};
 // DOM 로딩
 document.addEventListener("DOMContentLoaded", async () => {
+    // 뒤로 가기 버튼
+    const backButton = document.getElementById("blood-sugar-goback");
+    // 저장 버튼
+    const saveButton = document.getElementById("blood-sugar-save");
     // 시간 요소
     const timePicker = document.getElementById("timepicker");
     const timeDisplay = document.getElementById("current-time");
@@ -125,6 +137,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     const calendar = document.getElementById("calendar");
     const calendarHeader = document.getElementById("calendar-header");
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    // 혈당 정보 요소
+    const recordTypeSelect = document.getElementById("my-select");
+    const bloodSugarInput = document.getElementById("record-bs-before");
+    const commentstInupt = document.getElementById("eat-memo");
 
     // 날짜 정보와 시간 받아오기
     const { date, time } = getCurrentDateAndTime();
@@ -183,9 +199,49 @@ document.addEventListener("DOMContentLoaded", async () => {
     timePicker.value = data.time;
 
     // 기록 데이터에 받아온 데이터 입력
+    if (data.record_type != null) recordTypeSelect.value = data.record_type;
+    if (data.blood_sugar != null) bloodSugarInput.value = data.blood_sugar;
+    if (data.comments != null) commentstInupt.value = data.comments;
 
     // 요소 기능
-    // TODO : 뒤로 가기
+    // 저장하기
+    saveButton.addEventListener("click", async (e) => {
+        const recordType = recordTypeSelect.value;
+        const bloodSugar = bloodSugarInput.value;
+        const comments = commentstInupt.value;
+
+        // 정보가 전부 있는지 확인
+        if (!recordType.value) {
+            return Swal.fire({
+                title: "혈당 시간 타입 오류",
+                text: "혈당 시간 타입을 선택해주세요",
+                icon: "warning",
+            });
+        }
+
+        // TODO :
+
+        try {
+            if (!data.bsl_id) {
+                // 저장하기
+                const response = await fetchPostWithRetry(
+                    "/api/blood-sugar-logs",
+                    {
+                        bloodSugar,
+                    },
+                    { withCredentials: true }
+                );
+            } else {
+                // 수정하기
+            }
+        } catch (e) {}
+    });
+
+    // 뒤로 가기
+    backButton.addEventListener("click", (e) => {
+        history.back();
+        // window.location.href = "/sugardiary";
+    });
 
     // TimePicker
     timeDisplay.addEventListener("click", () => {
@@ -202,6 +258,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         const selectedTime = timePicker.value;
         timeDisplay.textContent = selectedTime;
         timePicker.style.display = "none";
+        timeDisplay.style.display = "block";
+    });
+    timePicker.addEventListener("input", function () {
         timeDisplay.style.display = "block";
     });
 

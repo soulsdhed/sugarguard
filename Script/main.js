@@ -129,3 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     window.updateChart = updateChart;
 });
+
+document.getElementById("chart").addEventListener("click", () => {
+    window.location.href = "/mypage";
+});

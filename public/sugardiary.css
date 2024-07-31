@@ -120,8 +120,10 @@ hr {
     flex-wrap: nowrap;
     /* 날짜들을 한 줄로 나열 */
     align-items: center;
+    justify-content: space-between;
+
     padding: 2px;
-    margin-left: 10px;
+    /* margin-left: 10px; */
     box-sizing: border-box;
     gap: 10px;
     /* 날짜 사이 간격 */
@@ -186,7 +188,7 @@ hr {
     position: relative;
     background-color: white;
     padding: 15px;
-    margin: 0 15px 20px 15px;
+    margin: 0 5px 15px 5px;
     height: 100px;
 
     border-radius: 20px;
@@ -203,12 +205,6 @@ hr {
     margin-left: 30px;
     bottom: 28px;
     font-size: 20px;
-}
-
-.record-time {
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 5px;
 }
 
 .close-icon {
@@ -229,6 +225,12 @@ hr {
     text-align: right;
     align-self: flex-end;
     bottom: 20px;
+}
+
+.record-time {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 5px;
 }
 
 .floating-buttons {

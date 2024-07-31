@@ -131,6 +131,7 @@ router.post("/", authenticateToken, (req, res, next) => {
         params.push(comments);
         data["comments"] = comments;
     }
+    console.log(record_time);
 
     // record_type이 '공복', '실시간'이 아닌 경우,
     // 동일 날짜에 기록이 있는지 확인 후에 기록이 있으면 처리
@@ -147,6 +148,7 @@ router.post("/", authenticateToken, (req, res, next) => {
             (err, rows) => {
                 console.log("???");
                 if (err) {
+                    console.log(err);
                     return next({
                         code: "SERVER_INTERNAL_ERROR",
                     });
@@ -154,8 +156,9 @@ router.post("/", authenticateToken, (req, res, next) => {
 
                 // 이미 기록이 있는 경우
                 if (rows[0].count > 0) {
+                    console.log(rows);
                     return next({
-                        code: "VALIDATION_ERROR",
+                        code: "DATA_DUPLICATED",
                     });
                 }
 

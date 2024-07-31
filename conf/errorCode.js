@@ -13,6 +13,10 @@ const ERROR_CODES = {
         statusCode: 404,
         message: "Data not found.",
     },
+    DATA_DUPLICATED: {
+        statusCode: 404,
+        message: "Data Duplicated.",
+    },
     // auth
     AUTH_INVALID_TOKEN: {
         statusCode: 401,

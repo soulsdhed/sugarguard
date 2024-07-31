@@ -49,24 +49,15 @@
     <div class="block-container">
 
         <div class="box1" id="div1">
-            <div class="color-box" id="resultBox1" onchange="checkLevelBsBefore()"></div>
+            <div class="color-box" id="resultBox1"></div>
             <div>
                 <h5>혈당</h5>
             </div>
             <div id="box-inner" clsss="box1-inner">
-                <input type="number" id="record-bs-before" min="0" max="999" onkeyup="checkLevelBsBefore()" />
+                <input type="number" id="record-bs-before" min="0" max="999" />
                 <h5>mg/dL</h5>
             </div>
         </div>
-
-        <!-- <form id="div2" style="visibility: hidden;">
-            <div class="color-box" id="resultBox2" onchange="checkLevelBsAfter()"></div>
-            <div>
-                <h5>혈당</h5>
-            </div>
-            <div><input type="number" id="record-bs-after" min="0" max="999" onkeyup="checkLevelBsAfter()" />mg/dL
-            </div>
-        </form> -->
         <div class="box2">
             <h5>특이사항</h5>
             <textarea id="eat-memo" rows="4" cols="50"></textarea>

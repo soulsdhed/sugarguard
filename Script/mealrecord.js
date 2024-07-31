@@ -7,6 +7,14 @@ function formatDate(date) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("meal-save").addEventListener("click", () => {
+        return Swal.fire({
+            title: "기록 저장 성공",
+            text: "식사 기록이 저장되었습니다.",
+            icon: "success",
+        });
+    });
+
     document.getElementById("photoDiv").addEventListener("click", function () {
         document.getElementById("fileInput").click();
     });

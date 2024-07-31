@@ -29,6 +29,14 @@ function formatDate(date) {
     return `${year}-${month}-${day}`;
 }
 
+document.getElementById("weight-save").addEventListener("click", () => {
+    return Swal.fire({
+        title: "기록 저장 성공",
+        text: "체중 기록이 저장되었습니다.",
+        icon: "success",
+    });
+});
+
 document.addEventListener("DOMContentLoaded", () => {
     // URL 파라미터에서 날짜를 가져오는 함수
     function getParameterByName(name) {

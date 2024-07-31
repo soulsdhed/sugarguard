@@ -78,7 +78,7 @@ hr {
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 350px;
+    width: 320px;
     background-color: white;
     border-bottom: 2px solid #000;
 }
@@ -97,10 +97,15 @@ hr {
 .nutrition-facts table {
     width: 100%;
     border-collapse: collapse;
+    font-size: 14px;
+}
+
+.nutrition-facts p {
+    font-size: 14px;
 }
 
 .nutrition-facts td {
-    padding: 5px 15px;
+    padding: 5px 13px;
     border-bottom: 1px solid gray;
     text-align: right;
 }

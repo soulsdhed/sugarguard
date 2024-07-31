@@ -210,6 +210,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         const bloodSugar = bloodSugarInput.value;
         const comments = commentstInupt.value;
 
+        return Swal.fire({
+            title: "기록 저장 성공",
+            text: "혈당 기록이 저장되었습니다.",
+            icon: "success",
+        });
+
         // 정보가 전부 있는지 확인
         if (!recordType.value) {
             return Swal.fire({
@@ -227,7 +233,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const response = await fetchPostWithRetry(
                     "/api/blood-sugar-logs",
                     {
-                        bloodSugar,
+                        record_type: recordType,
+                        blood_sugar: bloodSugar,
+                        comments: comments,
                     },
                     { withCredentials: true }
                 );

@@ -131,6 +131,26 @@ function formatDate(date) {
     return `${year}-${month}-${day}`;
 }
 
+// 로딩 창 띄우기
+const showLoading = () => {
+    let title = "AI 이미지 분석중...";
+    let text = "칼로리를 계산 중입니다...";
+    Swal.fire({
+        title: title,
+        text: text,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+            Swal.showLoading();
+        },
+    });
+};
+
+// 로딩 창 닫기
+const hideLoading = () => {
+    Swal.close();
+};
+
 // 전체 유저 데이타
 const data = {};
 document.addEventListener("DOMContentLoaded", async () => {
@@ -229,9 +249,92 @@ document.addEventListener("DOMContentLoaded", async () => {
     // if (data.comments != null) commentstInupt.value = data.comments;
 
     // 요소 기능
-    // TODO : 칼로리 계산 버튼
-    // photo url이 없는 경우
+    // 저장하기
+    saveButton.addEventListener("click", async (e) => {
+        const mealTime = data.meal_time;
+        const mealInfo = mealInfoInput.value;
+        const photoUrl = data.photo_url;
+        const calories = caloriesInput.value;
+        const medication = medicationInput.value;
+        // const comments = commentstInupt.value;
+
+        // console.log(mealTime, mealInfo, photoUrl, calories, medication);
+
+        // 유효성 검사
+        if (!mealTime) {
+            return Swal.fire({
+                title: "기록 저장 오류",
+                text: "식사 종류를 입력해주세요",
+                icon: "warning",
+            });
+        }
+        if (!calories) {
+            return Swal.fire({
+                title: "기록 저장 오류",
+                text: "칼로리를 입력해주세요",
+                icon: "warning",
+            });
+        }
+
+        // 정보 문제가 없다면 저장하자!
+        try {
+            if (!data.ml_id) {
+                // 저장하기
+                const response = await fetchPostWithRetry(
+                    "/api/meal-logs",
+                    {
+                        meal_time: mealTime,
+                        meal_info: mealInfo,
+                        photo_url: photoUrl,
+                        calories: calories,
+                        medication: medication,
+                        // comments: comments,
+                        record_date: data.date,
+                    },
+                    { withCredentials: true }
+                );
+                console.log(response);
+                return Swal.fire({
+                    title: "기록 저장 성공",
+                    text: "식사 기록이 저장되었습니다.",
+                    icon: "success",
+                });
+            } else {
+                // 수정하기
+                const response = await fetchPatchWithRetry(
+                    "/api/meal-logs",
+                    {
+                        ml_id: data.ml_id,
+                        meal_time: mealTime,
+                        meal_info: mealInfo,
+                        photo_url: photoUrl,
+                        calories: calories,
+                        medication: medication,
+                        // comments: comments,
+                        record_date: data.date,
+                    },
+                    { withCredentials: true }
+                );
+                console.log(response);
+                return Swal.fire({
+                    title: "기록 저장 성공",
+                    text: "식사 기록이 저장되었습니다.",
+                    icon: "success",
+                });
+            }
+        } catch (e) {
+            console.log(e);
+            return Swal.fire({
+                title: "기록 저장 실패",
+                text: "관리자에게 문의해주세요.",
+                icon: "error",
+            });
+        }
+    });
+
+    // 칼로리 계산 버튼
     calculateKcalButton.addEventListener("click", async () => {
+        // photo url이 없는 경우
         if (data.photo_url == null) {
             return Swal.fire({
                 title: "사진 업로드",
@@ -239,8 +342,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 icon: "warning",
             });
         }
-
-        // TODO : 계산
+        console.log(data.photo_url);
+        // 계산
+        // 로딩창 띄우기
+        showLoading();
         try {
             const response = await fetchPostWithRetry(
                 "/api/meal-logs/food-calories",
@@ -251,9 +356,22 @@ document.addEventListener("DOMContentLoaded", async () => {
                     withCredentials: true,
                 }
             );
+            console.log(response);
+
+            // 결과값을 각각 배치
+            caloriesInput.value = response.data.data.food_detection.calories;
+            mealInfoInput.value = response.data.data.food_detection.foodname;
         } catch (e) {
             // ?
+            console.log(e);
+            return Swal.fire({
+                title: "칼로리 계산 실패",
+                text: "관리자에게 문의해주세요",
+                icon: "warning",
+            });
         }
+        // 로딩창 닫기
+        hideLoading();
     });
 
     // 사진 업로드
@@ -263,18 +381,59 @@ document.addEventListener("DOMContentLoaded", async () => {
         mealPhotoDiv.style.backgroundColor = "white";
         mealPhotoicon.style.display = "none";
     }
-    mealPhotoDiv.addEventListener("click", function () {
+    mealPhotoDiv.addEventListener("click", () => {
         mealPhotoInput.click();
     });
-    mealPhotoInput.addEventListener("change", function (event) {
+    mealPhotoInput.addEventListener("change", async (event) => {
         const file = event.target.files[0];
+
+        // 파일이 있다면
         if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                updatePhoto(e.target.result);
-            };
-            reader.readAsDataURL(file);
+            // 업로드 요청
+            try {
+                // presigned URL 요청
+                const res = await fetchPostWithRetry(
+                    "/api/auth/upload-image/meal-log",
+                    {
+                        fileName: file.name,
+                        fileType: file.type,
+                    },
+                    {
+                        withCredentials: true,
+                    }
+                );
+
+                // presigned URL 받기
+                const { key, url } = res.data.data;
+
+                // S3에 파일 업로드
+                await axios.put(url, file, {
+                    headers: {
+                        "Content-Type": file.type,
+                    },
+                });
+
+                // url 저장
+                data.photo_url = key;
+
+                // 사진 보여주기
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    updatePhoto(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            } catch (err) {
+                console.log(err);
+                Swal.fire(
+                    "사진 업로드 실패",
+                    "관리자에게 문의해주세요",
+                    "error"
+                );
+            }
         }
+
+        // 다시 열릴 수 있도록
+        event.target.value = "";
     });
 
     // 식사 시간(타입) 선택

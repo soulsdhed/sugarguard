@@ -26,6 +26,7 @@
         <div id="calendar-header"></div>
         <div>
             <h4 id="current-time"></h4>
+            <input type="time" id="timepicker" class="timepicker" style="display: none;">
         </div>
     </div>
     <div id="calendar-container">
@@ -52,7 +53,7 @@
                 <h5>운동 종류</h5>
             </label>
             <select id="exercise">
-                <option value="">운동을 선택하세요.</option>
+                <!-- <option value="">운동을 선택하세요.</option> -->
                 <option value="걷기">걷기</option>
                 <option value="달리기">달리기</option>
                 <option value="자전거">자전거</option>
@@ -93,12 +94,12 @@
                 <h5>운동 시간 (분)</h5>
             </label>
             <div class="box1-inner">
-                <input type="number" id="duration" min="1" step="1" onkeyup="calculateCalories()" />
+                <input type="number" id="duration" min="1" step="1" />
                 <h5>분</h5>
             </div>
         </div>
 
-        <div class="box1" onchange="calculateCalories()">
+        <div class="box1">
             <h4 id="result">소모 칼로리</h4>
         </div>
     </div>

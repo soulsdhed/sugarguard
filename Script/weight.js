@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         // 유효성 검사
         if (!weight) {
             return Swal.fire({
-                title: "저장 오류",
+                title: "기록 저장 오류",
                 text: "체중을 입력해주세요",
                 icon: "warning",
             });
@@ -263,7 +263,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         } catch (e) {
             console.log(e);
             return Swal.fire({
-                title: "기록 저장 오류",
+                title: "기록 저장 실패",
                 text: "관리자에게 문의해주세요.",
                 icon: "error",
             });

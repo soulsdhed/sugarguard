@@ -226,7 +226,6 @@ hr {
     margin-right: 5px;
     font-size: 1.2em; /* 더 큰 폰트 크기 */
     font-weight: bold;
-    width: 85%; /* 전체 너비 사용 */
     background-color: transparent; /* 배경색 투명 */
 }
 
@@ -266,7 +265,7 @@ hr {
 #current-time {
     /* display: flex; */
     align-items: right;
-    width: 50px;
+    /* width: 50px; */
 }
 
 #time {
@@ -275,9 +274,6 @@ hr {
     border: none;
     font-size: 15px;
     font-weight: bold;
-}
-input[type="time"]::-webkit-calendar-picker-indicator {
-    display: none; /* Safari에서 시계 아이콘 숨기기 */
 }
 
 #time-meal {
@@ -486,7 +482,7 @@ textarea {
     text-decoration: none;
 }
 
-input {
+input[type="number"] {
     border: 0;
     border-bottom: solid 1px #bdbdbd;
     height: 25px;

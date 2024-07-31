@@ -24,24 +24,24 @@
     <div id="calendar-header1">
         <div id="calendar-header"></div>
         <div>
-            <!-- <input type="time" id="time" name="time">  -->
             <h4 id="current-time">14:23</h4>
+            <input type="time" id="timepicker" class="timepicker" style="display: none;">
         </div>
     </div>
     <div id="calendar-container">
         <div id="calendar"></div>
     </div>
     <div id="time-meal">
-        <a href="#" id="breakfast"><img src="morning.png" /><span>
+        <a id="breakfast" data-info="아침"><img src="morning.png" /><span>
                 <h3>아침</h3>
             </span></a>
-        <a href="#" id="lunch"><img src="lunch.png" /><span>
+        <a id="lunch" data-info="점심"><img src="lunch.png" /><span>
                 <h3>점심</h3>
             </span></a>
-        <a href="#" id="dinner"><img src="dinner.png" /><span>
+        <a id="dinner" data-info="저녁"><img src="dinner.png" /><span>
                 <h3>저녁</h3>
             </span></a>
-        <a href="#" id="snack"><img src="snack.png" /><span>
+        <a id="snack" data-info="간식"><img src="snack.png" /><span>
                 <h3>간식</h3>
             </span></a>
     </div>
@@ -64,7 +64,7 @@
                 <h5>섭취 칼로리</h5>
             </label>
             <div id="box1-inner">
-                <input type="number" id="duration" min="1" step="1" onkeyup="calculateCalories()" />
+                <input type="number" id="duration" min="1" step="1" />
                 <h5>kcal</h5>
                 <button id="calc-kcal">칼로리 계산</button>
             </div>

@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../../conf/db");
+const axios = require("axios");
+const { isValidURL } = require("../../utils/validation");
 const authenticateToken = require("../../middlewares/authenticateToken");
 
 // 식사 기록 조회
@@ -18,6 +20,7 @@ router.get("/", authenticateToken, (req, res, next) => {
                     medication,
                     meal_info,
                     calories,
+                    photo_url,
                     comments
                 FROM MEAL_LOG_TB
                 WHERE ml_id = ? AND member_id = ?`;
@@ -60,6 +63,7 @@ router.get("/", authenticateToken, (req, res, next) => {
                     medication,
                     meal_info,
                     calories,
+                    photo_url,
                     comments
                 FROM MEAL_LOG_TB
                 WHERE record_date BETWEEN ? AND ? AND member_id = ?`;
@@ -89,6 +93,7 @@ router.post("/", authenticateToken, (req, res, next) => {
         medication,
         meal_info,
         calories,
+        photo_url,
         comments,
     } = req.body;
 
@@ -170,6 +175,7 @@ router.patch("/", authenticateToken, (req, res, next) => {
         medication,
         meal_info,
         calories,
+        photo_url,
         comments,
     } = req.body;
 
@@ -315,6 +321,53 @@ router.get("/recent", authenticateToken, (req, res, next) => {
             meal_logs: rows,
         });
     });
+});
+
+// 칼로리 계산
+router.post("/food-calories", authenticateToken, async (req, res, next) => {
+    const { userId } = req.user;
+    const { photo_url } = req.body;
+
+    // url 없이 왜 보내냐
+    if (photo_url == null) {
+        return next({
+            code: "VALIDATION_MISSING_FIELD",
+        });
+    }
+
+    // photo_url이 존재하면 flask 서버로 사진을 보내 확인한다
+    if (photo_url) {
+        // key인지 url인지 구분한다
+        if (!isValidURL(photo_url)) {
+            photo_url = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.S3_REGION}.amazonaws.com/${photo_url}`;
+        }
+        console.log("photo_url", photo_url);
+
+        // Flask 서버로 사진을 보내서, have 추출
+        try {
+            const response = await axios.post(
+                "http://localhost:5000/api/food-calories",
+                {
+                    image_url: photo_url,
+                }
+            );
+            // console.log("response", response);
+            // console.log("json", response.data.json);
+            const jsonString = response.data.json.replace(/```json\n|```/g, "");
+            const jsonObject = JSON.parse(jsonString);
+            console.log(jsonObject);
+            return res.success({
+                userId: userId,
+                photo_url: photo_url,
+                food_detection: jsonObject,
+            });
+        } catch (e) {
+            // console.log(e);
+            return next({
+                code: "SERVER_SERVICE_UNAVAILABLE",
+            });
+        }
+    }
 });
 
 module.exports = router;

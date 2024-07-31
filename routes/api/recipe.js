@@ -74,7 +74,6 @@ router.get("/", authenticateToken, async (req, res, next) => {
             }
         } catch (e) {
             console.log(e);
-
             return next({
                 code: "SERVER_SERVICE_UNAVAILABLE",
             });

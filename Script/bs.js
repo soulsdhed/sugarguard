@@ -349,9 +349,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         timePicker.style.display = "none";
         timeDisplay.style.display = "block";
     });
-    timePicker.addEventListener("input", function () {
-        timeDisplay.style.display = "block";
-    });
 
     // 캘린더
     function updateHeader(date) {

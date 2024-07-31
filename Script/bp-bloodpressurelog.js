@@ -227,7 +227,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const comments = commentstInupt.value;
 
         // 유효성 검사
-        if (!bloodPressureMax && !bloodPressureMin) {
+        if (!bloodPressureMax || !bloodPressureMin) {
             return Swal.fire({
                 title: "저장 오류",
                 text: "혈압을 입력해주세요",
@@ -306,9 +306,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         const selectedTime = timePicker.value;
         timeDisplay.textContent = selectedTime;
         timePicker.style.display = "none";
-        timeDisplay.style.display = "block";
-    });
-    timePicker.addEventListener("input", function () {
         timeDisplay.style.display = "block";
     });
 

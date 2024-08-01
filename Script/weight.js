@@ -247,6 +247,14 @@ document.addEventListener("DOMContentLoaded", async () => {
                     title: "기록 저장 성공",
                     text: "체중 기록이 저장되었습니다.",
                     icon: "success",
+                    confirmButtonText: "확인",
+                    willClose: () => {
+                        window.location.href = `/sugardiary?date=${data.date}`;
+                    },
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = `/sugardiary?date=${data.date}`;
+                    }
                 });
             } else {
                 // 수정하기
@@ -265,6 +273,14 @@ document.addEventListener("DOMContentLoaded", async () => {
                     title: "기록 저장 성공",
                     text: "체중 기록이 저장되었습니다.",
                     icon: "success",
+                    confirmButtonText: "확인",
+                    willClose: () => {
+                        window.location.href = `/sugardiary?date=${data.date}`;
+                    },
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = `/sugardiary?date=${data.date}`;
+                    }
                 });
             }
         } catch (e) {
@@ -335,6 +351,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         // 데이터 업데이트
         data.date = formatDate(selectedDate);
     }
+
+    // 로딩화면 제거
+    document.getElementById("loading-screen").style.display = "none";
 });
 
 // // async api 연결 추가수정?

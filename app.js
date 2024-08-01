@@ -1,7 +1,8 @@
 const express = require("express");
 const nunjucks = require("nunjucks");
-const cookieParser = require("cookie-parser"); // 쿠키
+const cookieParser = require("cookie-parser");
 const rateLimit = require("express-rate-limit");
+const cors = require("cors");
 // const { client: redisClient } = require("./conf/redisClient"); // redisClient.js에서 Redis 클라이언트 및 함수 가져오기
 // const {
 //     setTemporaryValue,
@@ -9,6 +10,22 @@ const rateLimit = require("express-rate-limit");
 //     getValue,
 //     deleteValue
 // } = require('./utils/redisUtils');
+
+// cors 정책
+const corsOptions = {
+    origin: ["http://localhost", "http://127.0.0.1"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    allowedHeaders: [
+        "Authorization",
+        "Content-Type",
+        "Accept",
+        "Accept-Encoding",
+        "Accept-Language",
+        "Connection",
+        "Cookie",
+        "Origin",
+    ],
+};
 
 // router
 const mainRouter = require("./routes/mainRouter");
@@ -23,6 +40,8 @@ const timeoutMiddleware = require("./middlewares/timeoutMiddleware");
 const app = express();
 // let flaskProcess;
 
+app.use(cors(corsOptions));
+
 // 타임 아웃 미들웨어 (20초 -> 플라스크 응답이 너무 느리다...)
 app.use(timeoutMiddleware(process.env.TIMEOUT));
 
@@ -32,7 +51,7 @@ nunjucks.configure("views", {
     watch: true,
 });
 
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // 쿠키
@@ -47,12 +66,12 @@ app.use(successHandler);
 
 app.use("/", mainRouter);
 
-// TODO : 제한 100개로
+// TODO : 제한 200개로
 // api call 제한
 app.use(
     rateLimit({
         windowMs: 1 * 60 * 1000, // 1분
-        max: 1000, // 최대 100개 요청
+        max: 200, // 최대 200개 요청
         message: "API rate limit exceeded.",
     })
 );

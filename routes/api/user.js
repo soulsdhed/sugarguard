@@ -81,7 +81,6 @@ router.post("/", async (req, res, next) => {
 
     // 이메일 유효성 검사 (이메일 형식)
     if (!isValidEmail(email)) {
-        console.log("그놈의 이메일오류 씨발@");
         return next({
             code: "VALIDATION_ERROR",
         });
@@ -89,7 +88,6 @@ router.post("/", async (req, res, next) => {
 
     // 성별 유효성 검사 (남성, 여성)
     if (!["남성", "여성"].includes(gender.toLowerCase())) {
-        console.log("그놈의 젠더오류 씨발@");
         return next({
             code: "VALIDATION_ERROR",
         });
@@ -231,9 +229,9 @@ router.post("/login", (req, res, next) => {
 
             // Redis에 Refresh Token 저장 (id값으로 refresh token을 저장, 7일간만)
             try {
-                // redis에 id를 key로 refresh token을 저장
+                // redis에 id를 key로 refresh token을 저장 (이메일로 로그인 할 경우도 있으니 userId가 아니라 row.member_id로 토큰 발급 및 저장)
                 await setTemporaryValue(
-                    userId,
+                    row.member_id,
                     refreshToken,
                     refreshTokenExpiresIn
                 );

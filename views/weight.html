@@ -1,18 +1,13 @@
 {% extends "index.html" %}{% block content %}
-<link rel="stylesheet" href="weight.css" />
-<link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-/>
+<link rel="stylesheet" href="weight.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <div id="weight-wrapper">
     <div id="weight-title">
         <!-- 타이틀 문자열이 적히는 곳 -->
         <div>
-            <img
-                src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721888337/image-removebg-preview_3_t28f17.png"
-                alt=""
-            />
+            <img src="https://res.cloudinary.com/difzc7bsf/image/upload/v1721888337/image-removebg-preview_3_t28f17.png"
+                alt="">
             <div id="weight-title-text">체중 기록하기</div>
         </div>
         <!-- 뒤로 가기 버튼 -->
@@ -36,12 +31,7 @@
         <div id="calendar-header"></div>
         <div>
             <h4 id="current-time"></h4>
-            <input
-                type="time"
-                id="timepicker"
-                class="timepicker"
-                style="display: none"
-            />
+            <input type="time" id="timepicker" class="timepicker" style="display: none;">
         </div>
     </div>
     <div id="calendar-container">
@@ -60,6 +50,8 @@
             <h5>특이사항</h5>
             <textarea id="eat-memo" rows="4" cols="50"></textarea>
         </div>
+
+
     </div>
 </div>
 <script>

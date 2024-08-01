@@ -135,6 +135,13 @@ function formatDate(date) {
 const data = {};
 
 document.addEventListener("DOMContentLoaded", async () => {
+    // 넌적스 템플릿으로부터 userId 가져오기 (로그인 여부 확인)
+    const userId = window.userIdFromTemplate;
+    // 로그인 되어 있지 않으면 로그인 화면으로
+    if (!userId) {
+        return (window.location.href = "/sugardiary");
+    }
+
     // 뒤로 가기 버튼
     const backButton = document.getElementById("weight-goback");
     // 저장 버튼

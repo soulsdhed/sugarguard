@@ -229,42 +229,73 @@ router.post("/login", (req, res, next) => {
             const accessToken = generateAccessToken(res, row.member_id);
             const refreshToken = generateRefreshToken(res, row.member_id);
 
-            // refresh token table에 저장
-            const refreshTokenInsertQuery = `INSERT INTO REFRESH_TOKEN_TB 
-                (refresh_token, member_id, expires_at) 
-                VALUES (?, ?, ?)`;
-            db.execute(
-                refreshTokenInsertQuery,
-                [
+            // Redis에 Refresh Token 저장 (id값으로 refresh token을 저장, 7일간만)
+            try {
+                // redis에 id를 key로 refresh token을 저장
+                await setTemporaryValue(
+                    userId,
                     refreshToken,
-                    row.member_id,
-                    new Date(Date.now() + refreshTokenExpiresIn * 1000), // 7일
-                ],
-                (err, results) => {
-                    // sql error
-                    if (err || results.affectedRows <= 0) {
-                        return next({
-                            code: "SERVER_INTERNAL_ERROR",
-                        });
-                    }
+                    refreshTokenExpiresIn
+                );
 
-                    // 리프레쉬 토큰 추가 성공
-                    // client에 응답 (login success)
-                    return res.success({
-                        userId: row.member_id,
-                        nickname: row.nickname,
-                        email: row.email,
-                        gender: row.gender,
-                        birthDate: moment
-                            .utc(row.birth_date)
-                            .tz("Asia/Seoul")
-                            .format("YYYY-MM-DD"),
-                        diabetes_type: row.diabetes_type,
-                        accessToken: accessToken,
-                        refreshToken: refreshToken,
-                    });
-                }
-            );
+                // 리프레쉬 토큰 추가 성공
+                // client에 응답 (login success)
+                return res.success({
+                    userId: row.member_id,
+                    nickname: row.nickname,
+                    email: row.email,
+                    gender: row.gender,
+                    birthDate: moment
+                        .utc(row.birth_date)
+                        .tz("Asia/Seoul")
+                        .format("YYYY-MM-DD"),
+                    diabetes_type: row.diabetes_type,
+                    accessToken: accessToken,
+                    refreshToken: refreshToken,
+                });
+            } catch (e) {
+                console.log(e);
+                return next({
+                    code: "SERVER_SERVICE_UNAVAILABLE",
+                });
+            }
+
+            // // refresh token table에 저장
+            // const refreshTokenInsertQuery = `INSERT INTO REFRESH_TOKEN_TB
+            //     (refresh_token, member_id, expires_at)
+            //     VALUES (?, ?, ?)`;
+            // db.execute(
+            //     refreshTokenInsertQuery,
+            //     [
+            //         refreshToken,
+            //         row.member_id,
+            //         new Date(Date.now() + refreshTokenExpiresIn * 1000), // 7일
+            //     ],
+            //     (err, results) => {
+            //         // sql error
+            //         if (err || results.affectedRows <= 0) {
+            //             return next({
+            //                 code: "SERVER_INTERNAL_ERROR",
+            //             });
+            //         }
+
+            //         // 리프레쉬 토큰 추가 성공
+            //         // client에 응답 (login success)
+            //         return res.success({
+            //             userId: row.member_id,
+            //             nickname: row.nickname,
+            //             email: row.email,
+            //             gender: row.gender,
+            //             birthDate: moment
+            //                 .utc(row.birth_date)
+            //                 .tz("Asia/Seoul")
+            //                 .format("YYYY-MM-DD"),
+            //             diabetes_type: row.diabetes_type,
+            //             accessToken: accessToken,
+            //             refreshToken: refreshToken,
+            //         });
+            //     }
+            // );
         } catch (e) {
             return next({
                 code: "SERVER_INTERNAL_ERROR",
@@ -274,7 +305,7 @@ router.post("/login", (req, res, next) => {
 });
 
 // 회원 탈퇴 (jwt)
-router.delete("/", authenticateToken, (req, res, next) => {
+router.delete("/", authenticateToken, async (req, res, next) => {
     const { userId } = req.user;
     // const { password } = req.body;
 
@@ -350,29 +381,67 @@ router.delete("/", authenticateToken, (req, res, next) => {
     //     }
     // });
 
-    // 계정 삭제 작업
-    const currentTime = new Date();
-    const query = `UPDATE MEMBER_TB SET deleted_at = ? WHERE member_id = ?;`;
-    db.execute(query, [currentTime, userId], (err, results) => {
-        if (err) {
-            return next({
-                code: "SERVER_INTERNAL_ERROR",
-            });
-        }
+    // Redis에서 유저의 모든 refresh Token 삭제
+    try {
+        await deleteValue(userId);
 
-        // 영향받은 rows가 존재하지 않는 경우 (그럴 수 있나??)
-        if (results.affectedRows <= 0) {
-            return next({
-                code: "SERVER_INTERNAL_ERROR",
-            });
-        }
+        // token 쿠키 삭제
+        res.clearCookie("accessToken");
+        res.clearCookie("refreshToken");
 
-        // user delete success!!
-        return res.success({
-            userId: userId,
-            deletedAt: currentTime,
+        // 계정 삭제 작업
+        const currentTime = new Date();
+        const query = `UPDATE MEMBER_TB SET deleted_at = ? WHERE member_id = ?;`;
+        db.execute(query, [currentTime, userId], (err, results) => {
+            if (err) {
+                return next({
+                    code: "SERVER_INTERNAL_ERROR",
+                });
+            }
+
+            // 영향받은 rows가 존재하지 않는 경우 (그럴 수 있나??)
+            if (results.affectedRows <= 0) {
+                return next({
+                    code: "SERVER_INTERNAL_ERROR",
+                });
+            }
+
+            // user delete success!!
+            return res.success({
+                userId: userId,
+                deletedAt: currentTime,
+            });
         });
-    });
+    } catch (e) {
+        // Redis 삭제 실패
+        return next({
+            code: "SERVER_INTERNAL_ERROR",
+        });
+    }
+
+    // // 계정 삭제 작업
+    // const currentTime = new Date();
+    // const query = `UPDATE MEMBER_TB SET deleted_at = ? WHERE member_id = ?;`;
+    // db.execute(query, [currentTime, userId], (err, results) => {
+    //     if (err) {
+    //         return next({
+    //             code: "SERVER_INTERNAL_ERROR",
+    //         });
+    //     }
+
+    //     // 영향받은 rows가 존재하지 않는 경우 (그럴 수 있나??)
+    //     if (results.affectedRows <= 0) {
+    //         return next({
+    //             code: "SERVER_INTERNAL_ERROR",
+    //         });
+    //     }
+
+    //     // user delete success!!
+    //     return res.success({
+    //         userId: userId,
+    //         deletedAt: currentTime,
+    //     });
+    // });
 });
 
 // 회원 정보 요청
@@ -494,18 +563,13 @@ router.patch("/", authenticateToken, async (req, res, next) => {
 });
 
 // 로그 아웃 (jwt)
-router.post("/logout", authenticateToken, (req, res, next) => {
+router.post("/logout", authenticateToken, async (req, res, next) => {
     // const { userId } = req.body;
     const { userId } = req.user;
 
-    // 유저의 모든 refreshToken 삭제
-    const query = `DELETE FROM REFRESH_TOKEN_TB WHERE member_id = ?`;
-    db.execute(query, [userId], (err, results) => {
-        if (err) {
-            return next({
-                code: "SERVER_INTERNAL_ERROR",
-            });
-        }
+    // Redis에서 유저의 모든 refresh Token 삭제
+    try {
+        await deleteValue(userId);
 
         // token 쿠키 삭제
         res.clearCookie("accessToken");
@@ -514,7 +578,30 @@ router.post("/logout", authenticateToken, (req, res, next) => {
         return res.success({
             userId: userId,
         });
-    });
+    } catch (e) {
+        // Redis 삭제 실패
+        return next({
+            code: "SERVER_INTERNAL_ERROR",
+        });
+    }
+
+    // // 유저의 모든 refreshToken 삭제
+    // const query = `DELETE FROM REFRESH_TOKEN_TB WHERE member_id = ?`;
+    // db.execute(query, [userId], (err, results) => {
+    //     if (err) {
+    //         return next({
+    //             code: "SERVER_INTERNAL_ERROR",
+    //         });
+    //     }
+
+    //     // token 쿠키 삭제
+    //     res.clearCookie("accessToken");
+    //     res.clearCookie("refreshToken");
+
+    //     return res.success({
+    //         userId: userId,
+    //     });
+    // });
 });
 
 // id 중복검사

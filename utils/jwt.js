@@ -1,4 +1,7 @@
 const jwt = require("jsonwebtoken");
+// redis
+const { getValue } = require("./redisUtils");
+
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
 
@@ -49,7 +52,17 @@ const getUserIdInRefreshToken = async (req) => {
 
     if (!token) return undefined;
     try {
+        // token으로부터 userId 가져오기
         const user = await verifyToken(token, REFRESH_TOKEN_SECRET);
+
+        // 가져온 userId로부터 Redis에서 refresh token 조회
+        const getRefreshToken = await getValue(user.userId);
+        // redis에 토큰이 없거나 다른 경우 (null 검사도 하는 이유는 둘 모두 null일 수 있으므로)
+        if (getRefreshToken == null || token != getRefreshToken) {
+            // 비정상 토큰 ()
+            return undefined;
+        }
+
         return user.userId;
     } catch (err) {
         console.log(err);

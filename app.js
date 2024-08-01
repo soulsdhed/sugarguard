@@ -3,13 +3,6 @@ const nunjucks = require("nunjucks");
 const cookieParser = require("cookie-parser");
 const rateLimit = require("express-rate-limit");
 const cors = require("cors");
-// const { client: redisClient } = require("./conf/redisClient"); // redisClient.js에서 Redis 클라이언트 및 함수 가져오기
-// const {
-//     setTemporaryValue,
-//     setPermanentValue,
-//     getValue,
-//     deleteValue
-// } = require('./utils/redisUtils');
 
 // cors 정책
 const corsOptions = {
@@ -40,6 +33,7 @@ const timeoutMiddleware = require("./middlewares/timeoutMiddleware");
 const app = express();
 // let flaskProcess;
 
+// CORS
 app.use(cors(corsOptions));
 
 // 타임 아웃 미들웨어 (20초 -> 플라스크 응답이 너무 느리다...)
@@ -51,7 +45,7 @@ nunjucks.configure("views", {
     watch: true,
 });
 
-// app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // 쿠키
@@ -79,14 +73,6 @@ app.use("/api", apiRouter);
 
 // 에러 처리 미들웨어
 app.use(errorHandler);
-
-// 서버 종료 시 Redis 클라이언트 닫기
-// process.on('SIGINT', () => {
-//     redisClient.quit(() => {
-//         console.log('Redis client disconnected');
-//         process.exit(0);
-//     });
-// });
 
 app.listen(process.env.PORT, async () => {
     console.log(`Port ${process.env.PORT} : Server Start`);

@@ -21,7 +21,7 @@ const corsOptions = {
 };
 
 // router
-const mainRouter = require("./routes/mainRouter");
+const viewRouter = require("./routes/viewRouter");
 const apiRouter = require("./routes/apiRouter");
 
 // middleware
@@ -58,7 +58,7 @@ app.use(express.static(__dirname + "/img")); //주상
 // 성공 처리 미들웨어
 app.use(successHandler);
 
-app.use("/", mainRouter);
+app.use("/", viewRouter);
 
 // TODO : 제한 200개로
 // api call 제한

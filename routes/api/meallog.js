@@ -4,6 +4,7 @@ const db = require("../../conf/db");
 const axios = require("axios");
 const { isValidURL } = require("../../utils/validation");
 const authenticateToken = require("../../middlewares/authenticateToken");
+require("dotenv").config();
 
 // 식사 기록 조회
 router.get("/", authenticateToken, (req, res, next) => {
@@ -97,7 +98,7 @@ router.post("/", authenticateToken, (req, res, next) => {
         comments,
     } = req.body;
 
-    // TODO : 식사 사진 받도록 (DB도 수정)
+    console.log(req.body);
 
     if (!userId || !meal_time) {
         return next({
@@ -115,31 +116,55 @@ router.post("/", authenticateToken, (req, res, next) => {
         params.push(record_date);
         data["record_date"] = record_date;
     }
+    console.log("1");
     if (meal_time !== null && meal_time !== undefined) {
         creates.push("meal_time");
         params.push(meal_time);
         data["meal_time"] = meal_time;
     }
+    console.log("2");
     if (medication !== null && medication !== undefined) {
         creates.push("medication");
         params.push(medication);
         data["medication"] = medication;
     }
+    console.log("3");
     if (meal_info !== null && meal_info !== undefined) {
         creates.push("meal_info");
         params.push(meal_info);
         data["meal_info"] = meal_info;
     }
+    console.log("4");
     if (calories !== null && calories !== undefined) {
         creates.push("calories");
         params.push(calories);
-        data["meal_info"] = calories;
+        data["calories"] = calories;
     }
+    console.log("5");
+    try {
+        if (photo_url !== null && photo_url !== undefined) {
+            creates.push("photo_url");
+            if (!isValidURL(photo_url)) {
+                const realUrl = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.S3_REGION}.amazonaws.com/${photo_url}`;
+                params.push(realUrl);
+                data["photo_url"] = realUrl;
+                console.log(realUrl);
+            } else {
+                params.push(photo_url);
+                data["photo_url"] = photo_url;
+            }
+        }
+    } catch (e) {
+        console.log(e);
+    }
+
+    console.log("6");
     if (comments !== null && comments !== undefined) {
         creates.push("comments");
         params.push(comments);
         data["comments"] = comments;
     }
+    console.log("7");
 
     // 기록이 내용이 1개도 없는 경우 (없는데 왜...)
     if (creates.length < 1) {
@@ -147,6 +172,8 @@ router.post("/", authenticateToken, (req, res, next) => {
             code: "VALIDATION_MISSING_FIELD",
         });
     }
+
+    console.log("????");
 
     const query = `INSERT INTO MEAL_LOG_TB
             (${creates.join(", ")})
@@ -163,6 +190,7 @@ router.post("/", authenticateToken, (req, res, next) => {
         // 등록 성공
         return res.success({ data });
     });
+    console.log("????2");
 });
 
 // 식사 기록 수정
@@ -221,6 +249,17 @@ router.patch("/", authenticateToken, (req, res, next) => {
         updates.push("calories = ?");
         params.push(calories);
         data["calories"] = calories;
+    }
+    if (photo_url !== null && photo_url !== undefined) {
+        updates.push("photo_url = ?");
+        if (!isValidURL(photo_url)) {
+            const realUrl = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.S3_REGION}.amazonaws.com/${photo_url}`;
+            params.push(realUrl);
+            data["photo_url"] = realUrl;
+        } else {
+            params.push(photo_url);
+            data["photo_url"] = photo_url;
+        }
     }
     if (comments !== null && comments !== undefined) {
         updates.push("comments = ?");
@@ -326,7 +365,9 @@ router.get("/recent", authenticateToken, (req, res, next) => {
 // 칼로리 계산
 router.post("/food-calories", authenticateToken, async (req, res, next) => {
     const { userId } = req.user;
-    const { photo_url } = req.body;
+    let { photo_url } = req.body;
+
+    console.log(req.body);
 
     // url 없이 왜 보내냐
     if (photo_url == null) {

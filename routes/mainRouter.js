@@ -34,8 +34,10 @@ router.get("/recipe-details", (req, res) => {
     res.render("recipe_details");
 });
 
-router.get("/mealrecord", (req, res) => {
-    res.render("mealrecord");
+router.get("/mealrecord", async (req, res) => {
+    res.render("mealrecord", {
+        userId: await getUserIdInRefreshToken(req),
+    });
 });
 
 router.get("/report/:type", (req, res) => {
@@ -48,12 +50,16 @@ router.get("/recipe-list", async (req, res) => {
     });
 });
 
-router.get("/blood-sugar", (req, res) => {
-    res.render("bs");
+router.get("/blood-sugar", async (req, res) => {
+    res.render("bs", {
+        userId: await getUserIdInRefreshToken(req),
+    });
 }); // 김희은
 
-router.get("/exercise", (req, res) => {
-    res.render("exercise");
+router.get("/exercise", async (req, res) => {
+    res.render("exercise", {
+        userId: await getUserIdInRefreshToken(req),
+    });
 }); // 김희은
 
 // 회원 정보 수정 페이지
@@ -67,8 +73,10 @@ router.get("/foodnutrition", (req, res) => {
     res.render("foodnutrition");
 }); // 음식영양정보 풍규
 
-router.get("/weight", (req, res) => {
-    res.render("weight");
+router.get("/weight", async (req, res) => {
+    res.render("weight", {
+        userId: await getUserIdInRefreshToken(req),
+    });
 }); // 체중기록 풍규
 
 // 비밀번호 재설정 폼 페이지
@@ -89,8 +97,10 @@ router.get("/reset-password/:token", async (req, res) => {
     }
 });
 // 체중기록 페이지
-router.get("/bloodpressurelog", (req, res) => {
-    res.render("bloodpressurelog");
+router.get("/bloodpressurelog", async (req, res) => {
+    res.render("bloodpressurelog", {
+        userId: await getUserIdInRefreshToken(req),
+    });
 });
 
 module.exports = router;

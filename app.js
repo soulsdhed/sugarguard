@@ -6,18 +6,18 @@ const cors = require("cors");
 
 // cors 정책
 const corsOptions = {
-    origin: ["http://localhost", "http://127.0.0.1"],
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    allowedHeaders: [
-        "Authorization",
-        "Content-Type",
-        "Accept",
-        "Accept-Encoding",
-        "Accept-Language",
-        "Connection",
-        "Cookie",
-        "Origin",
-    ],
+  origin: ["http://localhost", "http://127.0.0.1"],
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  allowedHeaders: [
+    "Authorization",
+    "Content-Type",
+    "Accept",
+    "Accept-Encoding",
+    "Accept-Language",
+    "Connection",
+    "Cookie",
+    "Origin",
+  ],
 };
 
 // router
@@ -41,8 +41,8 @@ app.use(timeoutMiddleware(process.env.TIMEOUT));
 
 app.set("view engine", "html");
 nunjucks.configure("views", {
-    express: app,
-    watch: true,
+  express: app,
+  watch: true,
 });
 
 app.use(express.urlencoded({ extended: true }));
@@ -63,11 +63,11 @@ app.use("/", viewRouter);
 // TODO : 제한 200개로
 // api call 제한
 app.use(
-    rateLimit({
-        windowMs: 1 * 60 * 1000, // 1분
-        max: 200, // 최대 200개 요청
-        message: "API rate limit exceeded.",
-    })
+  rateLimit({
+    windowMs: 1 * 60 * 1000, // 1분
+    max: 200, // 최대 200개 요청
+    message: "API rate limit exceeded.",
+  })
 );
 app.use("/api", apiRouter);
 
@@ -75,27 +75,27 @@ app.use("/api", apiRouter);
 app.use(errorHandler);
 
 app.listen(process.env.PORT, async () => {
-    console.log(`Port ${process.env.PORT} : Server Start`);
+  console.log(`Port ${process.env.PORT} : Server Start`);
 
-    // // Flask 서버를 가상 환경에서 실행
-    // const venvPath = path.join(__dirname, './flask/venv/Scripts');
-    // const flaskAppPath = path.join(__dirname, './flask/app.py');
+  // // Flask 서버를 가상 환경에서 실행
+  // const venvPath = path.join(__dirname, './flask/venv/Scripts');
+  // const flaskAppPath = path.join(__dirname, './flask/app.py');
 
-    // // Waitress를 사용하여 Flask 서버 실행
-    // flaskProcess = spawn(path.join(venvPath, 'python'), [flaskAppPath]);
-    // console.log(`Port ${process.env.FLASK_PORT} : Flask Server Start`);
+  // // Waitress를 사용하여 Flask 서버 실행
+  // flaskProcess = spawn(path.join(venvPath, 'python'), [flaskAppPath]);
+  // console.log(`Port ${process.env.FLASK_PORT} : Flask Server Start`);
 
-    // flaskProcess.stdout.on('data', (data) => {
-    //     console.log(`Flask stdout: ${data}`);
-    // });
+  // flaskProcess.stdout.on('data', (data) => {
+  //     console.log(`Flask stdout: ${data}`);
+  // });
 
-    // flaskProcess.stderr.on('data', (data) => {
-    //     console.error(`Flask stderr: ${data}`);
-    // });
+  // flaskProcess.stderr.on('data', (data) => {
+  //     console.error(`Flask stderr: ${data}`);
+  // });
 
-    // flaskProcess.on('close', (code) => {
-    //     console.log(`Flask process exited with code ${code}`);
-    // });
+  // flaskProcess.on('close', (code) => {
+  //     console.log(`Flask process exited with code ${code}`);
+  // });
 });
 
 // process.on('SIGINT', () => {

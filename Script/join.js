@@ -1,499 +1,496 @@
 // 유효성 검사
 // 아이디
 const isValidUserId = (userId) => {
-    // 영어와 숫자만 가능하도록 (4-12글자)
-    const pattern = /^[A-Za-z0-9]{4,12}$/;
-    return pattern.test(userId);
+  // 영어와 숫자만 가능하도록 (4-12글자)
+  const pattern = /^[A-Za-z0-9]{4,12}$/;
+  return pattern.test(userId);
 };
 // 이메일
 const isValidEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
 };
 // 비밀번호
 const isValidPassword = (password) => {
-    const allowedSpecialCharacters = '!@#$%^&*(),.?":{}|<>'; // 사용할 수 있는 특수 문자 정의
-    const specialCharPattern = new RegExp(
-        "^[a-zA-Z0-9" +
-            allowedSpecialCharacters
-                .split("")
-                .map((char) => "\\" + char)
-                .join("") +
-            "]*$"
-    );
+  const allowedSpecialCharacters = '!@#$%^&*(),.?":{}|<>'; // 사용할 수 있는 특수 문자 정의
+  const specialCharPattern = new RegExp(
+    "^[a-zA-Z0-9" +
+      allowedSpecialCharacters
+        .split("")
+        .map((char) => "\\" + char)
+        .join("") +
+      "]*$"
+  );
 
-    // 비밀 번호 글자수 부족 혹은 과다
-    if (password.length < 8 || password.length > 16) {
-        return false;
-    }
-    // 비밀번호에 영어, 숫자, 특문 이외의 문자가 있으면 안된다
-    if (!/^[\x00-\x7F]*$/.test(password)) {
-        return false;
-    }
-    // 특수 문자 제한
-    if (!specialCharPattern.test(password)) {
-        return false;
-    }
-    // 반드시 영어, 숫자, 특수 문자를 포함해야 한다
-    const hasLetter = /[a-zA-Z]/.test(password);
-    const hasNumber = /\d/.test(password);
-    const hasSpecialChar = new RegExp(
-        "[" +
-            allowedSpecialCharacters
-                .split("")
-                .map((char) => "\\" + char)
-                .join("") +
-            "]"
-    ).test(password);
+  // 비밀 번호 글자수 부족 혹은 과다
+  if (password.length < 8 || password.length > 16) {
+    return false;
+  }
+  // 비밀번호에 영어, 숫자, 특문 이외의 문자가 있으면 안된다
+  if (!/^[\x00-\x7F]*$/.test(password)) {
+    return false;
+  }
+  // 특수 문자 제한
+  if (!specialCharPattern.test(password)) {
+    return false;
+  }
+  // 반드시 영어, 숫자, 특수 문자를 포함해야 한다
+  const hasLetter = /[a-zA-Z]/.test(password);
+  const hasNumber = /\d/.test(password);
+  const hasSpecialChar = new RegExp(
+    "[" +
+      allowedSpecialCharacters
+        .split("")
+        .map((char) => "\\" + char)
+        .join("") +
+      "]"
+  ).test(password);
 
-    if (!hasLetter || !hasNumber || !hasSpecialChar) {
-        return false;
-    }
+  if (!hasLetter || !hasNumber || !hasSpecialChar) {
+    return false;
+  }
 
-    return true;
+  return true;
 };
 const isValidNickname = (nickname) => {
-    // 닉네임 글자 수 조건 (2자 이상 20자 이하)
-    if (nickname.length < 2 || nickname.length > 20) {
-        return false;
-    }
-    return true;
+  // 닉네임 글자 수 조건 (2자 이상 20자 이하)
+  if (nickname.length < 2 || nickname.length > 20) {
+    return false;
+  }
+  return true;
 };
 const isValidDate = (dateString) => {
-    // Check for null or undefined
-    if (dateString == null) {
-        return false;
-    }
-    const regex = /^\d{8}$/;
-    if (!regex.test(dateString)) {
-        return false;
-    }
+  // Check for null or undefined
+  if (dateString == null) {
+    return false;
+  }
+  const regex = /^\d{8}$/;
+  if (!regex.test(dateString)) {
+    return false;
+  }
 
-    const year = parseInt(dateString.substring(0, 4), 10);
-    const month = parseInt(dateString.substring(4, 6), 10);
-    const day = parseInt(dateString.substring(6, 8), 10);
+  const year = parseInt(dateString.substring(0, 4), 10);
+  const month = parseInt(dateString.substring(4, 6), 10);
+  const day = parseInt(dateString.substring(6, 8), 10);
 
-    const date = new Date(year, month - 1, day);
-    return (
-        date.getFullYear() === year &&
-        date.getMonth() + 1 === month &&
-        date.getDate() === day
-    );
+  const date = new Date(year, month - 1, day);
+  return (
+    date.getFullYear() === year &&
+    date.getMonth() + 1 === month &&
+    date.getDate() === day
+  );
 };
 
 const formatDateString = (dateString) => {
-    if (!/^\d{8}$/.test(dateString)) {
-        throw new Error("Invalid date format. Please use YYYYMMDD.");
-    }
+  if (!/^\d{8}$/.test(dateString)) {
+    throw new Error("Invalid date format. Please use YYYYMMDD.");
+  }
 
-    const year = dateString.substring(0, 4);
-    const month = dateString.substring(4, 6);
-    const day = dateString.substring(6, 8);
+  const year = dateString.substring(0, 4);
+  const month = dateString.substring(4, 6);
+  const day = dateString.substring(6, 8);
 
-    return `${year}-${month}-${day}`;
+  return `${year}-${month}-${day}`;
 };
 
 const stepStr = [
-    "id",
-    "email",
-    "password",
-    "nickname",
-    "gender",
-    "birthdate",
-    "diabetes-type",
+  "id",
+  "email",
+  "password",
+  "nickname",
+  "gender",
+  "birthdate",
+  "diabetes-type",
 ];
 const stepDivs = [];
 let step = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 요소
-    const idInput = document.getElementById("id-input");
-    const idExistsButton = document.getElementById("id-exist-button");
-    const emailInput = document.getElementById("email-input");
-    const emailExistsButton = document.getElementById("email-exist-button");
-    const passwordInput = document.getElementById("password-input");
-    const nicknameInput = document.getElementById("nickname-input");
-    const genderDivs = [
-        document.getElementById("gender-male"),
-        document.getElementById("gender-female"),
-    ];
-    const birthDateInput = document.getElementById("birthdate-input");
-    const diabetesTypeInput = document.getElementById("diabetes-type-input");
+  // 요소
+  const idInput = document.getElementById("id-input");
+  const idExistsButton = document.getElementById("id-exist-button");
+  const emailInput = document.getElementById("email-input");
+  const emailExistsButton = document.getElementById("email-exist-button");
+  const passwordInput = document.getElementById("password-input");
+  const nicknameInput = document.getElementById("nickname-input");
+  const genderDivs = [
+    document.getElementById("gender-male"),
+    document.getElementById("gender-female"),
+  ];
+  const birthDateInput = document.getElementById("birthdate-input");
+  const diabetesTypeInput = document.getElementById("diabetes-type-input");
 
-    // div 전부 선택
-    stepStr.forEach((e) => {
-        stepDivs.push(document.getElementById(`${e}-content`));
-    });
+  // div 전부 선택
+  stepStr.forEach((e) => {
+    stepDivs.push(document.getElementById(`${e}-content`));
+  });
 
-    // 이전 버튼
-    document
-        .getElementById("join-prev-button")
-        .addEventListener("click", () => {
-            console.log("이전");
+  // 이전 버튼
+  document.getElementById("join-prev-button").addEventListener("click", () => {
+    // console.log("이전");
 
-            // 0단계 (아무것도 없다)
-            if (step == 0) {
-                history.back();
-            } else if (step == 1) {
-                // 아이디 (전단계 : 없음)
-                stepDivs[step - 1].classList.add("hidden-div");
-            } else if (step == 2) {
-                // 이메일 (전단계 : 아이디)
-                stepDivs[step - 1].classList.add("hidden-div");
+    // 0단계 (아무것도 없다)
+    if (step == 0) {
+      history.back();
+    } else if (step == 1) {
+      // 아이디 (전단계 : 없음)
+      stepDivs[step - 1].classList.add("hidden-div");
+    } else if (step == 2) {
+      // 이메일 (전단계 : 아이디)
+      stepDivs[step - 1].classList.add("hidden-div");
 
-                // 전단계 아이디를 살려주자
-                idInput.disabled = false;
-                idInput.style.backgroundColor = "white";
-                idInput.style.color = "black";
+      // 전단계 아이디를 살려주자
+      idInput.disabled = false;
+      idInput.style.backgroundColor = "white";
+      idInput.style.color = "black";
 
-                idExistsButton.disabled = false;
-                idExistsButton.style.backgroundColor = "#FF5C5C";
-            } else if (step == 3) {
-                // 비밀번호 (전단계 이메일)
-                stepDivs[step - 1].classList.add("hidden-div");
+      idExistsButton.disabled = false;
+      idExistsButton.style.backgroundColor = "#FF5C5C";
+    } else if (step == 3) {
+      // 비밀번호 (전단계 이메일)
+      stepDivs[step - 1].classList.add("hidden-div");
 
-                // 전단계 이메일을 살려주자
-                emailInput.disabled = false;
-                emailInput.style.backgroundColor = "white";
-                emailInput.style.color = "black";
+      // 전단계 이메일을 살려주자
+      emailInput.disabled = false;
+      emailInput.style.backgroundColor = "white";
+      emailInput.style.color = "black";
 
-                emailExistsButton.disabled = false;
-                emailExistsButton.style.backgroundColor = "#FF5C5C";
-            } else if (step == 4) {
-                // 닉네임 (전단계 비밀번호)
-                stepDivs[step - 1].classList.add("hidden-div");
+      emailExistsButton.disabled = false;
+      emailExistsButton.style.backgroundColor = "#FF5C5C";
+    } else if (step == 4) {
+      // 닉네임 (전단계 비밀번호)
+      stepDivs[step - 1].classList.add("hidden-div");
 
-                // 전단계 비밀번호를 살려주자
-                passwordInput.disabled = false;
-                passwordInput.style.backgroundColor = "white";
-                passwordInput.style.color = "black";
-            } else if (step == 5) {
-                // 성별 (전단계 닉네임)
-                stepDivs[step - 1].classList.add("hidden-div");
+      // 전단계 비밀번호를 살려주자
+      passwordInput.disabled = false;
+      passwordInput.style.backgroundColor = "white";
+      passwordInput.style.color = "black";
+    } else if (step == 5) {
+      // 성별 (전단계 닉네임)
+      stepDivs[step - 1].classList.add("hidden-div");
 
-                // 전단계 닉네임을 살려주자
-                nicknameInput.disabled = false;
-                nicknameInput.style.backgroundColor = "white";
-                nicknameInput.style.color = "black";
-            } else if (step == 6) {
-                // 생일 (전단계 성별)
-                stepDivs[step - 1].classList.add("hidden-div");
+      // 전단계 닉네임을 살려주자
+      nicknameInput.disabled = false;
+      nicknameInput.style.backgroundColor = "white";
+      nicknameInput.style.color = "black";
+    } else if (step == 6) {
+      // 생일 (전단계 성별)
+      stepDivs[step - 1].classList.add("hidden-div");
 
-                // 전단계 성별을 살려주자
-                genderDivs.forEach((e) => {
-                    e.disabled = false;
-                    e.style.backgroundColor = "white";
-                    e.style.color = "black";
-                });
-            } else if (step == 7) {
-                // 당뇨 유형 (전단계 생일)
-                stepDivs[step - 1].classList.add("hidden-div");
+      // 전단계 성별을 살려주자
+      genderDivs.forEach((e) => {
+        e.disabled = false;
+        e.style.backgroundColor = "white";
+        e.style.color = "black";
+      });
+    } else if (step == 7) {
+      // 당뇨 유형 (전단계 생일)
+      stepDivs[step - 1].classList.add("hidden-div");
 
-                // 전단계 생일을 살려주자
-                birthDateInput.disabled = false;
-                birthDateInput.style.backgroundColor = "white";
-                birthDateInput.style.color = "black";
-            }
-            step--;
-        });
+      // 전단계 생일을 살려주자
+      birthDateInput.disabled = false;
+      birthDateInput.style.backgroundColor = "white";
+      birthDateInput.style.color = "black";
+    }
+    step--;
+  });
 
-    // 다음 버튼
-    document
-        .getElementById("join-next-button")
-        .addEventListener("click", async () => {
-            console.log("다음");
+  // 다음 버튼
+  document
+    .getElementById("join-next-button")
+    .addEventListener("click", async () => {
+      // console.log("다음");
 
-            if (step == 0) {
-                // 아이디 (전단계 : 없음)
-                console.log(stepDivs[step]);
-                stepDivs[step].classList.remove("hidden-div");
-                stepDivs[step].classList.add("slide-down");
-            } else if (step == 1) {
-                // 이메일 (전단계 : 아이디)
-                // 아이디 중복 검사를 하지 않으며 안된다.
-                if (idInput.disabled == false) {
-                    return Swal.fire({
-                        title: "아이디 중복 검사",
-                        text: "아이디 중복 검사를 해주세요",
-                        icon: "warning",
-                    });
-                }
-
-                // 이메일을 보여주자
-                stepDivs[step].classList.remove("hidden-div");
-                stepDivs[step].classList.add("slide-down");
-            } else if (step == 2) {
-                // 비밀번호 (전단계 : 이메일)
-                // 이메일 중복 검사를 하지 않으면 안된다.
-                if (emailInput.disabled == false) {
-                    return Swal.fire({
-                        title: "이메일 중복 검사",
-                        text: "이메일 중복 검사를 해주세요",
-                        icon: "warning",
-                    });
-                }
-
-                // 비밀번호를 보여주자
-                stepDivs[step].classList.remove("hidden-div");
-                stepDivs[step].classList.add("slide-down");
-            } else if (step == 3) {
-                // 닉네임 (전단계 : 비밀번호)
-                // 비밀번호 유효성 검사
-                const password = passwordInput.value;
-                if (!isValidPassword(password)) {
-                    // 응 안돼
-                    return Swal.fire({
-                        title: "비밀번호 규칙 오류",
-                        text: "비밀번호는 4글자 이상으로 반드시 영문, 숫자, 특문이 혼합되어 있어야 합니다.",
-                        icon: "warning",
-                    });
-                }
-
-                // 비밀번호 사용 못하게 하자!
-                passwordInput.disabled = true;
-                passwordInput.style.backgroundColor = "whitesmoke";
-                passwordInput.style.color = "darkgray";
-
-                // 닉네임 보여주자
-                stepDivs[step].classList.remove("hidden-div");
-                stepDivs[step].classList.add("slide-down");
-            } else if (step == 4) {
-                // 성별 (전단계 : 닉네임)
-                // 닉네임 유효성 검사
-                const nickname = nicknameInput.value;
-                if (!isValidNickname(nickname)) {
-                    // 응 안돼
-                    return Swal.fire({
-                        title: "닉네임 오류",
-                        text: "닉네임은 2글자 이상으로 작성해주세요",
-                        icon: "warning",
-                    });
-                }
-
-                // 닉네임을 사용못하게 하자
-                nicknameInput.disabled = true;
-                nicknameInput.style.backgroundColor = "whitesmoke";
-                nicknameInput.style.color = "darkgray";
-
-                // 성별 보여주자
-                stepDivs[step].classList.remove("hidden-div");
-                stepDivs[step].classList.add("slide-down");
-            } else if (step == 5) {
-                // 생일
-
-                // 성별을 사용 못하게 하자
-                genderDivs.forEach((e) => {
-                    e.disabled = true;
-                    e.style.backgroundColor = "whitesmoke";
-                    e.style.color = "darkgray";
-                });
-
-                // 생일 보여주자
-                stepDivs[step].classList.remove("hidden-div");
-                stepDivs[step].classList.add("slide-down");
-            } else if (step == 6) {
-                // 당뇨 유형
-                // 생일 유효성 검사
-                const birthDate = birthDateInput.value;
-                if (!isValidDate(birthDate)) {
-                    return Swal.fire({
-                        title: "생년월일 오류",
-                        text: "유효한 생년월일 (예 19990101)을 작성해주세요",
-                        icon: "warning",
-                    });
-                }
-
-                // 생일 사용 못하게 하자
-                birthDateInput.disabled = true;
-                birthDateInput.style.backgroundColor = "whitesmoke";
-                birthDateInput.style.color = "darkgray";
-
-                // 당뇨 유형 보여주자
-                stepDivs[step].classList.remove("hidden-div");
-                stepDivs[step].classList.add("slide-down");
-            } else if (step == 7) {
-                // 회원 가입하자!!
-                const userId = idInput.value;
-                const password = passwordInput.value;
-                const email = emailInput.value;
-                const nickname = nicknameInput.value;
-                const gender =
-                    document.querySelector(".gender-selected").innerText;
-                const birthDate = formatDateString(birthDateInput.value);
-                const diabetesType = diabetesTypeInput.value;
-
-                // TODO : 혹시 모를 마지막 모든 유효성 검사!! (안해도 되긴 하는데...)
-
-                try {
-                    const response = await axios.post("/api/users", {
-                        userId: userId,
-                        password: password,
-                        email: email,
-                        nickname: nickname,
-                        gender: gender,
-                        birthDate: birthDate,
-                        diabetesType: diabetesType,
-                    });
-
-                    if (response.data.success) {
-                        // 회원 가입 성공
-                        Swal.fire({
-                            title: "회원 가입 성공",
-                            text: "회원 가입에 성공하셨습니다!!",
-                            icon: "success",
-                            confirmButtonText: "확인",
-                            allowOutsideClick: true,
-                            willClose: () => {
-                                window.location.href = "/login";
-                            },
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.href = "/login";
-                            }
-                        });
-                    }
-                } catch (e) {
-                    console.log(e);
-                    return Swal.fire({
-                        title: "회원가입 실패",
-                        text: "회원가입에 실패했습니다. 관리자에게 문의해주세요",
-                        icon: "error",
-                    });
-                }
-            }
-            step++;
-        });
-
-    // 성별 선택
-    genderDivs.forEach((i) => {
-        i.addEventListener("click", (e) => {
-            if (!i.disabled) {
-                i.classList.add("gender-selected");
-                genderDivs.forEach((item) => {
-                    if (i != item) item.classList.remove("gender-selected");
-                });
-            }
-        });
-    });
-
-    // 생년월일 입력 제한
-    birthDateInput.addEventListener("input", (event) => {
-        const input = event.target;
-        const filteredValue = input.value.replace(/[^0-9]/g, "");
-        if (input.value !== filteredValue) {
-            input.value = filteredValue;
+      if (step == 0) {
+        // 아이디 (전단계 : 없음)
+        // console.log(stepDivs[step]);
+        stepDivs[step].classList.remove("hidden-div");
+        stepDivs[step].classList.add("slide-down");
+      } else if (step == 1) {
+        // 이메일 (전단계 : 아이디)
+        // 아이디 중복 검사를 하지 않으며 안된다.
+        if (idInput.disabled == false) {
+          return Swal.fire({
+            title: "아이디 중복 검사",
+            text: "아이디 중복 검사를 해주세요",
+            icon: "warning",
+          });
         }
-    });
 
-    // 아이디 입력 제한
-    console.log(idInput);
-    idInput.addEventListener("input", (event) => {
-        const input = event.target;
-        const filteredValue = input.value.replace(/[^a-zA-Z0-9]/g, "");
-        if (input.value !== filteredValue) {
-            input.value = filteredValue;
+        // 이메일을 보여주자
+        stepDivs[step].classList.remove("hidden-div");
+        stepDivs[step].classList.add("slide-down");
+      } else if (step == 2) {
+        // 비밀번호 (전단계 : 이메일)
+        // 이메일 중복 검사를 하지 않으면 안된다.
+        if (emailInput.disabled == false) {
+          return Swal.fire({
+            title: "이메일 중복 검사",
+            text: "이메일 중복 검사를 해주세요",
+            icon: "warning",
+          });
         }
-    });
 
-    // 아이디 중복검사 버튼
-    idExistsButton.addEventListener("click", async () => {
+        // 비밀번호를 보여주자
+        stepDivs[step].classList.remove("hidden-div");
+        stepDivs[step].classList.add("slide-down");
+      } else if (step == 3) {
+        // 닉네임 (전단계 : 비밀번호)
+        // 비밀번호 유효성 검사
+        const password = passwordInput.value;
+        if (!isValidPassword(password)) {
+          // 응 안돼
+          return Swal.fire({
+            title: "비밀번호 규칙 오류",
+            text: "비밀번호는 4글자 이상으로 반드시 영문, 숫자, 특문이 혼합되어 있어야 합니다.",
+            icon: "warning",
+          });
+        }
+
+        // 비밀번호 사용 못하게 하자!
+        passwordInput.disabled = true;
+        passwordInput.style.backgroundColor = "whitesmoke";
+        passwordInput.style.color = "darkgray";
+
+        // 닉네임 보여주자
+        stepDivs[step].classList.remove("hidden-div");
+        stepDivs[step].classList.add("slide-down");
+      } else if (step == 4) {
+        // 성별 (전단계 : 닉네임)
+        // 닉네임 유효성 검사
+        const nickname = nicknameInput.value;
+        if (!isValidNickname(nickname)) {
+          // 응 안돼
+          return Swal.fire({
+            title: "닉네임 오류",
+            text: "닉네임은 2글자 이상으로 작성해주세요",
+            icon: "warning",
+          });
+        }
+
+        // 닉네임을 사용못하게 하자
+        nicknameInput.disabled = true;
+        nicknameInput.style.backgroundColor = "whitesmoke";
+        nicknameInput.style.color = "darkgray";
+
+        // 성별 보여주자
+        stepDivs[step].classList.remove("hidden-div");
+        stepDivs[step].classList.add("slide-down");
+      } else if (step == 5) {
+        // 생일
+
+        // 성별을 사용 못하게 하자
+        genderDivs.forEach((e) => {
+          e.disabled = true;
+          e.style.backgroundColor = "whitesmoke";
+          e.style.color = "darkgray";
+        });
+
+        // 생일 보여주자
+        stepDivs[step].classList.remove("hidden-div");
+        stepDivs[step].classList.add("slide-down");
+      } else if (step == 6) {
+        // 당뇨 유형
+        // 생일 유효성 검사
+        const birthDate = birthDateInput.value;
+        if (!isValidDate(birthDate)) {
+          return Swal.fire({
+            title: "생년월일 오류",
+            text: "유효한 생년월일 (예 19990101)을 작성해주세요",
+            icon: "warning",
+          });
+        }
+
+        // 생일 사용 못하게 하자
+        birthDateInput.disabled = true;
+        birthDateInput.style.backgroundColor = "whitesmoke";
+        birthDateInput.style.color = "darkgray";
+
+        // 당뇨 유형 보여주자
+        stepDivs[step].classList.remove("hidden-div");
+        stepDivs[step].classList.add("slide-down");
+      } else if (step == 7) {
+        // 회원 가입하자!!
         const userId = idInput.value;
-        // 유효성 검사
-        if (!isValidUserId(userId)) {
-            // 경고창
-            return Swal.fire({
-                title: "아이디 규칙 위반",
-                text: "아이디는 영어와 숫자 4~12글자로만 가능합니다.",
-                icon: "error",
-            });
-        }
-
-        // 중복검사 api
-        try {
-            const response = await axios.get("/api/users/exists/userid", {
-                params: {
-                    userId: userId,
-                },
-            });
-            const exists = response.data.data.exists;
-            console.log(exists);
-
-            if (exists) {
-                // 존재한단다 (새로 입력하게 하세요)
-                return Swal.fire({
-                    title: "아이디 중복",
-                    text: "해당 아이디는 사용할 수 없습니다.",
-                    icon: "error",
-                });
-            } else {
-                // 더이상 입력하지 못하게 막기
-                idInput.disabled = true;
-                idInput.style.backgroundColor = "whitesmoke";
-                idInput.style.color = "darkgray";
-
-                idExistsButton.disabled = true;
-                idExistsButton.style.backgroundColor = "darkgray";
-                return Swal.fire({
-                    title: "아이디 사용 가능",
-                    text: "해당 아이디는 사용할 수 있습니다.",
-                    icon: "success",
-                });
-            }
-        } catch (e) {
-            // 뭐냐 이건
-            console.log(e);
-        }
-    });
-
-    // 이메일 중복검사 버튼
-    emailExistsButton.addEventListener("click", async () => {
+        const password = passwordInput.value;
         const email = emailInput.value;
-        // 유효성 검사
-        if (!isValidEmail(email)) {
-            // 경고창
-            return Swal.fire({
-                title: "이메일 규칙 위반",
-                text: "옳바른 이메일을 입력해주세요",
-                icon: "error",
-            });
-        }
+        const nickname = nicknameInput.value;
+        const gender = document.querySelector(".gender-selected").innerText;
+        const birthDate = formatDateString(birthDateInput.value);
+        const diabetesType = diabetesTypeInput.value;
 
-        // 중복검사 api
+        // TODO : 혹시 모를 마지막 모든 유효성 검사!! (안해도 되긴 하는데...)
+
         try {
-            const response = await axios.get("/api/users/exists/email", {
-                params: {
-                    email: email,
-                },
+          const response = await axios.post("/api/users", {
+            userId: userId,
+            password: password,
+            email: email,
+            nickname: nickname,
+            gender: gender,
+            birthDate: birthDate,
+            diabetesType: diabetesType,
+          });
+
+          if (response.data.success) {
+            // 회원 가입 성공
+            Swal.fire({
+              title: "회원 가입 성공",
+              text: "회원 가입에 성공하셨습니다!!",
+              icon: "success",
+              confirmButtonText: "확인",
+              allowOutsideClick: true,
+              willClose: () => {
+                window.location.href = "/login";
+              },
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.href = "/login";
+              }
             });
-            const exists = response.data.data.exists;
-            console.log(exists);
-
-            if (exists) {
-                // 존재한단다 (새로 입력하게 하세요)
-                return Swal.fire({
-                    title: "이메일 중복",
-                    text: "해당 이메일은 사용할 수 없습니다.",
-                    icon: "error",
-                });
-            } else {
-                // 더이상 입력하지 못하게 막기
-                emailInput.disabled = true;
-                emailInput.style.backgroundColor = "whitesmoke";
-                emailInput.style.color = "darkgray";
-
-                emailExistsButton.disabled = true;
-                emailExistsButton.style.backgroundColor = "darkgray";
-                return Swal.fire({
-                    title: "이메일 사용 가능",
-                    text: "해당 이메일은 사용할 수 있습니다.",
-                    icon: "success",
-                });
-            }
+          }
         } catch (e) {
-            // 뭐냐 이건
-            console.log(e);
+          // console.log(e);
+          return Swal.fire({
+            title: "회원가입 실패",
+            text: "회원가입에 실패했습니다. 관리자에게 문의해주세요",
+            icon: "error",
+          });
         }
+      }
+      step++;
     });
+
+  // 성별 선택
+  genderDivs.forEach((i) => {
+    i.addEventListener("click", (e) => {
+      if (!i.disabled) {
+        i.classList.add("gender-selected");
+        genderDivs.forEach((item) => {
+          if (i != item) item.classList.remove("gender-selected");
+        });
+      }
+    });
+  });
+
+  // 생년월일 입력 제한
+  birthDateInput.addEventListener("input", (event) => {
+    const input = event.target;
+    const filteredValue = input.value.replace(/[^0-9]/g, "");
+    if (input.value !== filteredValue) {
+      input.value = filteredValue;
+    }
+  });
+
+  // 아이디 입력 제한
+  // console.log(idInput);
+  idInput.addEventListener("input", (event) => {
+    const input = event.target;
+    const filteredValue = input.value.replace(/[^a-zA-Z0-9]/g, "");
+    if (input.value !== filteredValue) {
+      input.value = filteredValue;
+    }
+  });
+
+  // 아이디 중복검사 버튼
+  idExistsButton.addEventListener("click", async () => {
+    const userId = idInput.value;
+    // 유효성 검사
+    if (!isValidUserId(userId)) {
+      // 경고창
+      return Swal.fire({
+        title: "아이디 규칙 위반",
+        text: "아이디는 영어와 숫자 4~12글자로만 가능합니다.",
+        icon: "error",
+      });
+    }
+
+    // 중복검사 api
+    try {
+      const response = await axios.get("/api/users/exists/userid", {
+        params: {
+          userId: userId,
+        },
+      });
+      const exists = response.data.data.exists;
+      // console.log(exists);
+
+      if (exists) {
+        // 존재한단다 (새로 입력하게 하세요)
+        return Swal.fire({
+          title: "아이디 중복",
+          text: "해당 아이디는 사용할 수 없습니다.",
+          icon: "error",
+        });
+      } else {
+        // 더이상 입력하지 못하게 막기
+        idInput.disabled = true;
+        idInput.style.backgroundColor = "whitesmoke";
+        idInput.style.color = "darkgray";
+
+        idExistsButton.disabled = true;
+        idExistsButton.style.backgroundColor = "darkgray";
+        return Swal.fire({
+          title: "아이디 사용 가능",
+          text: "해당 아이디는 사용할 수 있습니다.",
+          icon: "success",
+        });
+      }
+    } catch (e) {
+      // 뭐냐 이건
+      // console.log(e);
+    }
+  });
+
+  // 이메일 중복검사 버튼
+  emailExistsButton.addEventListener("click", async () => {
+    const email = emailInput.value;
+    // 유효성 검사
+    if (!isValidEmail(email)) {
+      // 경고창
+      return Swal.fire({
+        title: "이메일 규칙 위반",
+        text: "옳바른 이메일을 입력해주세요",
+        icon: "error",
+      });
+    }
+
+    // 중복검사 api
+    try {
+      const response = await axios.get("/api/users/exists/email", {
+        params: {
+          email: email,
+        },
+      });
+      const exists = response.data.data.exists;
+      // console.log(exists);
+
+      if (exists) {
+        // 존재한단다 (새로 입력하게 하세요)
+        return Swal.fire({
+          title: "이메일 중복",
+          text: "해당 이메일은 사용할 수 없습니다.",
+          icon: "error",
+        });
+      } else {
+        // 더이상 입력하지 못하게 막기
+        emailInput.disabled = true;
+        emailInput.style.backgroundColor = "whitesmoke";
+        emailInput.style.color = "darkgray";
+
+        emailExistsButton.disabled = true;
+        emailExistsButton.style.backgroundColor = "darkgray";
+        return Swal.fire({
+          title: "이메일 사용 가능",
+          text: "해당 이메일은 사용할 수 있습니다.",
+          icon: "success",
+        });
+      }
+    } catch (e) {
+      // 뭐냐 이건
+      // console.log(e);
+    }
+  });
 });
 
 // document.addEventListener("DOMContentLoaded", () => {
